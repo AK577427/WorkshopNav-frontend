@@ -43,7 +43,7 @@
 
 Workshop Navigator is a mobile-first presentation engagement tool designed to make presentations and workshops more interactive for Gen X and older corporate audiences. It supports participants who may be engaged but hesitant to speak up during live sessions by giving them a clear, low-friction way to interact on their phones.
 
-The product allows attendees to join quickly via QR code or session link, respond to live polls, ask anonymous questions, and access Scott Millar’s presentation library after the event. On the presenter side, Workshop Navigator provides a simple dashboard for reviewing audience engagement, captured questions, and email interest for future follow-up and client reporting. The overall goal is to create a sleek, elegant, and accessible experience that feels professional, easy to use, and relevant in live workshop and keynote environments.
+The product allows attendees to join quickly via QR code or session link, respond to live polls, ask anonymous questions, and access Scott Millar’s presentation library after the event. On the presenter side, Workshop Navigator provides a simple dashboard for reviewing audience engagement, captured questions, and email interest for future follow-up and client reporting. The overall goal is to create a sleek, elegant, simple, modern, high-energy, and accessible experience that feels professional, engaging, and useful in live workshop and keynote environments.
 
 ## Features
 
@@ -230,6 +230,8 @@ The interface is designed to support people who may use reading glasses or prefe
 - Text Primary: `#FFFFFF`
 - Text Secondary: `#E5E7EB`
 - Border: `#2A3D6B`
+
+More colours can be extracted from the BOP Industries website to expand the visual palette and support a more energetic, modern, and engaging visual system.
 
 ### Font
 
