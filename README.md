@@ -10,23 +10,31 @@
     - [Summary](#summary)
     - [Users](#users)
     - [Core Features](#core-features)
-    - [Pages/Endpoint Functionality](#pagesendpoint-functionality)
+    - [Pages / Functionality](#pages--functionality)
     - [Nice To Haves](#nice-to-haves)
   - [Technical Implementation](#technical-implementation)
     - [Back-End](#back-end)
     - [Front-End](#front-end)
     - [Git \& Deployment](#git--deployment)
   - [Target Audience](#target-audience)
-  - [Back-end Implementation](#back-end-implementation)
+  - [Back-End Implementation](#back-end-implementation)
     - [API Specification](#api-specification)
+      - [Events](#events)
+      - [Polls](#polls)
+      - [Poll Responses](#poll-responses)
+      - [Questions](#questions)
+      - [Feedback](#feedback)
+      - [Emails](#emails)
     - [Object Definitions](#object-definitions)
       - [Users](#users-1)
-      - [Questions](#questions)
-      - [Polls](#polls)
-      - [Sessions](#sessions)
-      - [Slide Access Requests](#slide-access-requests)
+      - [Events](#events-1)
+      - [Polls](#polls-1)
+      - [Poll Responses](#poll-responses-1)
+      - [Questions](#questions-1)
+      - [Feedback](#feedback-1)
+      - [Email Capture](#email-capture)
     - [Database Schema](#database-schema)
-  - [Front-end Implementation](#front-end-implementation)
+  - [Front-End Implementation](#front-end-implementation)
     - [Wireframes](#wireframes)
       - [Join Screen](#join-screen)
       - [Session Home](#session-home)
@@ -41,106 +49,146 @@
 
 ## Mission Statement
 
-Workshop Navigator is a mobile-first presentation engagement tool designed to make presentations and workshops more interactive for Gen X and older corporate audiences. It supports participants who may be engaged but hesitant to speak up during live sessions by giving them a clear, low-friction way to interact on their phones.
+Workshop Navigator is a mobile-first presentation and workshop engagement tool designed to improve audience interaction and data collection during live events. It is intended for professional facilitators and keynote speakers, particularly Scott Millar, who want a simple and effective way to encourage participation from Gen X and older corporate audiences.
 
-The product allows attendees to join quickly via QR code or session link, respond to live polls, ask anonymous questions, and access Scott Millar’s presentation library after the event. On the presenter side, Workshop Navigator provides a simple dashboard for reviewing audience engagement, captured questions, and email interest for future follow-up and client reporting. The overall goal is to create a sleek, elegant, simple, modern, high-energy, and accessible experience that feels professional, engaging, and useful in live workshop and keynote environments.
+Many presentations and workshops suffer from low engagement because attendees are shy, passive, or hesitant to ask questions in front of colleagues or managers. Workshop Navigator reduces those barriers by allowing attendees to join instantly through a QR code or link, participate in live polls, submit anonymous questions, and access presentation resources after the session. Presenters can later review audience responses, questions, and engagement data through a dashboard and export results for future topic planning and client reporting.
+
+The overall goal is to create a sleek, professional, easy-to-read interaction tool that supports live engagement without distracting from the presentation itself.
 
 ## Features
 
 ### Summary
 
-Workshop Navigator provides guest participants the ability to join a live presentation session, answer polls, ask questions privately, and request access to presentation slides/resources from their mobile device. Presenters can monitor engagement, view responses, review submitted questions, and export session outcomes later.
+Workshop Navigator is a real-time presentation engagement platform that allows attendees to:
+
+- join instantly with no login
+- participate in polls
+- ask anonymous questions
+- provide feedback
+- share their email to receive presentation resources
+
+Facilitators can:
+
+- create and manage events
+- run live polls
+- view questions
+- collect audience insights
+- review and export results later
 
 ### Users
 
-| Type | Access | Role type assignment |
+| Type | Access | Role |
 | :--- | :--- | :--- |
-| Presenter/Admin | <br> - Full access <br> - Can log in <br> - Can create and manage sessions <br> - Can create polls <br> - Can review questions <br> - Can view captured emails <br> - Can export results | Scott Millar / admin team |
-| Event Support / Approver | <br> - Can log in <br> - Can assist with session management <br> - Can view submitted questions and responses <br> - Can support presenter workflow | AV support / event support |
-| Guest Participant | <br> - Can join via QR code or session link <br> - Can answer live polls <br> - Can ask questions with or without sharing name <br> - Can enter email to access presentation library | Public workshop/presentation attendees |
+| Facilitator / Admin | Full control | Creates events, runs sessions, views results, exports data |
+| Event Support / Approver | Assists session delivery | Supports presenter workflow, views submitted questions and responses |
+| Attendee | No login required | Joins event, interacts via mobile, submits questions and feedback |
 
 ### Core Features
 
-| Feature | Access | Notes/Conditions |
+| Feature | Access | Notes / Conditions |
 | :--- | :--- | :--- |
-| Join Session | Guest | <br> - Access via QR code or session link <br> - No account required for MVP |
-| Live Polls | Guest | <br> - Simple, easy-to-read response flow <br> - Mobile friendly |
-| Ask a Question | Guest | <br> - Anonymous by default or optional name sharing <br> - Designed for low-pressure participation |
-| Access Presentation Library | Guest | <br> - Email required <br> - Optional workshop updates toggle |
-| Presenter Dashboard | Presenter/Admin | <br> - View participants, poll responses, questions, captured emails |
-| Export Results | Presenter/Admin | <br> - Export session results and engagement data |
-| Feedback Link | Guest | <br> - Optional and lightweight <br> - Can be offered after slide access flow |
+| Join Event | Attendee | Join instantly via QR code or link |
+| Live Polling | Attendee | Fast, simple, mobile-friendly responses |
+| Anonymous Q&A | Attendee | Anonymous by default, with optional name entry |
+| Feedback Collection | Attendee | Simple post-session rating and optional comment |
+| Email Capture | Attendee | Optional email submission for slides/resources |
+| Facilitator Dashboard | Facilitator / Admin | View questions, responses, emails, and event metrics |
+| Export Results | Facilitator / Admin | Export results for reporting and review |
 
-### Pages/Endpoint Functionality
+### Pages / Functionality
 
-| Endpoint/Page | Functionality | Comments |
+| Page | Function | Comments |
 | :--- | :--- | :--- |
-| Join Session | <br> - Join via QR code <br> - Join via session link | <br> - No workshop code required for MVP |
-| Session Home | <br> - Presents main participant actions <br> - Live Poll <br> - Ask a Question <br> - Get the Slides | <br> - Text-first navigation for accessibility |
-| Ask a Question | <br> - Submit question <br> - Optional name field <br> - Toggle to share name | <br> - Built for shy/passive audiences |
-| Get the Slides | <br> - Enter email <br> - Toggle workshop updates on/off <br> - Access presentation library | <br> - Presentation library acts as the free value offer |
-| Presenter Dashboard | <br> - View session metrics <br> - Review recent questions <br> - Export results | <br> - Simplified dashboard for MVP |
+| Join Page | Enter event via QR code or link | No login required |
+| Session Home | Main attendee actions | Live Poll, Ask a Question, Get the Slides |
+| Ask a Question | Submit anonymous question | Optional name field and share-name toggle |
+| Get the Slides | Enter email and request presentation resources | Optional workshop updates toggle |
+| Dashboard | Facilitator session control and results view | Simplified MVP dashboard |
+| Results Page | View poll and feedback results | Presenter-facing summary |
 
 ### Nice To Haves
 
-- Word cloud feature
-- Pre-event audience input
-- Richer analytics and charts
-- Session-specific client reports
-- Better AV display support
+- word clouds
+- gamification
+- advanced analytics dashboards
+- user accounts
+- live moderation tools
+- pre-event attendee input
 - Canva-adjacent workflow improvements
-- Expanded feedback flow
-- Deeper question moderation tools
 
 ## Technical Implementation
 
 ### Back-End
 
-- Django / Django REST Framework
-- Python
+- Django
+- Django REST Framework
+- SQLite for development
+- optional PostgreSQL for production
 
 ### Front-End
 
-- React
+- React (Vite)
+- mobile-first design
 - JavaScript or TypeScript
-- HTML/CSS
+- Fetch or Axios for API calls
 
 ### Git & Deployment
 
-- GitHub
-- Netlify for front-end deployment
-- Heroku or Render for back-end deployment
-
-This application can be developed as two linked repositories: one for the front-end React app and one for the back-end DRF API.
+- GitHub with 2 repositories:
+  - front-end
+  - back-end
+- Back-end deployment: Heroku or Render
+- Front-end deployment: Netlify
 
 ## Target Audience
 
-Workshop Navigator is primarily designed for Gen X and older professional users attending conferences, workshops, and keynote presentations. These users are familiar with mobile devices but often value usability, readability, and efficiency over trend-based or overly decorative interfaces.
+The primary audience for Workshop Navigator is professional facilitators, keynote speakers, and workshop leaders delivering presentations to corporate teams, particularly senior managers and employees. The platform is designed for live event environments where audience engagement is important but often limited by hesitation, passivity, or the absence of simple digital tools.
 
-The interface is designed to support people who may use reading glasses or prefer stronger contrast, larger buttons, and text-based navigation. The product is also designed for presenters such as Scott Millar, who need a streamlined way to encourage engagement, capture questions, and review session insights afterward. The result is a tool that supports both participant comfort and presenter usefulness in real-time event settings.
+It is also designed for attendees, who need a fast and accessible way to participate without creating an account or dealing with unnecessary friction. Because the product is aimed at Gen X and older professional audiences, the design prioritises readability, clear labels, visible buttons, and minimal technical barriers. The goal is to support confident participation for both confident and reluctant users.
 
-## Back-end Implementation
+## Back-End Implementation
 
 ### API Specification
 
-| HTTP Method | URL | Purpose | Request Body | Successful Response Code | Authentication and Authorization |
+#### Events
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| POST | /sessions/join | Join a live session via link or QR flow | `{ "session_link": "string" }` | 200 | Open access |
-| GET | /sessions/:id | Get session details | N/A | 200 | Open access |
-| GET | /sessions/:id/polls | Get live polls for a session | N/A | 200 | Open access |
-| POST | /poll-responses | Submit poll response | `{ "poll": integer, "response": "string" }` | 201 | Open access |
-| POST | /questions | Submit a question | `{ "session": integer, "question_text": "string", "name": "string", "share_name": boolean }` | 201 | Open access |
-| GET | /questions?session=:id | View questions for session | N/A | 200 | Presenter/Admin |
-| POST | /slide-access | Capture email and update preference | `{ "session": integer, "email": "string", "workshop_updates": boolean }` | 201 | Open access |
-| GET | /dashboard/:session_id | View dashboard metrics | N/A | 200 | Presenter/Admin |
-| GET | /dashboard/:session_id/export | Export results | N/A | 200 | Presenter/Admin |
-| POST | /login | Presenter/admin login | `{ "username": "string", "password": "string" }` | 200 | Token auth |
-| POST | /logout | Log out presenter/admin | N/A | 200 | Authenticated presenter/admin |
+| POST | /events | Create event | `{ "title": "string", "event_code": "string", "status": "string" }` | 201 | Facilitator / Admin |
+| GET | /events/code/:code | Join event by code/link | N/A | 200 | Open access |
+| GET | /events/:id | Get event details | N/A | 200 | Open access |
+
+#### Polls
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | /events/:id/polls | Create poll | `{ "question": "string", "options": [] }` | 201 | Facilitator / Admin |
+| GET | /events/:id/polls | Get polls for event | N/A | 200 | Open access |
+
+#### Poll Responses
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | /polls/:id/responses | Submit response | `{ "response": "string" }` | 201 | Open access |
+
+#### Questions
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | /events/:id/questions | Submit question | `{ "text": "string", "name": "string", "anonymous": true }` | 201 | Open access |
+| GET | /events/:id/questions | Get questions | N/A | 200 | Facilitator / Admin |
+| POST | /questions/:id/upvote | Upvote question | N/A | 200 | Open access |
+
+#### Feedback
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | /events/:id/feedback | Submit feedback | `{ "rating": integer, "comment": "string" }` | 201 | Open access |
+
+#### Emails
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | /events/:id/emails | Capture email | `{ "email": "string", "workshop_updates": boolean }` | 201 | Open access |
 
 ### Object Definitions
 
 #### Users
-| Field | Data type |
+| Field | Data Type |
 | :--- | :--- |
 | User_ID (PK) | integer |
 | Username | string |
@@ -149,40 +197,57 @@ The interface is designed to support people who may use reading glasses or prefe
 | Role | string |
 | Created_At | datetime |
 
-#### Questions
-| Field | Data type |
+#### Events
+| Field | Data Type |
 | :--- | :--- |
-| Question_ID (PK) | integer |
-| Session_ID (FK) | integer |
-| Question_Text | string |
-| Name | string |
-| Share_Name | boolean |
+| Event_ID (PK) | integer |
+| Title | string |
+| Event_Code | string |
+| Status | string |
 | Created_At | datetime |
 
 #### Polls
-| Field | Data type |
+| Field | Data Type |
 | :--- | :--- |
 | Poll_ID (PK) | integer |
-| Session_ID (FK) | integer |
-| Poll_Question | string |
-| Poll_Type | string |
+| Event_ID (FK) | integer |
+| Question | string |
+| Options | array / JSON |
 | Is_Live | boolean |
 
-#### Sessions
-| Field | Data type |
+#### Poll Responses
+| Field | Data Type |
 | :--- | :--- |
-| Session_ID (PK) | integer |
-| Title | string |
-| Presenter_Name | string |
-| Session_Link | string |
-| Is_Live | boolean |
+| PollResponse_ID (PK) | integer |
+| Poll_ID (FK) | integer |
+| Response | string |
 | Created_At | datetime |
 
-#### Slide Access Requests
-| Field | Data type |
+#### Questions
+| Field | Data Type |
 | :--- | :--- |
-| Access_ID (PK) | integer |
-| Session_ID (FK) | integer |
+| Question_ID (PK) | integer |
+| Event_ID (FK) | integer |
+| Text | string |
+| Name | string |
+| Anonymous | boolean |
+| Upvotes | integer |
+| Created_At | datetime |
+
+#### Feedback
+| Field | Data Type |
+| :--- | :--- |
+| Feedback_ID (PK) | integer |
+| Event_ID (FK) | integer |
+| Rating | integer |
+| Comment | string |
+| Created_At | datetime |
+
+#### Email Capture
+| Field | Data Type |
+| :--- | :--- |
+| EmailCapture_ID (PK) | integer |
+| Event_ID (FK) | integer |
 | Email | string |
 | Workshop_Updates | boolean |
 | Created_At | datetime |
@@ -191,7 +256,7 @@ The interface is designed to support people who may use reading glasses or prefe
 
 ![Database schema](./img/schema.png)
 
-## Front-end Implementation
+## Front-End Implementation
 
 ### Wireframes
 
@@ -218,30 +283,34 @@ The interface is designed to support people who may use reading glasses or prefe
 
 #### Primary
 
-- Main background: `#0B1020`
-- Surface 1: `#121933`
-- Surface 2: `#1A2450`
-- Primary Indigo: `#4F46E5`
+- Main Background: `#101A3A`
+- Surface 1: `#16234A`
+- Surface 2: `#1D2D5C`
+- Border / Outline: `#31457A`
 
 #### Secondary
 
-- Electric Blue: `#2563EB`
-- Accent Purple: `#7C3AED`
+- BOP Pink: `#E75595`
+- BOP Purple: `#8B57CC`
+- BOP Cyan: `#50C6E8`
 - Text Primary: `#FFFFFF`
-- Text Secondary: `#E5E7EB`
-- Border: `#2A3D6B`
+- Text Secondary: `#E6ECF7`
+- Text Muted: `#A6B4D0`
 
-More colours can be extracted from the BOP Industries website to expand the visual palette and support a more energetic, modern, and engaging visual system.
+Additional colours may be expanded from the BOP Industries logo and website to support a more energetic, modern, and engaging visual system.
 
 ### Font
 
-As a group decision, the project will use **Georgia** as the primary heading font.
+The preferred brand and display font is **Glacial Indifference**, as it aligns with Scott Millar’s existing site and visual identity.
 
-Georgia was selected because it offers a polished, classic serif feel similar to Bookman Old Style while being much easier to use reliably in a coded application. It is widely available, readable on screens, and dependable across devices and browsers.
+If implementation constraints arise, suitable fallback fonts such as **Georgia**, **Inter**, or **Arial** may be used while preserving readability, accessibility, and brand consistency.
 
 Suggested usage:
-- **Headings:** Georgia, serif
-- **Body text / buttons / form text:** Inter, Arial, sans-serif
+
+- **Headings / display text:** Glacial Indifference
+- **Body text / buttons / form text:** Inter or Arial
+
+Example fallback stack:
 
 ```css
-font-family: Georgia, "Times New Roman", serif;
+font-family: "Glacial Indifference", Georgia, Inter, Arial, sans-serif;
