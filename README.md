@@ -39,7 +39,7 @@
 
 Workshop Navigator is a mobile-first presentation and workshop engagement tool designed to improve audience interaction and data collection during live events. It is intended for professional facilitators and keynote speakers, particularly Scott Millar, who want a simple and effective way to encourage participation from Gen X and older corporate audiences.
 
-Many presentations and workshops suffer from low engagement because attendees may be shy, passive, or hesitant to ask questions in front of colleagues or managers. Workshop Navigator reduces those barriers by allowing attendees to join instantly through a QR code or link, participate in live polls, submit anonymous questions, and access presentation resources after the session.
+Many presentations and workshops suffer from low engagement because attendees may be shy, passive, or hesitant to ask questions in front of colleagues or managers. Workshop Navigator reduces those barriers by allowing attendees to join instantly through a QR code or direct link, participate in live polls, submit anonymous questions, and access presentation resources after the session.
 
 On the presenter side, Workshop Navigator provides a simple dashboard for reviewing audience engagement, captured questions, email interest, and event outcomes for future topic planning and client reporting.
 
@@ -83,7 +83,7 @@ Facilitators can:
 
 | Feature | Access | Notes / Conditions |
 | :--- | :--- | :--- |
-| Join Event | Guest | Access via QR code or session link. No account required for MVP. |
+| Join Event | Guest | Access via QR code or direct link as the primary flow, with optional manual event code entry as a backup if needed. No account required for MVP. |
 | Live Polls | Guest | Simple, easy-to-read response flow. Mobile friendly. |
 | Ask a Question | Guest | Anonymous by default, with optional name sharing. Designed for low-pressure participation. |
 | Access Presentation Library | Guest | Email required. Optional workshop updates toggle. |
@@ -97,7 +97,7 @@ Facilitators can:
 
 | Endpoint / Page | Functionality | Comments |
 | :--- | :--- | :--- |
-| Join Event | Join via QR code or session link. | No workshop code required for MVP. |
+| Join Event | Join via QR code or direct link. | Primary join flow is QR code or direct link; manual event code entry may be supported as a backup option if needed. |
 | Session Home | Presents main participant actions: Live Poll, Ask a Question, and Get the Slides. | Text-first navigation for accessibility. |
 | Ask a Question | Submit a question with a **Name (optional)** field and a toggle to share name. | Built for shy or passive audiences. |
 | Get the Slides | Enter email, choose workshop updates on/off, and access presentation library. | Presentation library acts as the free value offer. |
@@ -172,7 +172,7 @@ The result is a tool that supports both participant comfort and presenter useful
 | HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | POST | `/events` | Create event | `{ "title": "string", "event_code": "string", "status": "string" }` | 201 | Presenter / Admin |
-| GET | `/events/code/:code` | Join event by code or link | N/A | 200 | Open access |
+| GET | `/events/code/:code` | Join event by manual event code | N/A | 200 | Open access |
 | GET | `/events/:id` | Get event details | N/A | 200 | Open access |
 
 #### Polls
