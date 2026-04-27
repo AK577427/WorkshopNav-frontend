@@ -1,10 +1,10 @@
 # Workshop Navigator
-
 > Recursive Turtles
 
 ## Table of Contents
 
 - [Workshop Navigator](#workshop-navigator)
+  - [Table of Contents](#table-of-contents)
   - [Mission Statement](#mission-statement)
   - [Features](#features)
     - [Summary](#summary)
@@ -15,29 +15,35 @@
   - [Technical Implementation](#technical-implementation)
     - [Back-End](#back-end)
     - [Front-End](#front-end)
-    - [Git & Deployment](#git--deployment)
+    - [Git \& Deployment](#git--deployment)
   - [Target Audience](#target-audience)
   - [Back-End Implementation](#back-end-implementation)
     - [API Specification](#api-specification)
+      - [Events](#events)
+      - [Polls](#polls)
+      - [Poll Responses](#poll-responses)
+      - [Questions](#questions)
+      - [Feedback](#feedback)
+      - [Emails](#emails)
     - [Object Definitions](#object-definitions)
+      - [Users](#users-1)
+      - [Events](#events-1)
+      - [Polls](#polls-1)
+      - [Poll Responses](#poll-responses-1)
+      - [Questions](#questions-1)
+      - [Feedback](#feedback-1)
+      - [Email Capture](#email-capture)
     - [Database Schema](#database-schema)
-  - [Front-End Implementation](#front-end-implementation)
-    - [Wireframes](#wireframes)
-    - [Logo](#logo)
-    - [Colours](#colours)
-    - [Font](#font)
-
----
 
 ## Mission Statement
 
-Workshop Navigator is a mobile-first presentation engagement tool designed to make presentations and workshops more interactive for Gen X and older corporate audiences. It supports participants who may be engaged but hesitant to speak up during live sessions by giving them a clear, low-friction way to interact on their phones.
+Workshop Navigator is a mobile-first presentation and workshop engagement tool designed to improve audience interaction and data collection during live events. It is intended for professional facilitators and keynote speakers, particularly Scott Millar, who want a simple and effective way to encourage participation from Gen X and older corporate audiences.
 
-The product allows attendees to join quickly via QR code or session link, respond to live polls, ask anonymous questions, and access Scott Millar’s presentation library after the event.
+Many presentations and workshops suffer from low engagement because attendees may be shy, passive, or hesitant to ask questions in front of colleagues or managers. Workshop Navigator reduces those barriers by allowing attendees to join instantly through a QR code or link, participate in live polls, submit anonymous questions, and access presentation resources after the session.
 
-On the presenter side, Workshop Navigator provides a simple dashboard for reviewing audience engagement, captured questions, and email interest for future follow-up and client reporting.
+On the presenter side, Workshop Navigator provides a simple dashboard for reviewing audience engagement, captured questions, email interest, and event outcomes for future topic planning and client reporting.
 
-The overall goal is to create a sleek, elegant, and accessible experience that feels professional, easy to use, and relevant in live workshop and keynote environments.
+The overall goal is to create a sleek, professional, easy-to-read interaction tool that supports live engagement without distracting from the presentation itself.
 
 ---
 
@@ -45,9 +51,21 @@ The overall goal is to create a sleek, elegant, and accessible experience that f
 
 ### Summary
 
-Workshop Navigator provides guest participants the ability to join a live presentation session, answer polls, ask questions privately, and request access to presentation slides/resources from their mobile device.
+Workshop Navigator is a real-time presentation engagement platform that allows attendees to:
 
-Presenters can monitor engagement, view responses, review submitted questions, and export session outcomes later.
+- join instantly with no login
+- participate in live polls
+- ask anonymous questions
+- provide feedback
+- share their email for follow-up resources
+
+Facilitators can:
+
+- create and manage events
+- run live polls
+- view questions
+- collect audience insights
+- review and export results later
 
 ---
 
@@ -55,9 +73,9 @@ Presenters can monitor engagement, view responses, review submitted questions, a
 
 | Type | Access | Role Type Assignment |
 | :--- | :--- | :--- |
-| Presenter/Admin | Full access. Can log in, create and manage sessions, create polls, review questions, view captured emails, and export results. | Scott Millar / admin team |
-| Event Support / Approver | Can log in, assist with session management, view submitted questions and responses, and support presenter workflow. | AV support / event support |
-| Guest Participant | Can join via QR code or session link, answer live polls, ask questions with or without sharing their name, and enter an email to access the presentation library. | Public workshop / presentation attendees |
+| Presenter / Admin | Full access. Can log in, create and manage events, create polls, review questions, view captured emails, and export results. | Scott Millar / admin team |
+| Event Support / Approver | Can log in, assist with event management, view submitted questions and responses, and support presenter workflow. | AV support / event support |
+| Guest Participant | Can join via QR code or session link, answer live polls, ask questions with or without sharing their name, and enter an email to access presentation resources. | Public workshop / presentation attendees |
 
 ---
 
@@ -65,12 +83,12 @@ Presenters can monitor engagement, view responses, review submitted questions, a
 
 | Feature | Access | Notes / Conditions |
 | :--- | :--- | :--- |
-| Join Session | Guest | Access via QR code or session link. No account required for MVP. |
+| Join Event | Guest | Access via QR code or session link. No account required for MVP. |
 | Live Polls | Guest | Simple, easy-to-read response flow. Mobile friendly. |
 | Ask a Question | Guest | Anonymous by default, with optional name sharing. Designed for low-pressure participation. |
 | Access Presentation Library | Guest | Email required. Optional workshop updates toggle. |
-| Presenter Dashboard | Presenter/Admin | View participants, poll responses, questions, and captured emails. |
-| Export Results | Presenter/Admin | Export session results and engagement data. |
+| Presenter Dashboard | Presenter / Admin | View participants, poll responses, questions, and captured emails. |
+| Export Results | Presenter / Admin | Export event results and engagement data. |
 | Feedback Link | Guest | Optional and lightweight. Can be offered after slide access flow. |
 
 ---
@@ -79,24 +97,23 @@ Presenters can monitor engagement, view responses, review submitted questions, a
 
 | Endpoint / Page | Functionality | Comments |
 | :--- | :--- | :--- |
-| Join Session | Join via QR code or session link. | No workshop code required for MVP. |
+| Join Event | Join via QR code or session link. | No workshop code required for MVP. |
 | Session Home | Presents main participant actions: Live Poll, Ask a Question, and Get the Slides. | Text-first navigation for accessibility. |
-| Ask a Question | Submit a question with an optional name field and a toggle to share name. | Built for shy or passive audiences. |
+| Ask a Question | Submit a question with a **Name (optional)** field and a toggle to share name. | Built for shy or passive audiences. |
 | Get the Slides | Enter email, choose workshop updates on/off, and access presentation library. | Presentation library acts as the free value offer. |
-| Presenter Dashboard | View session metrics, review recent questions, and export results. | Simplified dashboard for MVP. |
+| Presenter Dashboard | View event metrics, review recent questions, and export results. | Simplified dashboard for MVP. |
 
 ---
 
 ### Nice To Haves
 
-- Word cloud feature
-- Pre-event audience input
-- Richer analytics and charts
-- Session-specific client reports
-- Better AV display support
+- word clouds
+- gamification
+- advanced analytics dashboards
+- user accounts
+- live moderation tools
+- pre-event attendee input
 - Canva-adjacent workflow improvements
-- Expanded feedback flow
-- Deeper question moderation tools
 
 ---
 
@@ -107,17 +124,24 @@ Presenters can monitor engagement, view responses, review submitted questions, a
 - Django
 - Django REST Framework
 - Python
+- SQLite for development
+- optional PostgreSQL for production
 
 ### Front-End
 
-- React
+- React (Vite)
+- mobile-first design
 - JavaScript or TypeScript
 - HTML
 - CSS
+- Fetch or Axios for API calls
 
 ### Git & Deployment
 
 - GitHub
+- two repositories:
+  - front-end
+  - back-end
 - Netlify for front-end deployment
 - Heroku or Render for back-end deployment
 
@@ -143,25 +167,52 @@ The result is a tool that supports both participant comfort and presenter useful
 
 ### API Specification
 
-| HTTP Method | URL | Purpose | Request Body | Successful Response Code | Authentication and Authorization |
+#### Events
+
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| POST | `/sessions/join` | Join a live session via link or QR flow | `{ "session_link": "string" }` | 200 | Open access |
-| GET | `/sessions/:id` | Get session details | N/A | 200 | Open access |
-| GET | `/sessions/:id/polls` | Get live polls for a session | N/A | 200 | Open access |
-| POST | `/poll-responses` | Submit poll response | `{ "poll": integer, "response": "string" }` | 201 | Open access |
-| POST | `/questions` | Submit a question | `{ "session": integer, "question_text": "string", "name": "string", "share_name": boolean }` | 201 | Open access |
-| GET | `/questions?session=:id` | View questions for session | N/A | 200 | Presenter/Admin |
-| POST | `/slide-access` | Capture email and update preference | `{ "session": integer, "email": "string", "workshop_updates": boolean }` | 201 | Open access |
-| GET | `/dashboard/:session_id` | View dashboard metrics | N/A | 200 | Presenter/Admin |
-| GET | `/dashboard/:session_id/export` | Export results | N/A | 200 | Presenter/Admin |
-| POST | `/login` | Presenter/admin login | `{ "username": "string", "password": "string" }` | 200 | Token auth |
-| POST | `/logout` | Log out presenter/admin | N/A | 200 | Authenticated presenter/admin |
+| POST | `/events` | Create event | `{ "title": "string", "event_code": "string", "status": "string" }` | 201 | Presenter / Admin |
+| GET | `/events/code/:code` | Join event by code or link | N/A | 200 | Open access |
+| GET | `/events/:id` | Get event details | N/A | 200 | Open access |
+
+#### Polls
+
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/events/:id/polls` | Create poll | `{ "question": "string", "options": [] }` | 201 | Presenter / Admin |
+| GET | `/events/:id/polls` | Get polls for event | N/A | 200 | Open access |
+
+#### Poll Responses
+
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/polls/:id/responses` | Submit poll response | `{ "response": "string" }` | 201 | Open access |
+
+#### Questions
+
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/events/:id/questions` | Submit question | `{ "text": "string", "name": "string", "anonymous": true }` | 201 | Open access |
+| GET | `/events/:id/questions` | Get questions for event | N/A | 200 | Presenter / Admin |
+| POST | `/questions/:id/upvote` | Upvote question | N/A | 200 | Open access |
+
+#### Feedback
+
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/events/:id/feedback` | Submit feedback | `{ "rating": integer, "comment": "string" }` | 201 | Open access |
+
+#### Emails
+
+| HTTP Method | URL | Purpose | Request Body | Success Code | Authentication |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| POST | `/events/:id/emails` | Capture email | `{ "email": "string", "workshop_updates": boolean }` | 201 | Open access |
 
 ---
 
-## Object Definitions
+### Object Definitions
 
-### Users
+#### Users
 
 | Field | Data Type |
 | :--- | :--- |
@@ -172,59 +223,70 @@ The result is a tool that supports both participant comfort and presenter useful
 | Role | string |
 | Created_At | datetime |
 
----
-
-### Questions
+#### Events
 
 | Field | Data Type |
 | :--- | :--- |
-| Question_ID (PK) | integer |
-| Session_ID (FK) | integer |
-| Question_Text | string |
-| Name | string |
-| Share_Name | boolean |
+| Event_ID (PK) | integer |
+| Title | string |
+| Event_Code | string |
+| Status | string |
 | Created_At | datetime |
 
----
-
-### Polls
+#### Polls
 
 | Field | Data Type |
 | :--- | :--- |
 | Poll_ID (PK) | integer |
-| Session_ID (FK) | integer |
-| Poll_Question | string |
-| Poll_Type | string |
+| Event_ID (FK) | integer |
+| Question | string |
+| Options | array / JSON |
 | Is_Live | boolean |
 
----
-
-### Sessions
+#### Poll Responses
 
 | Field | Data Type |
 | :--- | :--- |
-| Session_ID (PK) | integer |
-| Title | string |
-| Presenter_Name | string |
-| Session_Link | string |
-| Is_Live | boolean |
+| PollResponse_ID (PK) | integer |
+| Poll_ID (FK) | integer |
+| Response | string |
 | Created_At | datetime |
 
----
-
-### Slide Access Requests
+#### Questions
 
 | Field | Data Type |
 | :--- | :--- |
-| Access_ID (PK) | integer |
-| Session_ID (FK) | integer |
+| Question_ID (PK) | integer |
+| Event_ID (FK) | integer |
+| Text | string |
+| Name | string |
+| Anonymous | boolean |
+| Upvotes | integer |
+| Created_At | datetime |
+
+#### Feedback
+
+| Field | Data Type |
+| :--- | :--- |
+| Feedback_ID (PK) | integer |
+| Event_ID (FK) | integer |
+| Rating | integer |
+| Comment | string |
+| Created_At | datetime |
+
+#### Email Capture
+
+| Field | Data Type |
+| :--- | :--- |
+| EmailCapture_ID (PK) | integer |
+| Event_ID (FK) | integer |
 | Email | string |
 | Workshop_Updates | boolean |
 | Created_At | datetime |
 
 ---
 
-## Database Schema
+### Database Schema
 
 Add your database schema image inside an `img` folder and use the path below:
 
