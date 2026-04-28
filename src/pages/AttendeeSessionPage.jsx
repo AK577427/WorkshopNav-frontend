@@ -1,6 +1,7 @@
 import LivePollCard from "../components/polls/LivePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
 import QuestionList from "../components/questions/QuestionList";
+import GetSlidesCard from "../components/shared/GetSlidesCard";
 
 function AttendeeSessionPage() {
   return (
@@ -9,6 +10,7 @@ function AttendeeSessionPage() {
       <LivePollCard />
       <QuestionForm />
       <QuestionList />
+      <GetSlidesCard />
     </div>
   );
 }
