@@ -4,6 +4,7 @@ import JoinEventPage from "./pages/JoinEventPage";
 import CreateEventPage from "./pages/CreateEventPage";
 
 import SessionHome from "./pages/SessionHome";
+import DashboardPage from "./pages/DashboardPage";
 import AskQuestion from "./pages/AskQuestion";
 import GetSlides from "./pages/GetSlides";
 
@@ -15,6 +16,7 @@ function App() {
     <Routes>
       {/* ✅ First screen (Join) */}
       <Route path="/" element={<JoinEventPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
 
       {/* Existing routes */}
       <Route path="/join/:eventCode" element={<JoinEventPage />} />
