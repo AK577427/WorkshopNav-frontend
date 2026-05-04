@@ -1,5 +1,10 @@
 function JoinEventPage() {
-  return <h1>Join Event Page</h1>;
+  return (
+    <div>
+      <h1>Welcome to the session</h1>
+      <p>You’ve successfully joined via QR code or link.</p>
+    </div>
+  );
 }
 
 export default JoinEventPage;
