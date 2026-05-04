@@ -4,6 +4,7 @@ import CreateEventPage from "./pages/CreateEventPage";
 import SessionCompletePage from "./pages/SessionCompletePage";
 import AttendeeSessionPage from "./pages/AttendeeSessionPage";
 import FacilitatorDashboardPage from "./pages/FacilitatorDashboardPage";
+import "./App.css";
 
 function App() {
   return (

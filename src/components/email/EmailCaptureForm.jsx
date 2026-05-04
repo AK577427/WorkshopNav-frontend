@@ -12,53 +12,28 @@ function EmailCaptureForm() {
     }
 
     console.log({ email });
-
     setEmail("");
   }
 
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: "12px",
-        padding: "20px",
-        maxWidth: "500px",
-        margin: "20px auto",
-      }}
-    >
+    <section className="card">
+      <p className="card-label">Resources</p>
       <h2>Get the Slides</h2>
 
       <form onSubmit={handleSubmit}>
         <input
+          className="input"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email address"
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            boxSizing: "border-box",
-          }}
         />
 
-        <button
-          type="submit"
-          style={{
-            marginTop: "20px",
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            border: "none",
-            background: "#6b46c1",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
+        <button type="submit" className="button-primary">
           Send Me the Slides
         </button>
       </form>
-    </div>
+    </section>
   );
 }
 

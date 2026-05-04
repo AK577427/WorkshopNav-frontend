@@ -12,49 +12,25 @@ function QuestionForm() {
       return;
     }
 
-    console.log({
-      question,
-      anonymous,
-    });
-
+    console.log({ question, anonymous });
     setQuestion("");
   }
 
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: "12px",
-        padding: "20px",
-        maxWidth: "500px",
-        margin: "20px auto",
-      }}
-    >
+    <section className="card">
+      <p className="card-label">Audience Q&A</p>
       <h2>Ask a Question</h2>
 
       <form onSubmit={handleSubmit}>
         <textarea
+          className="textarea"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Type your question..."
           rows="4"
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            marginTop: "12px",
-            resize: "none",
-          }}
         />
 
-        <label
-          style={{
-            display: "flex",
-            gap: "8px",
-            marginTop: "12px",
-            alignItems: "center",
-          }}
-        >
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={anonymous}
@@ -63,23 +39,11 @@ function QuestionForm() {
           Ask anonymously
         </label>
 
-        <button
-          type="submit"
-          style={{
-            marginTop: "20px",
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            border: "none",
-            background: "#6b46c1",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
+        <button type="submit" className="button-primary">
           Submit Question
         </button>
       </form>
-    </div>
+    </section>
   );
 }
 
