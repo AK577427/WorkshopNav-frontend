@@ -288,3 +288,13 @@ body {
   font-size: 18px;
   letter-spacing: 2px;
 }
+
+.organiser-link {
+  background: transparent;
+  border: 1px solid rgba(199, 195, 244, 0.4);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
