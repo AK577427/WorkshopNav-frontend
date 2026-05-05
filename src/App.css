@@ -245,3 +245,12 @@ body {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
 }
+
+.share-link {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+  word-break: break-all;
+}
