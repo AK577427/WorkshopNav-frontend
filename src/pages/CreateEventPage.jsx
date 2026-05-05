@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { createEvent } from "../services/events";
+import { useNavigate } from "react-router-dom";
 
 function CreateEventPage() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [createdEvent, setCreatedEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +82,12 @@ function CreateEventPage() {
                 }}
               >
                 Copy Code
+              </button>
+              <button
+                className="button-primary"
+                onClick={() => navigate(`/dashboard/events/${createdEvent.id}`)}
+              >
+                Go to Dashboard
               </button>
             </section>
 
