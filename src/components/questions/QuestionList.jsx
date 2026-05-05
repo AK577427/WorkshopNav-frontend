@@ -15,63 +15,26 @@ function QuestionList() {
   ];
 
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: "12px",
-        padding: "20px",
-        maxWidth: "500px",
-        margin: "20px auto",
-      }}
-    >
+    <section className="card">
+      <p className="card-label">Live questions</p>
       <h2>Audience Questions</h2>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-          marginTop: "20px",
-        }}
-      >
+      <div className="stack">
         {questions.map((question) => (
-          <div
-            key={question.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "8px",
-              padding: "12px",
-            }}
-          >
+          <div key={question.id} className="question-item">
             <p>{question.text}</p>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px",
-                fontSize: "14px",
-              }}
-            >
-              <span>
-                {question.anonymous ? "Anonymous" : "Named User"}
-              </span>
+            <div className="question-meta">
+              <span>{question.anonymous ? "Anonymous" : "Named User"}</span>
 
-              <button
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  cursor: "pointer",
-                  color: "#6b46c1",
-                }}
-              >
+              <button className="upvote-button">
                 ▲ {question.upvotes}
               </button>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
