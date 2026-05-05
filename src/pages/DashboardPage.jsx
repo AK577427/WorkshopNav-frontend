@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import "./DashboardPage.css";
-import EmailCaptureForm from "../components/EmailCaptureForm";
+
 import FeedbackForm from "../components/FeedbackForm";
+import EmailCaptureForm from "../components/EmailCaptureForm";
 
 function DashboardPage() {
   const [questions, setQuestions] = useState([]);
@@ -29,7 +30,7 @@ function DashboardPage() {
 
       {/* Main Content */}
       <div className="dashboard-main">
-
+        
         <h1>Dashboard Overview • Live</h1>
         <p style={{ opacity: 0.6, marginBottom: "20px" }}>
           Real-time workshop engagement data
@@ -45,7 +46,7 @@ function DashboardPage() {
 
         {/* Content Sections */}
         <div className="content-grid">
-
+          
           <div className="card large">
             <h3>Live Poll Results</h3>
             <p>Very confident — 42%</p>
@@ -64,13 +65,18 @@ function DashboardPage() {
             ) : (
               <p>No questions yet</p>
             )}
+
           </div>
 
         </div>
 
-        {/* Email + Feedback */}
-        <EmailCaptureForm />
-        <FeedbackForm />
+        {/* ✅ FEEDBACK SECTION */}
+        <div className="card large" style={{ marginTop: "30px" }}>
+          <h3>Participant Feedback</h3>
+
+          <FeedbackForm />
+          <EmailCaptureForm />
+        </div>
 
       </div>
     </div>

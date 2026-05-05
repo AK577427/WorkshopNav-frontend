@@ -6,17 +6,26 @@ function EmailCaptureForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Email submitted:", email);
+
+    if (!email) {
+      alert("Please enter an email");
+      return;
+    }
+
+    console.log("Email captured:", email);
+
     setSubmitted(true);
     setEmail("");
+
+    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
     <div style={{ marginTop: "20px" }}>
-      <h3>Stay Updated</h3>
+      <h4>Email Updates</h4>
 
       {submitted ? (
-        <p>Thanks for signing up!</p>
+        <p style={{ color: "lightgreen" }}>✅ Email saved!</p>
       ) : (
         <form onSubmit={handleSubmit}>
           <input
@@ -24,9 +33,15 @@ function EmailCaptureForm() {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            style={{
+              padding: "10px",
+              borderRadius: "6px",
+              border: "none",
+              marginRight: "10px",
+              width: "60%",
+            }}
           />
-          <button type="submit">Subscribe</button>
+          <button type="submit">Save</button>
         </form>
       )}
     </div>
