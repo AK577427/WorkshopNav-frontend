@@ -254,3 +254,37 @@ body {
   font-size: 14px;
   word-break: break-all;
 }
+
+.landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.landing-content {
+  max-width: 420px;
+  width: 100%;
+}
+
+.landing-title {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.landing-subtitle {
+  color: #c7c3f4;
+  margin-bottom: 28px;
+}
+
+.landing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.landing-input {
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
