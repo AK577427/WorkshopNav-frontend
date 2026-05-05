@@ -29,19 +29,43 @@ function AttendeeSessionPage() {
     loadEvent();
   }, [eventId]);
 
-  if (isLoading) return <p>Loading session...</p>;
+  if (isLoading) {
+    return (
+      <main className="loading-screen">
+        <div className="card loading-card">
+          <div className="loading-spinner"></div>
+          <h2>Loading session...</h2>
+          <p className="muted">Preparing your live workshop experience</p>
+        </div>
+      </main>
+    );
+  }
 
   if (!event) return <p>Event not found</p>;
 
   return (
-    <div>
-      <h1>{event.title}</h1>
+    <>
+      <header className="app-header">
+        <div className="app-header-inner">
+          <div className="app-logo">Workshop Navigator</div>
+          <div className="event-code">Code: {event.event_code}</div>
+        </div>
+      </header>
 
-      <LivePollCard />
-      <QuestionForm />
-      <QuestionList />
-      <GetSlidesCard />
-    </div>
+      <main className="page">
+        <div className="page-header">
+          <h1 className="page-title">{event.title}</h1>
+          <p className="page-subtitle">
+            Join the conversation, answer prompts, and ask questions.
+          </p>
+        </div>
+
+        <LivePollCard />
+        <QuestionForm />
+        <QuestionList />
+        <GetSlidesCard />
+      </main>
+    </>
   );
 }
 

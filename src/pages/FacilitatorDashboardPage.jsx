@@ -8,41 +8,58 @@ function FacilitatorDashboardPage() {
   };
 
   return (
-    <div style={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
-      <h1>Facilitator Dashboard</h1>
+    <>
+      <header className="app-header">
+        <div className="app-header-inner">
+          <div className="app-logo">Workshop Navigator</div>
+          <div className="event-code">Facilitator View</div>
+        </div>
+      </header>
 
-      <section style={{ border: "1px solid #ccc", borderRadius: "12px", padding: "20px", marginTop: "20px" }}>
-        <h2>{event.title}</h2>
-        <p>Event code: {event.code}</p>
-      </section>
-
-      <section style={{ display: "grid", gap: "16px", marginTop: "20px" }}>
-        <div style={{ border: "1px solid #ccc", borderRadius: "12px", padding: "20px" }}>
-          <h3>Attendees</h3>
-          <p>{event.attendees}</p>
+      <main className="page">
+        <div className="page-header">
+          <h1 className="page-title">Facilitator Dashboard</h1>
+          <p className="page-subtitle">
+            Monitor audience activity and session insights.
+          </p>
         </div>
 
-        <div style={{ border: "1px solid #ccc", borderRadius: "12px", padding: "20px" }}>
-          <h3>Questions</h3>
-          <p>{event.questions}</p>
-        </div>
+        <section className="card card-centered">
+          <p className="card-label">Current event</p>
+          <h2>{event.title}</h2>
+          <p className="muted">Event code: {event.code}</p>
+        </section>
 
-        <div style={{ border: "1px solid #ccc", borderRadius: "12px", padding: "20px" }}>
-          <h3>Poll Responses</h3>
-          <p>{event.pollResponses}</p>
-        </div>
-      </section>
+        <section className="dashboard-grid">
+          <div className="stat-card">
+            <p className="card-label">Attendees</p>
+            <h3>{event.attendees}</h3>
+          </div>
 
-      <section style={{ border: "1px solid #ccc", borderRadius: "12px", padding: "20px", marginTop: "20px" }}>
-        <h2>Live Questions</h2>
-        <p>Questions submitted by attendees will appear here.</p>
-      </section>
+          <div className="stat-card">
+            <p className="card-label">Questions</p>
+            <h3>{event.questions}</h3>
+          </div>
 
-      <section style={{ border: "1px solid #ccc", borderRadius: "12px", padding: "20px", marginTop: "20px" }}>
-        <h2>Poll Results</h2>
-        <p>Poll results will appear here.</p>
-      </section>
-    </div>
+          <div className="stat-card">
+            <p className="card-label">Poll Responses</p>
+            <h3>{event.pollResponses}</h3>
+          </div>
+        </section>
+
+        <section className="card">
+          <p className="card-label">Live Q&A</p>
+          <h2>Live Questions</h2>
+          <p className="muted">Questions submitted by attendees will appear here.</p>
+        </section>
+
+        <section className="card">
+          <p className="card-label">Poll analytics</p>
+          <h2>Poll Results</h2>
+          <p className="muted">Poll results will appear here.</p>
+        </section>
+      </main>
+    </>
   );
 }
 
