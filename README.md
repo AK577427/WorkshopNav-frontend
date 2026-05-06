@@ -290,6 +290,3 @@ The result is a tool that supports both participant comfort and presenter useful
 
 Add your database schema image inside an `img` folder and use the path below:
 
-```md
-![Database schema](./img/schema.png)
->>>>>>> b854279f25b90fa05bca41acd2131b2483339513
