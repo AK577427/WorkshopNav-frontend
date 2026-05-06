@@ -322,3 +322,9 @@ body {
 .footer-links a:hover {
   color: #ec4899;
 }
+
+.success-message {
+  margin-top: 14px;
+  color: #86efac;
+  font-weight: 600;
+}
