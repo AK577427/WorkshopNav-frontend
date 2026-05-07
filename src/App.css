@@ -359,3 +359,28 @@ body {
   color: #c7c3f4;
   margin-top: 34px;
 }
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.star-button {
+  background: transparent;
+  border: none;
+  color: rgba(199, 195, 244, 0.4);
+  font-size: 42px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.star-button.active {
+  color: #ec4899;
+  transform: scale(1.08);
+}
+
+.star-button:hover {
+  color: #ec4899;
+}
