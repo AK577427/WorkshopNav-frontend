@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
+import { QRCodeCanvas } from "qrcode.react";
 
 function CreateEventPage() {
   const navigate = useNavigate();
@@ -74,34 +75,36 @@ function CreateEventPage() {
               <p className="muted">Event Code</p>
               <h2>{createdEvent.event_code}</h2>
 
+              {/* Shareable link */}
+              <p className="muted" style={{ marginTop: "16px" }}>
+                Share this link
+              </p>
+
+              <div className="share-link">
+                {`${window.location.origin}/join/${createdEvent.event_code}`}
+              </div>
+
               <button
                 className="button-primary"
                 onClick={() => {
-                  navigator.clipboard.writeText(createdEvent.event_code);
-                  alert("Event code copied!");
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}/join/${createdEvent.event_code}`
+                  );
+                  alert("Link copied!");
                 }}
               >
-                Copy Code
+                Copy Link
               </button>
-              <button
-                className="button-primary"
-                onClick={() => navigate(`/dashboard/events/${createdEvent.id}`)}
-              >
-                Go to Dashboard
-              </button>
-            </section>
 
-            <section className="card">
-              <p className="card-label">Next step</p>
-              <h2>Add Polls</h2>
-
-              <p className="muted">
-                You’ll be able to add live polls for this event once polling is enabled.
-              </p>
-
-              <button className="button-primary" disabled>
-                Create Poll (Coming Soon)
-              </button>
+              {/* QR Code */}
+              <div style={{ marginTop: "20px" }}>
+                <QRCodeCanvas
+                  value={`${window.location.origin}/join/${createdEvent.event_code}`}
+                  size={180}
+                  bgColor="#ffffff"
+                  fgColor="#000000"
+                />
+              </div>
             </section>
           </>
         )}
