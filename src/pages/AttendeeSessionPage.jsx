@@ -4,13 +4,12 @@ import { getEvents } from "../services/events";
 
 import LivePollCard from "../components/polls/LivePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
-import QuestionList from "../components/questions/QuestionList";
 import GetSlidesCard from "../components/shared/GetSlidesCard";
 import Footer from "../components/shared/Footer";
+import QuestionList from "../components/questions/QuestionList";
 
 function AttendeeSessionPage() {
   const { eventId } = useParams();
-
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -42,24 +41,38 @@ function AttendeeSessionPage() {
     );
   }
 
-  if (!event) return <p>Event not found</p>;
+  if (!event) {
+    return (
+      <main className="page">
+        <section className="card card-centered">
+          <h2>Event not found</h2>
+          <p className="muted">This session could not be loaded.</p>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <>
       <header className="app-header">
         <div className="app-header-inner">
           <div className="app-logo">Workshop Navigator</div>
-          <div className="event-code">Code: {event.event_code}</div>
+
+          <div className="session-header-actions">
+            <span className="live-badge">+ Live</span>
+            <span className="event-code-pill">{event.event_code}</span>
+          </div>
         </div>
       </header>
 
-      <main className="page">
-        <div className="page-header">
-          <h1 className="page-title">{event.title}</h1>
-          <p className="page-subtitle">
-            Join the conversation, answer prompts, and ask questions.
+      <main className="page session-page">
+        <section className="session-welcome">
+          <h1>Welcome!</h1>
+          <p>You’re now in the session.</p>
+          <p className="muted">
+            Engage, participate and have a great learning experience.
           </p>
-        </div>
+        </section>
 
         <LivePollCard />
         <QuestionForm />

@@ -5,6 +5,9 @@ import Footer from "../components/shared/Footer";
 
 function HomePage() {
     const [code, setCode] = useState("");
+function HomePage() {
+    const [code, setCode] = useState("");
+    const [name, setName] = useState("");
     const navigate = useNavigate();
 
     function handleJoin(e) {
