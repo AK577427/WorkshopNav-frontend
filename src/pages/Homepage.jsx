@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Footer from "../components/shared/Footer";
-
-function HomePage() {
-    const [code, setCode] = useState("");
 function HomePage() {
     const [code, setCode] = useState("");
     const [name, setName] = useState("");
@@ -39,11 +35,23 @@ function HomePage() {
 
             {/* Landing */}
             <main className="page landing">
-                <div className="landing-content">
+                <div className="landing-content card">
                     <h1 className="landing-title">Join a Workshop</h1>
+
                     <p className="landing-subtitle">
                         Enter your event code to participate
                     </p>
+
+                    <p className="landing-helper">
+                        Join live polls and ask questions.
+                    </p>
+
+                    <input
+                        className="input"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your name (optional)"
+                    />
 
                     <form onSubmit={handleJoin} className="landing-form">
                         <input
@@ -59,9 +67,9 @@ function HomePage() {
                             Join Session
                         </button>
                     </form>
+
                 </div>
             </main>
-            <Footer />
         </>
     );
 }
