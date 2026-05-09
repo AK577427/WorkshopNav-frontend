@@ -289,4 +289,3 @@ The result is a tool that supports both participant comfort and presenter useful
 ### Database Schema
 
 Add your database schema image inside an `img` folder and use the path below:
-

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function LivePollCard() {
   const [selectedOption, setSelectedOption] = useState("");
+  const [message, setMessage] = useState("");
 
   const poll = {
     question: "What is your biggest challenge with Gen Z employees?",
@@ -15,6 +16,7 @@ function LivePollCard() {
     }
 
     console.log("Submitted:", selectedOption);
+    setMessage("Your poll response has been submitted.");
   }
 
   return (
@@ -37,6 +39,7 @@ function LivePollCard() {
       <button onClick={handleSubmit} className="button-primary">
         Submit Response
       </button>
+      {message && <p className="success-message">{message}</p>}
     </section>
   );
 }

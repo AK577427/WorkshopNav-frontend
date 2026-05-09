@@ -5,6 +5,7 @@ import { getEvents } from "../services/events";
 import LivePollCard from "../components/polls/LivePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
 import GetSlidesCard from "../components/shared/GetSlidesCard";
+import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 
 function AttendeeSessionPage() {
@@ -78,6 +79,7 @@ function AttendeeSessionPage() {
         <QuestionList />
         <GetSlidesCard />
       </main>
+      <Footer />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
+import Footer from "../components/shared/Footer";
 
 function SessionCompletePage() {
   return (
@@ -29,6 +30,7 @@ function SessionCompletePage() {
           Thanks again. See you in the next session.
         </p>
       </main>
+      <Footer />
     </>
   );
 }

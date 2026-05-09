@@ -3,6 +3,7 @@ import { useState } from "react";
 function QuestionForm() {
   const [question, setQuestion] = useState("");
   const [anonymous, setAnonymous] = useState(true);
+  const [message, setMessage] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,6 +14,7 @@ function QuestionForm() {
     }
 
     console.log({ question, anonymous });
+    setMessage("Your question has been submitted.");
     setQuestion("");
   }
 
@@ -42,6 +44,7 @@ function QuestionForm() {
         <button type="submit" className="button-primary">
           Submit Question
         </button>
+        {message && <p className="success-message">{message}</p>}
       </form>
     </section>
   );

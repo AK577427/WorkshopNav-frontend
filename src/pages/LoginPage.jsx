@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/shared/Footer";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -59,6 +60,7 @@ function LoginPage() {
           </form>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
