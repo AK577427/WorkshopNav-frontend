@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
+
+import DashboardPage from "./pages/DashboardPage";
 import JoinEventPage from "./pages/JoinEventPage";
-import CreateEventPage from "./pages/CreateEventPage";
 import SessionCompletePage from "./pages/SessionCompletePage";
 import AttendeeSessionPage from "./pages/AttendeeSessionPage";
 import ResultsPage from "./pages/ResultsPage";
