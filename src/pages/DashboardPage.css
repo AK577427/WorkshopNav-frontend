@@ -1,0 +1,65 @@
+.dashboard-container {
+  padding: 20px;
+  color: white;
+}
+
+/* HEADER */
+.dashboard-title {
+  font-size: 1.6rem;
+  margin-bottom: 5px;
+}
+
+.live-dot {
+  color: #22c55e;
+}
+
+.dashboard-subtitle {
+  color: #a5b4fc;
+  margin-bottom: 20px;
+}
+
+/* STATS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* CARDS */
+.card {
+  background: #1e1b4b;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+/* POLL BARS */
+.poll-bar {
+  margin-bottom: 10px;
+}
+
+.bar {
+  background: #312e81;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 8px;
+  margin-top: 5px;
+}
+
+.bar div {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+}
+
+/* EMPTY STATE */
+.empty {
+  color: #a5b4fc;
+}
