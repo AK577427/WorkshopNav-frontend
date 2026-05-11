@@ -1,145 +1,73 @@
 import "./DashboardPage.css";
 
 function DashboardPage() {
+  const events = [
+    {
+      id: 1,
+      title: "Gen Z Leadership Workshop",
+      date: "May 22, 2026 • 10:00 AM",
+      status: "Live",
+    },
+    {
+      id: 2,
+      title: "AI for Beginners",
+      date: "May 15, 2026 • 02:00 PM",
+      status: "Completed",
+    },
+    {
+      id: 3,
+      title: "Future of Work",
+      date: "May 10, 2026 • 11:00 AM",
+      status: "Completed",
+    },
+  ];
+
   return (
-    <>
+    <div className="dashboard-container">
+
+      {/* HEADER */}
       <header className="dashboard-header">
+        <h2 className="logo">Workshop Navigator</h2>
 
-        <div className="dashboard-header-inner">
-
-          <div>
-            <p className="dashboard-label">
-              Workshop Navigator
-            </p>
-
-            <h1 className="dashboard-title">
-              Workshop Title
-            </h1>
-
-            <p className="dashboard-subtitle">
-              Current live workshop session
-            </p>
-          </div>
-
-          <div className="live-badge">
-            LIVE
-          </div>
-
+        <div className="facilitator">
+          <div className="avatar">F</div>
+          <span>Facilitator</span>
         </div>
-
       </header>
 
-      <main className="dashboard-page">
+      {/* TITLE */}
+      <div className="dashboard-title">
+        <h1>Dashboard</h1>
+        <p>Manage your workshops and events</p>
+      </div>
 
-        {/* OVERVIEW */}
-        <section className="dashboard-card overview-card">
+      {/* CREATE EVENT */}
+      <div className="create-event-card">
+        <div className="plus">+</div>
+        <div>
+          <h3>Create New Event</h3>
+          <p>Set up a new workshop session</p>
+        </div>
+        <span className="arrow">›</span>
+      </div>
 
+      {/* EVENTS */}
+      <h3 className="section-title">Your Events</h3>
+
+      {events.map((event) => (
+        <div className="event-card" key={event.id}>
           <div>
-            <p className="card-label">
-              Event Code
-            </p>
-
-            <h2 className="event-code-text">
-              AB12CD
-            </h2>
+            <h4>{event.title}</h4>
+            <p>{event.date}</p>
           </div>
 
-          <p className="event-time">
-            May 22, 2026 • 10:00 AM
-          </p>
+          <span className={`status ${event.status.toLowerCase()}`}>
+            {event.status}
+          </span>
+        </div>
+      ))}
 
-        </section>
-
-        {/* STATS */}
-        <section className="stats-grid">
-
-          <div className="stat-card">
-            <h2>42</h2>
-            <p>Participants</p>
-          </div>
-
-          <div className="stat-card">
-            <h2>77</h2>
-            <p>Responses</p>
-          </div>
-
-          <div className="stat-card">
-            <h2>12</h2>
-            <p>Questions</p>
-          </div>
-
-        </section>
-
-        {/* CREATE POLL */}
-        <section className="dashboard-card">
-
-          <p className="card-label">
-            Facilitator Action
-          </p>
-
-          <button className="primary-button">
-            + Create Live Poll
-          </button>
-
-        </section>
-
-        {/* ACTIVE POLL */}
-        <section className="dashboard-card">
-
-          <p className="card-label">
-            Active Poll
-          </p>
-
-          <h3 className="poll-title">
-            How valuable is today’s workshop?
-          </h3>
-
-          <div className="poll-bar">
-            <div
-              className="poll-fill"
-              style={{ width: "82%" }}
-            ></div>
-          </div>
-
-          <p className="poll-result">
-            82% Positive Feedback
-          </p>
-
-        </section>
-
-        {/* QUESTIONS */}
-        <section className="dashboard-card">
-
-          <p className="card-label">
-            Recent Questions
-          </p>
-
-          <div className="question-list">
-
-            <div className="question-card">
-              Can you share more examples of
-              real-world leadership challenges?
-            </div>
-
-            <div className="question-card">
-              What tools help build effective teams?
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* EXPORT */}
-        <section className="dashboard-card">
-
-          <button className="secondary-button">
-            Export Results CSV
-          </button>
-
-        </section>
-
-      </main>
-    </>
+    </div>
   );
 }
 
