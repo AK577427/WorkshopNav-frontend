@@ -7,6 +7,7 @@ import FacilitatorDashboardPage from "./pages/FacilitatorDashboardPage";
 import ResultsPage from "./pages/ResultsPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
+import FacilitatorEventDetailsPages from "./pages/FacilitatorEventDetailsPage";
 import "./App.css";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
       <Route path="/dashboard/events/new" element={<CreateEventPage />} />
       <Route path="/event/:eventId" element={<AttendeeSessionPage />} />
       <Route path="/event/:eventId/complete" element={<SessionCompletePage />} />
-      <Route path="/dashboard/events/:eventId" element={<FacilitatorDashboardPage />} />
+      <Route path="/dashboard/events/:eventCode" element={<FacilitatorEventDetailsPages />} />
       <Route path="/results/:eventId" element={<ResultsPage />} />
     </Routes>
   );
