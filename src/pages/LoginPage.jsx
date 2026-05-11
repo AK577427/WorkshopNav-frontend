@@ -57,6 +57,13 @@ function LoginPage() {
             <button className="button-primary">
               Login
             </button>
+            <button
+  className="secondary-button"
+  type="button"
+  onClick={() => navigate("/reset-password")}
+>
+  Forgot password?
+</button>
           </form>
         </section>
       </main>

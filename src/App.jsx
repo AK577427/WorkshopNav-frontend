@@ -7,6 +7,7 @@ import ResultsPage from "./pages/ResultsPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import FacilitatorEventDetailsPages from "./pages/FacilitatorEventDetailsPage";
 import "./App.css";
 
@@ -21,7 +22,9 @@ function App() {
       <Route path="/event/:eventId/complete" element={<SessionCompletePage />} />
       <Route path="/dashboard/events/:eventCode" element={<FacilitatorEventDetailsPages />} />
       <Route path="/results/:eventId" element={<ResultsPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      
     </Routes>
   );
 }
