@@ -730,3 +730,18 @@ body {
   margin-top: 0;
   padding: 12px 18px;
 }
+
+.logout-button {
+  border: 1px solid rgba(199, 195, 244, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
