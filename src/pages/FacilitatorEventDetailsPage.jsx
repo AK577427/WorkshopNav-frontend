@@ -2,6 +2,7 @@ import { useState } from "react";
 import CreatePoll from "../components/polls/CreatePoll";
 import QueuedPolls from "../components/polls/QueuedPolls";
 import LivePollCard from "../components/polls/LivePollCard";
+import LogoutButton from "../components/shared/LogoutButton";
 import RecentQuestions from "../components/questions/RecentQuestions";
 import ResultsOverview from "../components/questions/ResultsOverview";
 
