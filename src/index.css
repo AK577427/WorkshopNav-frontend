@@ -1,0 +1,24 @@
+body {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(168, 85, 247, 0.28),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(99, 102, 241, 0.22),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at right,
+      rgba(59, 130, 246, 0.10),
+      transparent 30%
+    ),
+    #0f0b2c;
+
+  font-family: 'Glacial Indifference', sans-serif;
+  display: flex;
+  justify-content: center;
+  color: white;
+}

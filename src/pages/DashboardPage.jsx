@@ -1,6 +1,9 @@
+import { useState } from "react";
 import "./DashboardPage.css";
 
 function DashboardPage() {
+  const [eventTitle, setEventTitle] = useState("");
+
   const events = [
     {
       id: 1,
@@ -22,6 +25,14 @@ function DashboardPage() {
     },
   ];
 
+  const handleCreateEvent = () => {
+    if (!eventTitle.trim()) return;
+
+    alert(`Event Created: ${eventTitle}`);
+
+    setEventTitle("");
+  };
+
   return (
     <div className="dashboard-container">
 
@@ -30,7 +41,6 @@ function DashboardPage() {
         <h2 className="logo">Workshop Navigator</h2>
 
         <div className="facilitator">
-          <div className="avatar">F</div>
           <span>Facilitator</span>
         </div>
       </header>
@@ -43,12 +53,24 @@ function DashboardPage() {
 
       {/* CREATE EVENT */}
       <div className="create-event-card">
-        <div className="plus">+</div>
-        <div>
-          <h3>Create New Event</h3>
-          <p>Set up a new workshop session</p>
-        </div>
-        <span className="arrow">›</span>
+
+        <h3>Create New Event</h3>
+
+        <input
+          type="text"
+          placeholder="Enter event title"
+          value={eventTitle}
+          onChange={(e) => setEventTitle(e.target.value)}
+          className="event-input"
+        />
+
+        <button
+          className="create-button"
+          onClick={handleCreateEvent}
+        >
+          Create Event
+        </button>
+
       </div>
 
       {/* EVENTS */}
@@ -56,6 +78,7 @@ function DashboardPage() {
 
       {events.map((event) => (
         <div className="event-card" key={event.id}>
+
           <div>
             <h4>{event.title}</h4>
             <p>{event.date}</p>
@@ -64,6 +87,7 @@ function DashboardPage() {
           <span className={`status ${event.status.toLowerCase()}`}>
             {event.status}
           </span>
+
         </div>
       ))}
 
