@@ -23,13 +23,21 @@ function HomePage() {
             <header className="app-header">
                 <div className="app-header-inner">
                     <div className="app-logo">Workshop Navigator</div>
+<div className="header-actions">
+  <button
+    className="button-primary"
+    onClick={() => navigate("/login")}
+  >
+    Organiser Login
+  </button>
 
-                    <button
-                        className="organiser-link"
-                        onClick={() => navigate("/login")}
-                    >
-                        Event Organiser
-                    </button>
+  <button
+    className="secondary-button"
+    onClick={() => navigate("/signup")}
+  >
+    Create Account
+  </button>
+</div>
                 </div>
             </header>
 
