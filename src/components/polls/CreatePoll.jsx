@@ -1,3 +1,4 @@
+<<<<<<< feature/event-details-page
 import { useState } from "react";
 
 function CreatePoll({ onCreatePoll }) {
@@ -26,6 +27,13 @@ function CreatePoll({ onCreatePoll }) {
     setOptionTwo("");
     setIsOpen(false);
   }
+=======
+// src/components/event/CreatePoll.jsx
+import { useState } from "react";
+
+function CreatePoll() {
+  const [isOpen, setIsOpen] = useState(false);
+>>>>>>> main
 
   return (
     <section className="card">
@@ -41,6 +49,7 @@ function CreatePoll({ onCreatePoll }) {
       </div>
 
       {isOpen && (
+<<<<<<< feature/event-details-page
         <form className="poll-form" onSubmit={handleSubmit}>
           <input
             value={question}
@@ -60,6 +69,12 @@ function CreatePoll({ onCreatePoll }) {
             placeholder="Option 2"
           />
 
+=======
+        <form className="poll-form">
+          <input placeholder="Poll question" />
+          <input placeholder="Option 1" />
+          <input placeholder="Option 2" />
+>>>>>>> main
           <button type="submit">Save Poll</button>
         </form>
       )}
