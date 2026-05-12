@@ -1,43 +1,54 @@
 import { useState } from "react";
 
-function LivePollCard() {
-  const [selectedOption, setSelectedOption] = useState("");
+function LivePollCard({ question, options }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const poll = {
-    question: "What is your biggest challenge with Gen Z employees?",
-    options: ["Communication", "Motivation", "Retention", "Conflict"],
-  };
-
-  function handleSubmit() {
-    if (!selectedOption) {
-      alert("Please select an option");
-      return;
-    }
-
-    console.log("Submitted:", selectedOption);
-  }
+  const totalVotes = options.reduce((sum, option) => sum + option.votes, 0);
 
   return (
-    <section className="card">
-      <p className="card-label">Live poll</p>
-      <h2>{poll.question}</h2>
+    <article className="live-poll-card">
+      <button
+        className="live-poll-summary"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="poll-icon">▥</div>
 
-      <div className="stack">
-        {poll.options.map((option) => (
-          <button
-            key={option}
-            onClick={() => setSelectedOption(option)}
-            className={`option-button ${selectedOption === option ? "selected" : ""}`}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+        <div className="poll-info">
+          <h3>{question}</h3>
+          <p>{options.length} options · {totalVotes} responses</p>
+        </div>
 
-      <button onClick={handleSubmit} className="button-primary">
-        Submit Response
+        <span className="active-badge">Active</span>
+        <span className={`poll-arrow ${isOpen ? "open" : ""}`}>›</span>
       </button>
-    </section>
+
+      {isOpen && (
+        <div className="poll-results">
+          {options.map((option) => {
+            const percent =
+              totalVotes === 0 ? 0 : Math.round((option.votes / totalVotes) * 100);
+
+            return (
+              <div className="poll-result-row" key={option.label}>
+                <div className="poll-result-label">
+                  <span>{option.label}</span>
+                  <span>{percent}%</span>
+                </div>
+
+                <div className="poll-result-bar">
+                  <div
+                    className="poll-result-fill"
+                    style={{ width: `${percent}%` }}
+                  />
+                </div>
+
+                <small>{option.votes} votes</small>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </article>
   );
 }
 

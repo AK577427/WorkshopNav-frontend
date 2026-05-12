@@ -1,5 +1,6 @@
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
+import Footer from "../components/shared/Footer";
 
 function SessionCompletePage() {
   return (
@@ -11,16 +12,25 @@ function SessionCompletePage() {
       </header>
 
       <main className="page">
-        <div className="page-header">
-          <h1 className="page-title">Thanks for joining</h1>
+        <section className="end-hero">
+          <div className="success-icon">✓</div>
+
+          <h1 className="page-title">Thank you for joining!</h1>
+
           <p className="page-subtitle">
-            Share your feedback and enter your email if you want the slides.
+            We hope you found the session valuable.
           </p>
-        </div>
+        </section>
 
         <FeedbackForm />
+
         <EmailCaptureForm />
+
+        <p className="end-note">
+          Thanks again. See you in the next session.
+        </p>
       </main>
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEventByCode } from "../services/events";
+import Footer from "../components/shared/Footer";
 
 function JoinEventPage() {
   const { eventCode } = useParams();
@@ -77,6 +78,7 @@ function JoinEventPage() {
           </button>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
