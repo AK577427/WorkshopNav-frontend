@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function DashboardPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchEvents() {
@@ -35,6 +38,14 @@ function DashboardPage() {
         </p>
       </div>
 
+      {/* ✅ CREATE EVENT BUTTON */}
+      <button
+        className="button-primary"
+        onClick={() => navigate("/dashboard/events/new")}
+      >
+        + Create New Event
+      </button>
+
       {/* LOADING */}
       {loading && <p>Loading events...</p>}
 
@@ -47,7 +58,11 @@ function DashboardPage() {
       {!loading && events.length > 0 && (
         <div>
           {events.map((event) => (
-            <div key={event.id} className="event-card">
+            <div
+              key={event.id}
+              className="event-card"
+              onClick={() => navigate(`/dashboard/events/${event.id}`)}
+            >
               <h3>{event.title}</h3>
               <p>Code: {event.event_code}</p>
             </div>
