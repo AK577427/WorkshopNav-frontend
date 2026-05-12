@@ -48,15 +48,12 @@ function DashboardPage() {
         + Create New Event
       </button>
 
-      {/* LOADING */}
       {loading && <p>Loading events...</p>}
 
-      {/* NO EVENTS */}
       {!loading && events.length === 0 && (
         <p>No events yet</p>
       )}
 
-      {/* EVENT LIST */}
       {!loading && events.length > 0 && (
         <div className="events-list">
           {events.map((event) => (
