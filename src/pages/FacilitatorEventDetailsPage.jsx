@@ -1,16 +1,29 @@
 import { useState } from "react";
+
+// Poll management components
 import CreatePoll from "../components/polls/CreatePoll";
 import QueuedPolls from "../components/polls/QueuedPolls";
 import LivePollCard from "../components/polls/LivePollCard";
+
+// Shared components
 import LogoutButton from "../components/shared/LogoutButton";
+
+// Question and analytics components
 import RecentQuestions from "../components/questions/RecentQuestions";
 import ResultsOverview from "../components/questions/ResultsOverview";
 
 function FacilitatorEventDetailsPage() {
+
+  // Track currently active navigation tab
   const [activeTab, setActiveTab] = useState("overview");
 
+  // Store polls waiting to be launched
   const [queuedPolls, setQueuedPolls] = useState([]);
+
+  // Store currently active live polls
   const [activePolls, setActivePolls] = useState([
+
+    // Mock active poll data
     {
       id: 1,
       question: "How was the session so far?",
@@ -20,6 +33,8 @@ function FacilitatorEventDetailsPage() {
         { label: "Needs more examples", votes: 5 },
       ],
     },
+
+    // Mock active poll data
     {
       id: 2,
       question: "What topics interest you most?",
@@ -31,25 +46,41 @@ function FacilitatorEventDetailsPage() {
     },
   ]);
 
+  // Smooth scroll navigation between page sections
   function scrollToSection(sectionId) {
+
+    // Update active tab styling
     setActiveTab(sectionId);
+
+    // Scroll to matching section
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
   }
 
+  // Add newly created poll into queue
   function handleCreatePoll(newPoll) {
     setQueuedPolls([...queuedPolls, newPoll]);
   }
 
+  // Move poll from queued state into active live polls
   function handleLaunchPoll(pollToLaunch) {
-    setQueuedPolls(queuedPolls.filter((poll) => poll.id !== pollToLaunch.id));
 
+    // Remove poll from queued list
+    setQueuedPolls(
+      queuedPolls.filter(
+        (poll) => poll.id !== pollToLaunch.id
+      )
+    );
+
+    // Add poll into active polls list
     setActivePolls([
       ...activePolls,
       {
         ...pollToLaunch,
+
+        // Convert plain option strings into poll objects
         options: pollToLaunch.options.map((option) => ({
           label: option,
           votes: 0,
@@ -60,38 +91,98 @@ function FacilitatorEventDetailsPage() {
 
   return (
     <main className="page event-details-page">
-      <button className="back-link">← Back to Dashboard</button>
 
-      <section id="overview" className="event-summary-card">
+      {/* Navigation button back to facilitator dashboard */}
+      <button className="back-link">
+        ← Back to Dashboard
+      </button>
+
+      {/* Event overview section */}
+      <section
+        id="overview"
+        className="event-summary-card"
+      >
+
         <div className="event-summary-content">
+
+          {/* Event title and live status */}
           <div className="event-title-row">
+
             <h1>Gen Z Leadership Workshop</h1>
-            <span className="live-badge">Live</span>
+
+            <span className="live-badge">
+              Live
+            </span>
+
           </div>
 
+          {/* Event date/time */}
           <p>May 22, 2025 · 10:00 AM</p>
+
+          {/* Event access code */}
           <p>Event Code: AB12CD</p>
+
         </div>
       </section>
 
+      {/* Sticky navigation tabs */}
       <nav className="event-tabs">
-        <button className={activeTab === "overview" ? "active" : ""} onClick={() => scrollToSection("overview")}>Overview</button>
-        <button className={activeTab === "polls" ? "active" : ""} onClick={() => scrollToSection("polls")}>Polls</button>
-        <button className={activeTab === "questions" ? "active" : ""} onClick={() => scrollToSection("questions")}>Questions</button>
-        <button className={activeTab === "results" ? "active" : ""} onClick={() => scrollToSection("results")}>Results</button>
+
+        {/* Overview navigation tab */}
+        <button
+          className={activeTab === "overview" ? "active" : ""}
+          onClick={() => scrollToSection("overview")}
+        >
+          Overview
+        </button>
+
+        {/* Poll navigation tab */}
+        <button
+          className={activeTab === "polls" ? "active" : ""}
+          onClick={() => scrollToSection("polls")}
+        >
+          Polls
+        </button>
+
+        {/* Questions navigation tab */}
+        <button
+          className={activeTab === "questions" ? "active" : ""}
+          onClick={() => scrollToSection("questions")}
+        >
+          Questions
+        </button>
+
+        {/* Results navigation tab */}
+        <button
+          className={activeTab === "results" ? "active" : ""}
+          onClick={() => scrollToSection("results")}
+        >
+          Results
+        </button>
+
       </nav>
 
-      <section id="polls" className="event-section">
+      {/* Poll management section */}
+      <section
+        id="polls"
+        className="event-section"
+      >
+
+        {/* Poll creation form */}
         <CreatePoll onCreatePoll={handleCreatePoll} />
 
+        {/* List of polls waiting to launch */}
         <QueuedPolls
           polls={queuedPolls}
           onLaunchPoll={handleLaunchPoll}
         />
 
+        {/* Currently active live polls */}
         <section className="card">
+
           <h2>Active Polls</h2>
 
+          {/* Render all active polls */}
           {activePolls.map((poll) => (
             <LivePollCard
               key={poll.id}
@@ -99,16 +190,30 @@ function FacilitatorEventDetailsPage() {
               options={poll.options}
             />
           ))}
+
         </section>
       </section>
 
-      <section id="questions" className="event-section">
+      {/* Attendee questions section */}
+      <section
+        id="questions"
+        className="event-section"
+      >
+
         <RecentQuestions />
+
       </section>
 
-      <section id="results" className="event-section">
+      {/* Event analytics/results section */}
+      <section
+        id="results"
+        className="event-section"
+      >
+
         <ResultsOverview />
+
       </section>
+
     </main>
   );
 }
