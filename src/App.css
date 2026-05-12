@@ -718,19 +718,6 @@ body {
   white-space: nowrap;
 }
 
-.header-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.header-actions .button-primary,
-.header-actions .secondary-button {
-  width: auto;
-  margin-top: 0;
-  padding: 12px 18px;
-}
-
 .logout-button {
   border: 1px solid rgba(199, 195, 244, 0.25);
   background: rgba(255, 255, 255, 0.06);

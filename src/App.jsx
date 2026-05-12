@@ -6,7 +6,6 @@ import AttendeeSessionPage from "./pages/AttendeeSessionPage";
 import ResultsPage from "./pages/ResultsPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import FacilitatorEventDetailsPages from "./pages/FacilitatorEventDetailsPage";
 import "./App.css";
