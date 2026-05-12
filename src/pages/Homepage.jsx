@@ -2,84 +2,117 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function HomePage() {
-    const [code, setCode] = useState("");
-    const [name, setName] = useState("");
-    const navigate = useNavigate();
 
-    function handleJoin(e) {
-        e.preventDefault();
+  // Store attendee event code input
+  const [code, setCode] = useState("");
 
-        if (!code.trim()) {
-            alert("Enter a code");
-            return;
-        }
+  // Store optional attendee name input
+  const [name, setName] = useState("");
 
-        navigate(`/join/${code}`);
+  // React Router navigation hook
+  const navigate = useNavigate();
+
+  // Handle attendee joining a workshop session
+  function handleJoin(e) {
+    e.preventDefault();
+
+    // Prevent empty event code submission
+    if (!code.trim()) {
+      alert("Enter a code");
+      return;
     }
 
-    return (
-        <>
-            {/* Header */}
-            <header className="app-header">
-                <div className="app-header-inner">
-                    <div className="app-logo">Workshop Navigator</div>
-<div className="header-actions">
-  <button
-    className="button-primary"
-    onClick={() => navigate("/login")}
-  >
-    Organiser Login
-  </button>
+    // Navigate attendee to event join page
+    navigate(`/join/${code}`);
+  }
 
-  <button
-    className="secondary-button"
-    onClick={() => navigate("/signup")}
-  >
-    Create Account
-  </button>
-</div>
-                </div>
-            </header>
+  return (
+    <>
+      {/* Top application header */}
+      <header className="app-header">
+        <div className="app-header-inner">
 
-            {/* Landing */}
-            <main className="page landing">
-                <div className="landing-content card">
-                    <h1 className="landing-title">Join a Workshop</h1>
+          {/* Application branding */}
+          <div className="app-logo">
+            Workshop Navigator
+          </div>
 
-                    <p className="landing-subtitle">
-                        Enter your event code to participate
-                    </p>
+          {/* Organiser account actions */}
+          <div className="header-actions">
 
-                    <p className="landing-helper">
-                        Join live polls and ask questions.
-                    </p>
+            {/* Navigate to organiser login */}
+            <button
+              className="button-primary"
+              onClick={() => navigate("/login")}
+            >
+              Organiser Login
+            </button>
 
-                    <input
-                        className="input"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Your name (optional)"
-                    />
+            {/* Navigate to account creation */}
+            <button
+              className="secondary-button"
+              onClick={() => navigate("/signup")}
+            >
+              Create Account
+            </button>
 
-                    <form onSubmit={handleJoin} className="landing-form">
-                        <input
-                            className="input landing-input"
-                            value={code}
-                            onChange={(e) =>
-                                setCode(e.target.value.toUpperCase())
-                            }
-                            placeholder="Enter event code (e.g. 015B9F)"
-                        />
+          </div>
+        </div>
+      </header>
 
-                        <button className="button-primary">
-                            Join Session
-                        </button>
-                    </form>
+      {/* Landing page content */}
+      <main className="page landing">
+        <div className="landing-content card">
 
-                </div>
-            </main>
-        </>
-    );
+          {/* Main page heading */}
+          <h1 className="landing-title">
+            Join a Workshop
+          </h1>
+
+          {/* Page instruction text */}
+          <p className="landing-subtitle">
+            Enter your event code to participate
+          </p>
+
+          {/* Supporting helper text */}
+          <p className="landing-helper">
+            Join live polls and ask questions.
+          </p>
+
+          {/* Optional attendee name input */}
+          <input
+            className="input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name (optional)"
+          />
+
+          {/* Event code join form */}
+          <form
+            onSubmit={handleJoin}
+            className="landing-form"
+          >
+
+            {/* Event code input */}
+            <input
+              className="input landing-input"
+              value={code}
+              onChange={(e) =>
+                setCode(e.target.value.toUpperCase())
+              }
+              placeholder="Enter event code (e.g. 015B9F)"
+            />
+
+            {/* Submit join request */}
+            <button className="button-primary">
+              Join Session
+            </button>
+
+          </form>
+        </div>
+      </main>
+    </>
+  );
 }
 
 export default HomePage;
