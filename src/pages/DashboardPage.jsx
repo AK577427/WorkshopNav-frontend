@@ -30,7 +30,6 @@ function DashboardPage() {
 
   return (
     <div className="dashboard-container">
-      {/* HEADER */}
       <div className="dashboard-header">
         <h1>Your Events</h1>
         <p className="dashboard-subtitle">
@@ -38,7 +37,7 @@ function DashboardPage() {
         </p>
       </div>
 
-      {/* ✅ CREATE EVENT BUTTON */}
+      {/* CREATE EVENT BUTTON */}
       <button
         className="button-primary"
         onClick={() => navigate("/dashboard/events/new")}
@@ -46,15 +45,12 @@ function DashboardPage() {
         + Create New Event
       </button>
 
-      {/* LOADING */}
       {loading && <p>Loading events...</p>}
 
-      {/* NO EVENTS */}
       {!loading && events.length === 0 && (
         <p>No events yet</p>
       )}
 
-      {/* EVENT LIST */}
       {!loading && events.length > 0 && (
         <div>
           {events.map((event) => (
