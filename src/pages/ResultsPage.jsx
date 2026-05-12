@@ -30,7 +30,7 @@ function ResultsPage() {
   const pollResponseCount = 31;
   const averageRating = 4.2;
 
-  // Export event results into a downloadable CSV file
+  // Export session results into a downloadable CSV file
   function exportCSV() {
 
     // Build summary section of CSV
