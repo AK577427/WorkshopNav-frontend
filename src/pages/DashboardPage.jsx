@@ -1,96 +1,59 @@
-import { useState } from "react";
-import "./DashboardPage.css";
+import { useEffect, useState } from "react";
 
 function DashboardPage() {
-  const [eventTitle, setEventTitle] = useState("");
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const events = [
-    {
-      id: 1,
-      title: "Gen Z Leadership Workshop",
-      date: "May 22, 2026 • 10:00 AM",
-      status: "Live",
-    },
-    {
-      id: 2,
-      title: "AI for Beginners",
-      date: "May 15, 2026 • 02:00 PM",
-      status: "Completed",
-    },
-    {
-      id: 3,
-      title: "Future of Work",
-      date: "May 10, 2026 • 11:00 AM",
-      status: "Completed",
-    },
-  ];
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/events/", {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        });
 
-  const handleCreateEvent = () => {
-    if (!eventTitle.trim()) return;
+        const data = await response.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-    alert(`Event Created: ${eventTitle}`);
-
-    setEventTitle("");
-  };
+    fetchEvents();
+  }, []);
 
   return (
     <div className="dashboard-container">
-
       {/* HEADER */}
-      <header className="dashboard-header">
-        <h2 className="logo">Workshop Navigator</h2>
-
-        <div className="facilitator">
-          <span>Facilitator</span>
-        </div>
-      </header>
-
-      {/* TITLE */}
-      <div className="dashboard-title">
-        <h1>Dashboard</h1>
-        <p>Manage your workshops and events</p>
+      <div className="dashboard-header">
+        <h1>Your Events</h1>
+        <p className="dashboard-subtitle">
+          Manage your workshop sessions
+        </p>
       </div>
 
-      {/* CREATE EVENT */}
-      <div className="create-event-card">
+      {/* LOADING */}
+      {loading && <p>Loading events...</p>}
 
-        <h3>Create New Event</h3>
+      {/* NO EVENTS */}
+      {!loading && events.length === 0 && (
+        <p>No events yet</p>
+      )}
 
-        <input
-          type="text"
-          placeholder="Enter event title"
-          value={eventTitle}
-          onChange={(e) => setEventTitle(e.target.value)}
-          className="event-input"
-        />
-
-        <button
-          className="create-button"
-          onClick={handleCreateEvent}
-        >
-          Create Event
-        </button>
-
-      </div>
-
-      {/* EVENTS */}
-      <h3 className="section-title">Your Events</h3>
-
-      {events.map((event) => (
-        <div className="event-card" key={event.id}>
-
-          <div>
-            <h4>{event.title}</h4>
-            <p>{event.date}</p>
-          </div>
-
-          <span className={`status ${event.status.toLowerCase()}`}>
-            {event.status}
-          </span>
-
+      {/* EVENT LIST */}
+      {!loading && events.length > 0 && (
+        <div>
+          {events.map((event) => (
+            <div key={event.id} className="event-card">
+              <h3>{event.title}</h3>
+              <p>Code: {event.event_code}</p>
+            </div>
+          ))}
         </div>
-      ))}
-
+      )}
     </div>
   );
 }
