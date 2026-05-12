@@ -42,7 +42,7 @@ function DashboardPage() {
 
       {/* CREATE EVENT BUTTON */}
       <button
-        className="create-button"
+        className="button-primary"
         onClick={() => navigate("/dashboard/events/new")}
       >
         + Create New Event
