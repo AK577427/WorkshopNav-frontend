@@ -24,6 +24,10 @@ function CreateEventPage() {
       const data = await createEvent({ title });
       setCreatedEvent(data);
       setTitle("");
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
     } catch (err) {
       console.error(err);
       alert("Failed to create event");
@@ -86,7 +90,7 @@ function CreateEventPage() {
               className="button-primary"
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `${window.location.origin}/join/${createdEvent.event_code}`
+                  `${window.location.origin}/join/${createdEvent.event_code}`,
                 );
                 alert("Link copied!");
               }}

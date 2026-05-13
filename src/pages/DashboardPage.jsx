@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Event from "../components/shared/Event";
 
 function DashboardPage() {
   const [events, setEvents] = useState([]);
@@ -32,6 +33,7 @@ function DashboardPage() {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h1>Your Events</h1>
+
         <p className="dashboard-subtitle">
           Manage your workshop sessions
         </p>
@@ -52,16 +54,15 @@ function DashboardPage() {
       )}
 
       {!loading && events.length > 0 && (
-        <div>
+        <div className="events-list">
           {events.map((event) => (
-            <div
+            <Event
               key={event.id}
-              className="event-card"
-              onClick={() => navigate(`/dashboard/events/${event.id}`)}
-            >
-              <h3>{event.title}</h3>
-              <p>Code: {event.event_code}</p>
-            </div>
+              event={event}
+              onClick={() =>
+                navigate(`/dashboard/events/${event.id}`)
+              }
+            />
           ))}
         </div>
       )}

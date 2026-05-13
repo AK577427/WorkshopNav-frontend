@@ -7,8 +7,8 @@ import ResultsPage from "./pages/ResultsPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
 import CreateEventPage from "./pages/CreateEventPage";
-
 import "./App.css";
+import EventDetailsPage from "./pages/EventDetailsPage";
 
 function App() {
   return (
@@ -22,10 +22,17 @@ function App() {
 
       {/* SESSION */}
       <Route path="/event/:eventId" element={<AttendeeSessionPage />} />
-      <Route path="/event/:eventId/complete" element={<SessionCompletePage />} />
+      <Route
+        path="/event/:eventId/complete"
+        element={<SessionCompletePage />}
+      />
 
       {/* DASHBOARD */}
-      <Route path="/dashboard/events/:eventId" element={<DashboardPage />} />
+      {/* DASHBOARD */}
+      <Route path="/dashboard" element={<DashboardPage />} />
+
+      {/* EVENT DETAILS */}
+      <Route path="/dashboard/events/:eventId" element={<EventDetailsPage />} />
 
       {/* RESULTS */}
       <Route path="/results/:eventId" element={<ResultsPage />} />
