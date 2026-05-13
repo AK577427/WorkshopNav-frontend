@@ -1,12 +1,12 @@
 /* RESET */
-
+@import url('https://fonts.cdnfonts.com/css/glacial-indifference');
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Glacial Indifference';
   background: linear-gradient(135deg, #0f1028, #1d1450, #2b145f);
   color: white;
 }
@@ -24,6 +24,7 @@ body {
   text-align: center;
   margin-bottom: 32px;
 }
+
 
 .page-title {
   font-size: 42px;

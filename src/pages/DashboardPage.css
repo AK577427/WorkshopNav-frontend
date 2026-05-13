@@ -5,6 +5,8 @@
   padding: 28px 24px 40px;
   font-family: 'Glacial Indifference', sans-serif;
   color: white;
+  max-width: 420px;
+margin: 0 auto;
 }
 
 /* HEADER */
@@ -93,6 +95,8 @@
 
 /* BUTTON */
 .create-button {
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+
   width: 100%;
   padding: 18px;
 
@@ -117,7 +121,7 @@
 
 .create-button:hover {
   opacity: 0.92;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 /* SECTION TITLE */
@@ -144,6 +148,13 @@
   align-items: center;
 
   backdrop-filter: blur(10px);
+
+  .event-card:hover {
+  transform: translateY(-2px);
+}
+.event-card:hover {
+  transform: translateY(-2px);
+}
 }
 
 .event-card h4 {
