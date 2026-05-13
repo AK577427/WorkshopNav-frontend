@@ -22,7 +22,6 @@ function App() {
 
       {/* SESSION */}
       <Route path="/event/:eventId" element={<AttendeeSessionPage />} />
-
       <Route
         path="/event/:eventId/complete"
         element={<SessionCompletePage />}
@@ -33,7 +32,7 @@ function App() {
 
       {/* EVENT DETAILS */}
       <Route path="/dashboard/events/:eventId" element={<EventDetailsPage />} />
-      
+
       {/* RESULTS */}
       <Route path="/results/:eventId" element={<ResultsPage />} />
     </Routes>
