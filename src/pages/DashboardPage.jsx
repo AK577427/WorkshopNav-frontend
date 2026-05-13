@@ -30,19 +30,20 @@ function DashboardPage() {
     fetchEvents();
   }, []);
 
-  return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
-        <h1>Your Events</h1>
+return (
+  <div className="dashboard-container">
 
-        <p className="dashboard-subtitle">
-          Manage your workshop sessions
-        </p>
-      </div>
+    <div className="dashboard-title">
+      <h1>Your Events</h1>
 
+      <p>
+        Manage your workshop sessions
+      </p>
+    </div>
+    
       {/* CREATE EVENT BUTTON */}
       <button
-        className="button-primary"
+        className="create-button"
         onClick={() => navigate("/dashboard/events/new")}
       >
         + Create New Event
