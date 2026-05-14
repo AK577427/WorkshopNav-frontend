@@ -24,10 +24,6 @@ function CreateEventPage() {
       const data = await createEvent({ title });
       setCreatedEvent(data);
       setTitle("");
-
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
     } catch (err) {
       console.error(err);
       alert("Failed to create event");
@@ -96,6 +92,13 @@ function CreateEventPage() {
               }}
             >
               Copy Link
+            </button>
+            <button
+              className="button-secondary"
+              onClick={() => navigate("/dashboard")}
+              style={{ marginTop: "12px" }}
+            >
+              Go to Dashboard
             </button>
 
             <div style={{ marginTop: "20px" }}>

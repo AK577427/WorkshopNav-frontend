@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Event from "../components/shared/Event";
 import "./DashboardPage.css";
+import { getEvents } from "../services/events";
 
 function DashboardPage() {
   const [events, setEvents] = useState([]);
@@ -12,13 +13,7 @@ function DashboardPage() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch("http://127.0.0.1:8000/events/", {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        });
-
-        const data = await response.json();
+        const data = await getEvents();
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -30,17 +25,14 @@ function DashboardPage() {
     fetchEvents();
   }, []);
 
-return (
-  <div className="dashboard-container">
+  return (
+    <div className="dashboard-container">
+      <div className="dashboard-title">
+        <h1>Your Events</h1>
 
-    <div className="dashboard-title">
-      <h1>Your Events</h1>
+        <p>Manage your workshop sessions</p>
+      </div>
 
-      <p>
-        Manage your workshop sessions
-      </p>
-    </div>
-    
       {/* CREATE EVENT BUTTON */}
       <button
         className="create-button"
@@ -51,9 +43,7 @@ return (
 
       {loading && <p>Loading events...</p>}
 
-      {!loading && events.length === 0 && (
-        <p>No events yet</p>
-      )}
+      {!loading && events.length === 0 && <p>No events yet</p>}
 
       {!loading && events.length > 0 && (
         <div className="events-list">
@@ -61,9 +51,7 @@ return (
             <Event
               key={event.id}
               event={event}
-              onClick={() =>
-                navigate(`/dashboard/events/${event.id}`)
-              }
+              onClick={() => navigate(`/dashboard/events/${event.id}`)}
             />
           ))}
         </div>

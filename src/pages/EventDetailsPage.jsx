@@ -1,6 +1,37 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getEventById } from "../services/events";
 import "./DashboardPage.css";
 
 function EventDetailsPage() {
+  const { eventId } = useParams();
+
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEvent() {
+      try {
+        const data = await getEventById(eventId);
+        setEvent(data);
+      } catch (error) {
+        console.error("Error fetching event:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvent();
+  }, [eventId]);
+
+  if (loading) {
+    return <p>Loading event...</p>;
+  }
+
+  if (!event) {
+    return <p>Event not found.</p>;
+  }
+
   return (
     <>
       <header className="dashboard-header">
@@ -8,13 +39,9 @@ function EventDetailsPage() {
           <div>
             <p className="dashboard-label">Workshop Navigator</p>
 
-            <h1 className="dashboard-title">
-              Gen Z Leadership Workshop
-            </h1>
+            <h1 className="dashboard-title">{event.title}</h1>
 
-            <p className="dashboard-subtitle">
-              Current live workshop session
-            </p>
+            <p className="dashboard-subtitle">Current live workshop session</p>
           </div>
 
           <div className="live-badge">LIVE</div>
@@ -22,20 +49,20 @@ function EventDetailsPage() {
       </header>
 
       <main className="dashboard-page">
-
-        {/* EVENT INFO */}
         <section className="dashboard-card overview-card">
           <div>
             <p className="card-label">Event Code</p>
-            <h2 className="event-code-text">AB12CD</h2>
+
+            <h2 className="event-code-text">{event.event_code}</h2>
           </div>
 
           <p className="event-time">
-            May 22, 2026 • 10:00 AM
+            {event.created_at
+              ? new Date(event.created_at).toLocaleString()
+              : "Workshop session"}
           </p>
         </section>
 
-        {/* STATS */}
         <section className="stats-grid">
           <div className="stat-card">
             <h2>42</h2>
@@ -53,33 +80,24 @@ function EventDetailsPage() {
           </div>
         </section>
 
-        {/* CREATE POLL */}
         <section className="dashboard-card">
           <p className="card-label">Facilitator Action</p>
 
-          <button className="primary-button">
-            + Create Live Poll
-          </button>
+          <button className="primary-button">+ Create Live Poll</button>
         </section>
 
-        {/* ACTIVE POLL */}
         <section className="dashboard-card">
           <p className="card-label">Active Poll</p>
 
-          <h3 className="poll-title">
-            How valuable is today’s workshop?
-          </h3>
+          <h3 className="poll-title">How valuable is today’s workshop?</h3>
 
           <div className="poll-bar">
             <div className="poll-fill" style={{ width: "82%" }}></div>
           </div>
 
-          <p className="poll-result">
-            82% Positive Feedback
-          </p>
+          <p className="poll-result">82% Positive Feedback</p>
         </section>
 
-        {/* QUESTIONS */}
         <section className="dashboard-card">
           <p className="card-label">Recent Questions</p>
 
@@ -94,13 +112,9 @@ function EventDetailsPage() {
           </div>
         </section>
 
-        {/* EXPORT */}
         <section className="dashboard-card">
-          <button className="secondary-button">
-            Export Results CSV
-          </button>
+          <button className="secondary-button">Export Results CSV</button>
         </section>
-
       </main>
     </>
   );
