@@ -28,7 +28,6 @@ function App() {
       />
 
       {/* DASHBOARD */}
-      {/* DASHBOARD */}
       <Route path="/dashboard" element={<DashboardPage />} />
 
       {/* EVENT DETAILS */}
