@@ -4,8 +4,8 @@ export function getEvents() {
   return apiRequest("/events/");
 }
 
-export function getEventById(eventId) {
-  return apiRequest(`/events/${eventId}/`);
+export function getEventById(eventCode) {
+  return apiRequest(`/events/${eventCode}/`);
 }
 
 export function createEvent(data) {
