@@ -4,6 +4,10 @@ export function getEvents() {
   return apiRequest("/events/");
 }
 
+export function getEventById(eventCode) {
+  return apiRequest(`/events/${eventCode}/`);
+}
+
 export function createEvent(data) {
   return apiRequest("/events/", {
     method: "POST",
