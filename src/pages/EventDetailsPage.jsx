@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getEventById } from "../services/events";
 import "./DashboardPage.css";
 import Footer from "../components/shared/Footer";
 function EventDetailsPage() {
   const { eventId } = useParams();
+  const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,21 +34,24 @@ function EventDetailsPage() {
   }
 
   if (!event) {
-  return (
-    <div className="dashboard-page">
-      <p>Event not found.</p>
-    </div>
-  );
-}
+    return (
+      <div className="dashboard-page">
+        <p>Event not found.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <header className="dashboard-header">
         <div className="dashboard-header-inner">
           <div>
-            <p className="dashboard-label">Workshop Navigator</p>
+            <p className="dashboard-label">
+              Workshop Navigator
+            </p>
 
             <h1 className="dashboard-title">
-              {event?.title || "Loading..."}
+              {event.title}
             </h1>
 
             <p className="dashboard-subtitle">
@@ -60,22 +64,25 @@ function EventDetailsPage() {
       </header>
 
       <main className="dashboard-page">
+
+        {/* EVENT INFO */}
         <section className="dashboard-card overview-card">
           <div>
             <p className="card-label">Event Code</p>
 
             <h2 className="event-code-text">
-              {event?.event_code || "Loading..."}
+              {event.event_code}
             </h2>
           </div>
 
           <p className="event-time">
-            {event?.created_at
+            {event.created_at
               ? new Date(event.created_at).toLocaleString()
               : "Workshop event"}
           </p>
         </section>
 
+        {/* STATS */}
         <section className="stats-grid">
           <div className="stat-card">
             <h2>42</h2>
@@ -93,14 +100,32 @@ function EventDetailsPage() {
           </div>
         </section>
 
+        {/* FACILITATOR ACTIONS */}
         <section className="dashboard-card">
-          <p className="card-label">Facilitator Action</p>
+          <p className="card-label">
+            Facilitator Actions
+          </p>
 
-          <button className="primary-button">
-            + Create Live Poll
-          </button>
+          <div className="action-buttons">
+
+            <button
+              className="primary-button"
+              onClick={() => navigate(`/results/${eventId}`)}
+            >
+              View Results
+            </button>
+
+            <button
+              className="secondary-button"
+              onClick={() => navigate("/dashboard")}
+            >
+              Back to Dashboard
+            </button>
+
+          </div>
         </section>
 
+        {/* ACTIVE POLL */}
         <section className="dashboard-card">
           <p className="card-label">Active Poll</p>
 
@@ -120,8 +145,11 @@ function EventDetailsPage() {
           </p>
         </section>
 
+        {/* QUESTIONS */}
         <section className="dashboard-card">
-          <p className="card-label">Recent Questions</p>
+          <p className="card-label">
+            Recent Questions
+          </p>
 
           <div className="question-list">
             <div className="question-card">
@@ -134,11 +162,13 @@ function EventDetailsPage() {
           </div>
         </section>
 
+        {/* EXPORT */}
         <section className="dashboard-card">
           <button className="secondary-button">
             Export Results CSV
           </button>
         </section>
+
       </main>
       <Footer />
     </>
