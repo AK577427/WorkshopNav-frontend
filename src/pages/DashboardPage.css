@@ -1,0 +1,187 @@
+/* MAIN CONTAINER */
+.dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 28px 24px 40px;
+  font-family: 'Glacial Indifference', sans-serif;
+  color: white;
+  max-width: 420px;
+margin: 0 auto;
+}
+
+/* HEADER */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+/* LOGO */
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* FACILITATOR */
+.facilitator {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+/* TITLE */
+.dashboard-title {
+  margin-bottom: 36px;
+}
+
+.dashboard-title h1 {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dashboard-title p {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* CREATE EVENT CARD */
+.create-event-card {
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  margin-bottom: 40px;
+
+  backdrop-filter: blur(10px);
+}
+
+.create-event-card h3 {
+  margin-bottom: 22px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* INPUT */
+.event-input {
+  width: 100%;
+  padding: 18px;
+
+  border-radius: 16px;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  font-size: 1rem;
+
+  margin-bottom: 20px;
+
+  outline: none;
+}
+
+.event-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* BUTTON */
+.create-button {
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+
+  width: 100%;
+  padding: 18px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #ec4899
+  );
+
+  color: white;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.create-button:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* EVENT CARD */
+.event-card {
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 20px;
+
+  padding: 20px;
+
+  margin-bottom: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  backdrop-filter: blur(10px);
+
+  .event-card:hover {
+  transform: translateY(-2px);
+}
+.event-card:hover {
+  transform: translateY(-2px);
+}
+}
+
+.event-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.event-card p {
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
+/* STATUS BADGES */
+.status {
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status.live {
+  background: rgba(34, 197, 94, 0.18);
+  color: #4ade80;
+}
+
+.status.completed {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}

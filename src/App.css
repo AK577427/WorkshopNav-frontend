@@ -1,17 +1,17 @@
-/* ================= GLOBAL / RESET ================= */
-
+/* RESET */
+@import url('https://fonts.cdnfonts.com/css/glacial-indifference');
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Glacial Indifference';
   background: linear-gradient(135deg, #0f1028, #1d1450, #2b145f);
   color: white;
 }
 
-/* ================= LAYOUT ================= */
+/* PAGE */
 
 .page {
   min-height: 100vh;
@@ -24,6 +24,7 @@ body {
   text-align: center;
   margin-bottom: 32px;
 }
+
 
 .page-title {
   font-size: 42px;
@@ -46,7 +47,7 @@ body {
   color: #c7c3f4;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 .app-header {
   width: 100%;
@@ -82,12 +83,13 @@ body {
   color: #c7c3f4;
 }
 
+
 .header-actions {
   display: flex;
   gap: 12px;
 }
 
-/* ================= CARDS ================= */
+/* CARDS */
 
 .card {
   background: rgba(25, 21, 65, 0.92);
@@ -114,7 +116,8 @@ body {
   margin-bottom: 8px;
 }
 
-/* ================= BUTTONS ================= */
+
+/* BUTTONS */
 
 .button-primary {
   width: 100%;
@@ -152,15 +155,10 @@ body {
   padding: 14px;
   border-radius: 14px;
   border: 1px solid rgba(199, 195, 244, 0.3);
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.06);
   color: white;
   cursor: pointer;
-  text-align: left;
-}
-
-.option-button.selected {
-  background: rgba(236, 72, 153, 0.25);
-  border-color: #ec4899;
+  font-weight: 600;
 }
 
 .upvote-button {
@@ -187,7 +185,8 @@ body {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* ================= FORMS ================= */
+
+/* FORM */
 
 .input,
 .textarea,
@@ -199,10 +198,6 @@ body {
   background: rgba(255, 255, 255, 0.08);
   color: white;
   margin-top: 8px;
-}
-
-.textarea {
-  resize: none;
 }
 
 .form-label {
@@ -219,7 +214,6 @@ body {
   color: #c7c3f4;
 }
 
-/* ================= LOADING ================= */
 
 .loading-screen {
   min-height: 100vh;
@@ -248,7 +242,6 @@ body {
   }
 }
 
-/* ================= LANDING PAGE ================= */
 
 .landing {
   display: flex;
@@ -289,7 +282,6 @@ body {
   letter-spacing: 2px;
 }
 
-/* ================= SESSION COMPLETE ================= */
 
 .end-hero {
   text-align: center;
@@ -316,7 +308,6 @@ body {
   margin-top: 34px;
 }
 
-/* ================= FEEDBACK ================= */
 
 .star-rating {
   display: flex;
@@ -343,7 +334,6 @@ body {
   transform: scale(1.08);
 }
 
-/* ================= ATTENDEE SESSION ================= */
 
 .session-page {
   max-width: 620px;
@@ -384,7 +374,6 @@ body {
   font-size: 13px;
 }
 
-/* ================= QUESTIONS ================= */
 
 .question-item {
   border: 1px solid rgba(199, 195, 244, 0.25);
@@ -402,7 +391,12 @@ body {
   font-size: 14px;
 }
 
-/* ================= DASHBOARD ================= */
+
+.muted {
+  color: #c7c3f4;
+}
+
+/* GRID */
 
 .dashboard-grid {
   display: grid;
@@ -426,7 +420,6 @@ body {
   margin: 6px 0 0;
 }
 
-/* ================= RESULTS ================= */
 
 .result-row {
   display: flex;
@@ -460,7 +453,46 @@ body {
   fill: white;
 }
 
-/* ================= SHARING ================= */
+@media (max-width: 700px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.dashboard-subtitle {
+  color: #c7c3f4;
+  font-size: 14px;
+}
+
+/* EVENT LIST */
+.event-card {
+  background: rgba(25, 21, 65, 0.92);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+}
+
+/* SHARE */
 
 .share-link {
   margin-top: 10px;
@@ -469,9 +501,10 @@ body {
   background: rgba(255, 255, 255, 0.08);
   font-size: 14px;
   word-break: break-all;
-}
+  
+  }
 
-/* ================= FACILITATOR EVENT DETAILS ================= */
+
 
 .event-details-page {
   display: flex;
@@ -526,7 +559,6 @@ body {
   border-radius: 999px;
 }
 
-/* ================= RESPONSIVE ================= */
 
 @media (max-width: 700px) {
   .dashboard-grid,
@@ -537,4 +569,5 @@ body {
   .header-actions {
     flex-direction: column;
   }
+
 }
