@@ -21,7 +21,8 @@ function App() {
       <Route path="/dashboard/events/new" element={<CreateEventPage />} />
 
       {/* SESSION */}
-      <Route path="/event/:eventId" element={<AttendeeSessionPage />} />
+      {/* <Route path="/event/:eventId" element={<AttendeeSessionPage />} /> */}
+      <Route path="/event/:eventCode" element={<AttendeeSessionPage />} />
       <Route
         path="/event/:eventId/complete"
         element={<SessionCompletePage />}
