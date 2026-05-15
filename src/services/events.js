@@ -15,6 +15,13 @@ export function createEvent(data) {
   });
 }
 
-export function getEventByCode(eventCode) {
-  return apiRequest(`/events/${eventCode}/`);
+export async function getEventByCode(eventCode) {
+  // return apiRequest(`/events/${eventCode}/`);
+  const response = await fetch  (`${import.meta.env.VITE_API_URL}/events/${eventCode}/`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch event");
+  }
+
+  return
 }
