@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getEvents } from "../services/events";
+import { getEventByCode } from "../services/events";
 
 // Interactive attendee session components
 import LivePollCard from "../components/polls/LivePollCard";
@@ -27,15 +27,17 @@ function AttendeeSessionPage() {
       try {
 
         // Fetch all available events
-        const data = await getEvents();
+        const data = await getEventByCode();
 
-        // Find event matching URL parameter
-        const found = data.find(
-          (e) => e.id === Number(eventId)
-        );
+        setEvent(data); // Set the fetched event data into state
 
-        // Save matching event into state
-        setEvent(found);
+        // // Find event matching URL parameter
+        // const found = data.find(
+        //   (e) => e.id === Number(eventId)
+        // );
+
+        // // Save matching event into state
+        // setEvent(found);
 
       } catch (err) {
 
