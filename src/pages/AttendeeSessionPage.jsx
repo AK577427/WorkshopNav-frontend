@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getEventByCode } from "../services/events";
+import { getEventByCode, getEventById } from "../services/events";
 
 // Interactive attendee session components
 import LivePollCard from "../components/polls/LivePollCard";
@@ -12,7 +12,8 @@ import QuestionList from "../components/questions/QuestionList";
 function AttendeeSessionPage() {
 
   // Get event ID from route parameters
-  const { eventId } = useParams();
+  // const { eventId } = useParams();
+  const {eventCode} = useParams();
 
   // Store selected event data
   const [event, setEvent] = useState(null);
@@ -27,7 +28,8 @@ function AttendeeSessionPage() {
       try {
 
         // Fetch all available events
-        const data = await getEventByCode();
+        // const data = await getEventById(eventId);
+        const data = await getEventByCode(eventCode);
 
         setEvent(data); // Set the fetched event data into state
 
@@ -53,7 +55,7 @@ function AttendeeSessionPage() {
 
     loadEvent();
 
-  }, [eventId]);
+  }, [eventCode]);
 
   // Display loading screen while event data is loading
   if (isLoading) {
@@ -125,9 +127,9 @@ function AttendeeSessionPage() {
         {/* Welcome section for attendees */}
         <section className="session-welcome">
 
-          <h1>Welcome!</h1>
+          <h1>Welcome to '{event.title}'</h1>
 
-          <p>You’re now in the session.</p>
+          <p>You’re now in an event.</p>
 
           <p className="muted">
             Engage, participate and have a great learning experience.
@@ -136,7 +138,7 @@ function AttendeeSessionPage() {
         </section>
 
         {/* Live polling component */}
-        <LivePollCard />
+        {/* <LivePollCard /> */}
 
         {/* Question submission form */}
         <QuestionForm />

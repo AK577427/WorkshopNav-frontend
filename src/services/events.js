@@ -4,8 +4,17 @@ export function getEvents() {
   return apiRequest("/events/");
 }
 
-export function getEventById(eventCode) {
-  return apiRequest(`/events/${eventCode}/`);
+export async function getEventById(eventID) {
+  // return apiRequest(`/events/${eventID}/`);
+  const response = await fetch  (`${import.meta.env.VITE_API_URL}/event/${eventID}/`);
+  // console.log(response);
+  
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch event");
+  }
+
+  return response.json();
 }
 
 export function createEvent(data) {
@@ -17,11 +26,13 @@ export function createEvent(data) {
 
 export async function getEventByCode(eventCode) {
   // return apiRequest(`/events/${eventCode}/`);
-  const response = await fetch  (`${import.meta.env.VITE_API_URL}/events/${eventCode}/`);
+  const response = await fetch  (`${import.meta.env.VITE_API_URL}/events/join/${eventCode}/`);
+  // console.log(response);
+  
 
   if (!response.ok) {
     throw new Error("Failed to fetch event");
   }
 
-  return
+  return response.json();
 }
