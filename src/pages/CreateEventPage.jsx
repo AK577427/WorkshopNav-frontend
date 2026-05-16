@@ -1,57 +1,42 @@
 import { useState } from "react";
-import { createEvent } from "../services/events";
+import { postCreateEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import ErrorAlert from "../components/shared/ErrorAlert";
 
 function CreateEventPage() {
   const navigate = useNavigate();
-  const [access] = useState(window.localStorage.getItem("access") || null);
   const [err,setErr] = useState("");
 
   const [title, setTitle] = useState("");
   const [createdEvent, setCreatedEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
-    async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (!title.trim()) {
-      setError("Please enter an event title.");
+      setErr("Please enter an event title");
       return;
     }
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   if (!title.trim()) {
-  //     setErr("Please enter an event title");
-  //     return;
-  //   }
-  //   if(title.trim()) {
-  //     createNewEvent();
-  //   }
-
-    setIsLoading(true);
-
-    
 
     try {
-      const data = await createEvent({ title });
-      setCreatedEvent(data);
+      setIsLoading(true);
+
+      const response = await postCreateEvent({ title });
+      setCreatedEvent(response);
       setTitle("");
       setErr("");
     } catch (err) {
       console.error(err);
-      setError("We couldn't create the event. Please try again.");
-    } finally {
+      setErr("We couldn't create the event. Please try again.");
+    } finally {      
       setIsLoading(false);
     }
-  }
+
+  };
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-
       <header className="app-header">
         <div className="app-header-inner">
           <div className="app-logo">Workshop Navigator</div>
