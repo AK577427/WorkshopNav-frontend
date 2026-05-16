@@ -1,9 +1,5 @@
 import { apiRequest } from "./api";
 
-export function getEvents() {
-  return apiRequest("/events/");
-}
-
 export async function getEventById(eventID) {
   const response = await fetch  (`${import.meta.env.VITE_API_URL}/event/${eventID}/`);
 
@@ -12,13 +8,6 @@ export async function getEventById(eventID) {
   }
 
   return response.json();
-}
-
-export function createEvent(data) {
-  return apiRequest("/events/", {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
 }
 
 export async function getEventByCode(eventCode) {
@@ -64,6 +53,27 @@ export async function postCreateEvent(data) {
 
   if (!response.ok) {
     throw new Error("Failed to create event");
+  }
+
+  return response.json();
+}
+
+export async function getEventsPerFacilitator() {
+  const accessToken = window.localStorage.getItem("access");
+
+  if (!accessToken) {
+    throw new Error("No access token found. Please log in.");
+  }
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/events/`, {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch events");
   }
 
   return response.json();
