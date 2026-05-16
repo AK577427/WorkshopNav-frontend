@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/shared/ErrorAlert";
 // import JoinEventPage from "./JoinEventPage";
 
 function HomePage() {
@@ -13,13 +14,15 @@ function HomePage() {
   // React Router navigation hook
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
   // Handle attendee joining a workshop session
   function handleJoin(e) {
     e.preventDefault();
 
     // Prevent empty event code submission
     if (!code.trim()) {
-      alert("Enter a code");
+      setError("Please enter an event code to join.");
       return;
     }
 
@@ -30,6 +33,8 @@ function HomePage() {
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">

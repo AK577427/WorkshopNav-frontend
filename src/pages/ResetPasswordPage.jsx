@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function ResetPasswordPage() {
 
@@ -9,13 +10,15 @@ function ResetPasswordPage() {
   // Store email input value
   const [email, setEmail] = useState("");
 
+  const [error, setError] = useState("");
+
   // Handle reset password form submission
   function handleSubmit(e) {
     e.preventDefault();
 
     // Prevent empty email submissions
     if (!email) {
-      alert("Please enter your email");
+      setError("Please enter your email address.");
       return;
     }
 
@@ -28,6 +31,7 @@ function ResetPasswordPage() {
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">

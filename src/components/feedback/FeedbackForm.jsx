@@ -1,21 +1,34 @@
 import { useState } from "react";
+import { submitFeedback } from "../../services/feedback";
 
-function FeedbackForm() {
+function FeedbackForm({ eventId, setError }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log({
-      rating,
-      comment,
-    });
+    if (!rating) {
+      setError("Please select a rating before submitting feedback.");
+      return;
+    }
 
-    setMessage("Thanks for your feedback!");
+    try {
+      await submitFeedback(eventId, {
+        rating,
+        comment,
+      });
+
+      setMessage("Thanks for your feedback!");
+      setRating(0);
+      setComment("");
+    } catch (err) {
+      console.error(err);
+      setError("We couldn't submit your feedback. Please try again.");
+    }
   }
-
+    
   return (
     <section className="card">
       <p className="card-label">Your Feedback Matters</p>

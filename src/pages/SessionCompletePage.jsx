@@ -1,10 +1,18 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function SessionCompletePage() {
+  const { eventId } = useParams();
+  const [error, setError] = useState("");
+
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -38,10 +46,10 @@ function SessionCompletePage() {
         </section>
 
         {/* Collect attendee feedback */}
-        <FeedbackForm />
+        <FeedbackForm eventId={eventId} setError={setError} />
 
         {/* Capture attendee email for slides/resources */}
-        <EmailCaptureForm />
+        <EmailCaptureForm eventId={eventId} setError={setError} />
 
         {/* Closing message */}
         <p className="end-note">
