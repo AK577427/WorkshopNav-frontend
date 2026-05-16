@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { getEventById } from "../services/events";
 import "./DashboardPage.css";
 import Footer from "../components/shared/Footer";
+import { useParams, useNavigate } from "react-router-dom";
+
 function EventDetailsPage() {
   const { eventId } = useParams();
   const navigate = useNavigate();
