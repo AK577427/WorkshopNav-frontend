@@ -47,12 +47,12 @@ function HomePage() {
               className="button-primary"
               onClick={() => navigate("/login")}
             >
-              Organiser Login
+              Facilitator Login
             </button>
 
             {/* Navigate to account creation */}
             <button
-              className="secondary-button"
+              className="button-primary"
               onClick={() => navigate("/signup")}
             >
               Create Account

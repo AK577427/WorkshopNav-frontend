@@ -5,28 +5,43 @@ import { QRCodeCanvas } from "qrcode.react";
 
 function CreateEventPage() {
   const navigate = useNavigate();
+  const [access] = useState(window.localStorage.getItem("access") || null);
+  const [err,setErr] = useState("");
 
   const [title, setTitle] = useState("");
   const [createdEvent, setCreatedEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleSubmit(e) {
+
+    async function handleSubmit(e) {
     e.preventDefault();
 
     if (!title.trim()) {
       alert("Please enter an event title");
       return;
     }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   if (!title.trim()) {
+  //     setErr("Please enter an event title");
+  //     return;
+  //   }
+  //   if(title.trim()) {
+  //     createNewEvent();
+  //   }
 
     setIsLoading(true);
+
+    
 
     try {
       const data = await createEvent({ title });
       setCreatedEvent(data);
       setTitle("");
+      setErr("");
     } catch (err) {
       console.error(err);
-      alert("Failed to create event");
+      setErr("Failed to create event");
     } finally {
       setIsLoading(false);
     }
@@ -43,13 +58,14 @@ function CreateEventPage() {
       <main className="page">
         <div className="page-header">
           <h1 className="page-title">Create Event</h1>
-          <p className="page-subtitle">Set up a new workshop session</p>
+          <p className="page-subtitle">Set up a new workshop event</p>
         </div>
 
         <section className="card">
           <h2>Event Details</h2>
 
           <form onSubmit={handleSubmit}>
+            {err && <p className="error-message">{err}</p>}
             <label className="form-label">Event Title</label>
 
             <input
