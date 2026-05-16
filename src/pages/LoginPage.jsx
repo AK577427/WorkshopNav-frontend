@@ -36,7 +36,7 @@ function LoginPage() {
           // Handle successful login, e.g., save token, redirect, etc.
           console.log("Login successful:", response);
           console.log("Token saved to localStorage:", response.access);
-          navigate("/dashboard/events/new");
+          navigate("/dashboard");
         })
         .catch((error) => {
           // Handle login error, e.g., show error message
