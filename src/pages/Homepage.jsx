@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
+// import JoinEventPage from "./JoinEventPage";
 
 function HomePage() {
 
@@ -26,7 +27,8 @@ function HomePage() {
     }
 
     // Navigate attendee to event join page
-    navigate(`/join/${code}`);
+    // navigate(`/join/${code}`);
+    navigate(`/event/${code}`); // updated skip JoinEventPage
   }
 
   return (
