@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { getEventById } from "../services/events";
 import "./DashboardPage.css";
+import { useParams, useNavigate } from "react-router-dom";
 
 function EventDetailsPage() {
   const { eventId } = useParams();
