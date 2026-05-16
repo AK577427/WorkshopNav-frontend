@@ -17,6 +17,7 @@ import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 function App() {
   return (
     <Routes>
+
       <Route path="/" element={<HomePage />} />
 
       <Route path="/login" element={<LoginPage />} />
@@ -78,6 +79,7 @@ function App() {
         path="/results/:eventId"
         element={<ResultsPage />}
       />
+
     </Routes>
   );
 }
