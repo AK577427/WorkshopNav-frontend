@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function CreateEventPage() {
   const navigate = useNavigate();

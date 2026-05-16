@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // Shared footer component
 import Footer from "../components/shared/Footer";
 
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function LoginPage() {
 

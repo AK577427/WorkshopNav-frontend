@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function SignupPage() {
 

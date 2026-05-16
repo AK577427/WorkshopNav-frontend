@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEvents } from "../services/events";
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 // Interactive attendee session components
 import LivePollCard from "../components/polls/LivePollCard";

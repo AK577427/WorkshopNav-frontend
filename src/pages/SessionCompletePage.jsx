@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function SessionCompletePage() {
   const { eventId } = useParams();
