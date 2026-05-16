@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
+import ErrorAlert from "../components/ErrorAlert";
 
 function CreateEventPage() {
   const navigate = useNavigate();
@@ -9,12 +10,13 @@ function CreateEventPage() {
   const [title, setTitle] = useState("");
   const [createdEvent, setCreatedEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (!title.trim()) {
-      alert("Please enter an event title");
+      setError("Please enter an event title.");
       return;
     }
 
@@ -26,7 +28,7 @@ function CreateEventPage() {
       setTitle("");
     } catch (err) {
       console.error(err);
-      alert("Failed to create event");
+      setError("We couldn't create the event. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -34,6 +36,8 @@ function CreateEventPage() {
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+
       <header className="app-header">
         <div className="app-header-inner">
           <div className="app-logo">Workshop Navigator</div>

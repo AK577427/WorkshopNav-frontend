@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEvents } from "../services/events";
+import ErrorAlert from "../components/ErrorAlert";
 
 // Interactive attendee session components
 import LivePollCard from "../components/polls/LivePollCard";
@@ -19,6 +20,8 @@ function AttendeeSessionPage() {
 
   // Track loading state while fetching event
   const [isLoading, setIsLoading] = useState(true);
+
+  const [error, setError] = useState("");
 
   // Load event information when page opens
   useEffect(() => {
@@ -92,6 +95,8 @@ function AttendeeSessionPage() {
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -137,7 +142,7 @@ function AttendeeSessionPage() {
         <LivePollCard />
 
         {/* Question submission form */}
-        <QuestionForm />
+        <QuestionForm setError={setError} />
 
         {/* Display attendee questions */}
         <QuestionList />
