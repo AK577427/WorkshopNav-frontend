@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 // Shared footer component
 import Footer from "../components/shared/Footer";
 
+import ErrorAlert from "../components/shared/ErrorAlert";
+
 function LoginPage() {
 
   // Store organiser email input
@@ -14,6 +16,8 @@ function LoginPage() {
 
   // React Router navigation hook
   const navigate = useNavigate();
+  
+  const [error, setError] = useState("");
 
   // Handle organiser login form submission
   function handleLogin(e) {
@@ -21,7 +25,7 @@ function LoginPage() {
 
     // Prevent empty login fields
     if (!email || !password) {
-      alert("Enter email and password");
+      setError("Please enter your email and password to log in.");
       return;
     }
 
@@ -32,6 +36,8 @@ function LoginPage() {
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
