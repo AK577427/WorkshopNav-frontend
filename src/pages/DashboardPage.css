@@ -1,0 +1,256 @@
+.dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 28px 24px 40px;
+  font-family: 'Glacial Indifference', sans-serif;
+  color: white;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 32px;
+}
+
+.dashboard-subtitle {
+  margin-top: 6px;
+  color: #b8b8d4;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.live-badge {
+  background: linear-gradient(135deg, #6d5dfc, #c951e7);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 22px 18px 60px;
+}
+
+.dashboard-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(18px);
+}
+
+.card-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #a5b4fc;
+  margin-bottom: 14px;
+}
+
+.overview-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-code-text {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.event-time {
+  color: #b8b8d4;
+  font-size: 0.95rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #6d5dfc, #8b5cf6);
+  border-radius: 22px;
+  padding: 18px 10px;
+  min-height: 105px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+
+.stat-card h2 {
+  font-size: 1.9rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.stat-card p {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  opacity: 0.92;
+}
+
+.dashboard-title p {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+.create-event-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 28px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+}
+
+.create-event-card h3 {
+  margin-bottom: 22px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.event-input {
+  width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.event-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.create-button,
+.button-primary {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #ec4899
+  );
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+.create-button:hover,
+.button-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.event-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 18px;
+  transition: 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+}
+
+.primary-button,
+.secondary-button {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 15px;
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Glacial Indifference', sans-serif;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #6d5dfc, #c951e7);
+  color: white;
+}
+
+.secondary-button {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.poll-title {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.poll-bar {
+  height: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+
+.poll-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #6d5dfc, #c951e7);
+  border-radius: 999px;
+}
+
+.poll-result {
+  margin-top: 12px;
+  color: #b8b8d4;
+  font-size: 0.9rem;
+}
+
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.question-card {
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+  padding: 15px;
+  line-height: 1.5;
+  color: #f4f4ff;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 1.25rem;
+  }
+
+  .dashboard-page {
+    padding-bottom: 80px;
+  }
+}
