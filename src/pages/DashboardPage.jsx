@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Event from "../components/shared/Event";
 import "./DashboardPage.css";
-import { getEventsPerFacilitator } from "../services/events";
 import Footer from "../components/shared/Footer";
+import { getEvents } from "../services/events";
 
 function DashboardPage() {
   const [events, setEvents] = useState([]);
@@ -14,7 +14,7 @@ function DashboardPage() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const data = await getEventsPerFacilitator();
+        const data = await getEvents();
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);
