@@ -25,13 +25,20 @@ function EventDetailsPage() {
   }, [eventId]);
 
   if (loading) {
-    return <p>Loading event...</p>;
+    return (
+      <div className="dashboard-page">
+        <p>Loading workshop details...</p>
+      </div>
+    );
   }
 
   if (!event) {
-    return <p>Event not found.</p>;
-  }
-
+  return (
+    <div className="dashboard-page">
+      <p>Event not found.</p>
+    </div>
+  );
+}
   return (
     <>
       <header className="dashboard-header">
@@ -39,9 +46,13 @@ function EventDetailsPage() {
           <div>
             <p className="dashboard-label">Workshop Navigator</p>
 
-            <h1 className="dashboard-title">{event.title}</h1>
+            <h1 className="dashboard-title">
+              {event?.title || "Loading..."}
+            </h1>
 
-            <p className="dashboard-subtitle">Current live workshop session</p>
+            <p className="dashboard-subtitle">
+              Current live workshop event
+            </p>
           </div>
 
           <div className="live-badge">LIVE</div>
@@ -53,13 +64,15 @@ function EventDetailsPage() {
           <div>
             <p className="card-label">Event Code</p>
 
-            <h2 className="event-code-text">{event.event_code}</h2>
+            <h2 className="event-code-text">
+              {event?.event_code || "Loading..."}
+            </h2>
           </div>
 
           <p className="event-time">
-            {event.created_at
+            {event?.created_at
               ? new Date(event.created_at).toLocaleString()
-              : "Workshop session"}
+              : "Workshop event"}
           </p>
         </section>
 
@@ -83,19 +96,28 @@ function EventDetailsPage() {
         <section className="dashboard-card">
           <p className="card-label">Facilitator Action</p>
 
-          <button className="primary-button">+ Create Live Poll</button>
+          <button className="primary-button">
+            + Create Live Poll
+          </button>
         </section>
 
         <section className="dashboard-card">
           <p className="card-label">Active Poll</p>
 
-          <h3 className="poll-title">How valuable is today’s workshop?</h3>
+          <h3 className="poll-title">
+            How valuable is today’s workshop?
+          </h3>
 
           <div className="poll-bar">
-            <div className="poll-fill" style={{ width: "82%" }}></div>
+            <div
+              className="poll-fill"
+              style={{ width: "82%" }}
+            ></div>
           </div>
 
-          <p className="poll-result">82% Positive Feedback</p>
+          <p className="poll-result">
+            82% Positive Feedback
+          </p>
         </section>
 
         <section className="dashboard-card">
@@ -113,7 +135,9 @@ function EventDetailsPage() {
         </section>
 
         <section className="dashboard-card">
-          <button className="secondary-button">Export Results CSV</button>
+          <button className="secondary-button">
+            Export Results CSV
+          </button>
         </section>
       </main>
     </>

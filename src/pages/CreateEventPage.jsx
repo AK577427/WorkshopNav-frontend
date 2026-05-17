@@ -49,25 +49,27 @@ function CreateEventPage() {
           <p className="page-subtitle">Set up a new workshop event</p>
         </div>
 
-        <section className="card">
-          <h2>Event Details</h2>
+        {!createdEvent && (
+          <section className="card">
+            <h2>Event Details</h2>
 
           <form onSubmit={handleSubmit}>
             {err && <p className="error-message">{err}</p>}
             <label className="form-label">Event Title</label>
 
-            <input
-              className="input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Gen Z Leadership Workshop"
-            />
+              <input
+                className="input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. Gen Z Leadership Workshop"
+              />
 
-            <button className="button-primary" type="submit">
-              {isLoading ? "Creating..." : "Create Event"}
-            </button>
-          </form>
-        </section>
+              <button className="button-primary" type="submit">
+                {isLoading ? "Creating..." : "Create Event"}
+              </button>
+            </form>
+          </section>
+        )}
 
         {createdEvent && (
           <section className="card card-centered">
@@ -113,6 +115,14 @@ function CreateEventPage() {
                 fgColor="#000000"
               />
             </div>
+
+            <button
+              className="button-secondary"
+              style={{ marginTop: "20px" }}
+              onClick={() => setCreatedEvent(null)}
+            >
+              Create Another Event
+            </button>
           </section>
         )}
       </main>
