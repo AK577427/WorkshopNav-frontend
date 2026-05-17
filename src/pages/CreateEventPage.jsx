@@ -1,40 +1,42 @@
 import { useState } from "react";
-import { createEvent } from "../services/events";
+import { postCreateEvent } from "../services/events";
+import { useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import ErrorAlert from "../components/shared/ErrorAlert";
 
 function CreateEventPage() {
+  const navigate = useNavigate();
+  const [err,setErr] = useState("");
+
   const [title, setTitle] = useState("");
   const [createdEvent, setCreatedEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (!title.trim()) {
-      setError("Please enter an event title.");
+      setErr("Please enter an event title");
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      const data = await createEvent({ title });
-      setCreatedEvent(data);
+      setIsLoading(true);
+
+      const response = await postCreateEvent({ title });
+      setCreatedEvent(response);
       setTitle("");
+      setErr("");
     } catch (err) {
       console.error(err);
-      setError("We couldn't create the event. Please try again.");
-    } finally {
+      setErr("We couldn't create the event. Please try again.");
+    } finally {      
       setIsLoading(false);
     }
-  }
+
+  };
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-
       <header className="app-header">
         <div className="app-header-inner">
           <div className="app-logo">Workshop Navigator</div>
@@ -44,17 +46,16 @@ function CreateEventPage() {
       <main className="page">
         <div className="page-header">
           <h1 className="page-title">Create Event</h1>
-          <p className="page-subtitle">
-            Set up a new workshop event
-          </p>
+          <p className="page-subtitle">Set up a new workshop event</p>
         </div>
 
         {!createdEvent && (
           <section className="card">
             <h2>Event Details</h2>
 
-            <form onSubmit={handleSubmit}>
-              <label className="form-label">Event Title</label>
+          <form onSubmit={handleSubmit}>
+            {err && <p className="error-message">{err}</p>}
+            <label className="form-label">Event Title</label>
 
               <input
                 className="input"

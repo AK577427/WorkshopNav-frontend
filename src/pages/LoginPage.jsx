@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postLogin } from "../services/post-login";
 
 // Shared footer component
 import Footer from "../components/shared/Footer";
@@ -10,6 +11,7 @@ function LoginPage() {
 
   // Store organiser email input
   const [email, setEmail] = useState("");
+  const [err, setErr] = useState("");
 
   // Store organiser password input
   const [password, setPassword] = useState("");
@@ -19,20 +21,31 @@ function LoginPage() {
   
   const [error, setError] = useState("");
 
-  // Handle organiser login form submission
-  function handleLogin(e) {
-    e.preventDefault();
 
-    // Prevent empty login fields
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (!email || !password) {
-      setError("Please enter your email and password to log in.");
+      setErr("Please enter your email and password to log in.");
       return;
     }
+    if(email && password) {
+      // Perform login logic here
+      postLogin(email, password)
+        .then((response) => {
+          window.localStorage.setItem("access", response.access); // Save token to local storage
+          // Handle successful login, e.g., save token, redirect, etc.
+          console.log("Login successful:", response);
+          console.log("Token saved to localStorage:", response.access);
+          navigate("/dashboard");
+        })
+        .catch((error) => {
+          // Handle login error, e.g., show error message
+          console.error("Login failed:", error);
+          setErr("Login failed. Please check your credentials and try again.");
+        });
+    }
+  };
 
-    // MVP temporary login behaviour
-    // Redirect organiser directly to dashboard
-    navigate("/dashboard/events/new");
-  }
 
   return (
     <>
@@ -68,8 +81,9 @@ function LoginPage() {
         {/* Login form card */}
         <section className="card">
 
-          <form onSubmit={handleLogin}>
-
+          <form onSubmit={handleSubmit}>
+            {err && <p className="error-message">{err}</p>}
+            
             {/* Email field label */}
             <label className="form-label">
               Email
@@ -80,6 +94,7 @@ function LoginPage() {
               className="input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              id="email"
               placeholder="Enter your email"
             />
 
@@ -94,18 +109,19 @@ function LoginPage() {
               className="input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              id="password"
               placeholder="Enter your password"
             />
 
             {/* Submit login form */}
-            <button className="button-primary">
+            <button type="submit" 
+              className="button-primary">
               Login
             </button>
 
             {/* Navigate to password reset page */}
-            <button
+            <button type="button"
               className="secondary-button"
-              type="button"
               onClick={() => navigate("/reset-password")}
             >
               Forgot password?
