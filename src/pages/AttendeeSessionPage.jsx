@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { getEvents } from "../services/events";
 
 // Interactive attendee session components
-import LivePollCard from "../components/polls/LivePollCard";
+import LivePollCard from "../components/polls/AttendeePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
-import GetSlidesCard from "../components/shared/GetSlidesCard";
+import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 
@@ -143,8 +143,7 @@ function AttendeeSessionPage() {
         <QuestionList />
 
         {/* Email capture for workshop slides */}
-        <GetSlidesCard />
-
+        <EmailCaptureForm />
       </main>
 
       {/* Global application footer */}
