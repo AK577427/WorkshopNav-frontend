@@ -116,6 +116,7 @@ function EventDetailsPage() {
           <button className="secondary-button">Export Results CSV</button>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
