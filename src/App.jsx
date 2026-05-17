@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import CreateEventPage from "./pages/CreateEventPage";
 import "./App.css";
 import EventDetailsPage from "./pages/EventDetailsPage";
+import FacilitatorEventDetailsPage from "./pages/FacilitatorEventDetailsPage";
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
       <Route path="/dashboard" element={<DashboardPage />} />
 
       {/* EVENT DETAILS */}
-      <Route path="/dashboard/events/:eventId" element={<EventDetailsPage />} />
+      <Route path="/dashboard/eventmon/:eventId" element={<EventDetailsPage />} />
+      <Route path="/dashboard/eventshan/:eventId" element={<FacilitatorEventDetailsPage />} />
 
       {/* RESULTS */}
       <Route path="/results/:eventId" element={<ResultsPage />} />

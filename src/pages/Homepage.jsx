@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/shared/Footer";
 
 function HomePage() {
 
@@ -111,7 +112,9 @@ function HomePage() {
           </form>
         </div>
       </main>
+      <Footer />
     </>
+    
   );
 }
 
