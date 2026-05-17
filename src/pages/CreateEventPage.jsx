@@ -1,36 +1,39 @@
 import { useState } from "react";
-import { createEvent } from "../services/events";
+import { postCreateEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 
 function CreateEventPage() {
   const navigate = useNavigate();
+  const [err,setErr] = useState("");
 
   const [title, setTitle] = useState("");
   const [createdEvent, setCreatedEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (!title.trim()) {
-      alert("Please enter an event title");
+      setErr("Please enter an event title");
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      const data = await createEvent({ title });
-      setCreatedEvent(data);
+      setIsLoading(true);
+
+      const response = await postCreateEvent({ title });
+      setCreatedEvent(response);
       setTitle("");
+      setErr("");
     } catch (err) {
       console.error(err);
-      alert("Failed to create event");
-    } finally {
+      setErr("We couldn't create the event. Please try again.");
+    } finally {      
       setIsLoading(false);
     }
-  }
+
+  };
 
   return (
     <>
@@ -43,27 +46,30 @@ function CreateEventPage() {
       <main className="page">
         <div className="page-header">
           <h1 className="page-title">Create Event</h1>
-          <p className="page-subtitle">Set up a new workshop session</p>
+          <p className="page-subtitle">Set up a new workshop event</p>
         </div>
 
-        <section className="card">
-          <h2>Event Details</h2>
+        {!createdEvent && (
+          <section className="card">
+            <h2>Event Details</h2>
 
           <form onSubmit={handleSubmit}>
+            {err && <p className="error-message">{err}</p>}
             <label className="form-label">Event Title</label>
 
-            <input
-              className="input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Gen Z Leadership Workshop"
-            />
+              <input
+                className="input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. Gen Z Leadership Workshop"
+              />
 
-            <button className="button-primary" type="submit">
-              {isLoading ? "Creating..." : "Create Event"}
-            </button>
-          </form>
-        </section>
+              <button className="button-primary" type="submit">
+                {isLoading ? "Creating..." : "Create Event"}
+              </button>
+            </form>
+          </section>
+        )}
 
         {createdEvent && (
           <section className="card card-centered">
@@ -109,6 +115,14 @@ function CreateEventPage() {
                 fgColor="#000000"
               />
             </div>
+
+            <button
+              className="button-secondary"
+              style={{ marginTop: "20px" }}
+              onClick={() => setCreatedEvent(null)}
+            >
+              Create Another Event
+            </button>
           </section>
         )}
       </main>

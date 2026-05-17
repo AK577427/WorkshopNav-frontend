@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/shared/ErrorAlert";
 
 function SignupPage() {
 
@@ -12,6 +13,8 @@ function SignupPage() {
     email: "",
     password: "",
   });
+  
+  const [error, setError] = useState("");
 
   // Handle updates to form input fields
   function handleChange(e) {
@@ -33,7 +36,7 @@ function SignupPage() {
       !formData.email ||
       !formData.password
     ) {
-      alert("Please fill in all fields");
+      setError("Please complete all required fields.");
       return;
     }
 
@@ -43,6 +46,8 @@ function SignupPage() {
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+        
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
