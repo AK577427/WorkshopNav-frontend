@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { QRCodeCanvas } from "qrcode.react";
 import { getEventById } from "../services/events";
 import "./DashboardPage.css";
 import Footer from "../components/shared/Footer";
 import { useParams, useNavigate } from "react-router-dom";
 
 function EventDetailsPage() {
-  const { eventCode } = useParams();
+  const { eventId } = useParams();
   const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
@@ -14,7 +15,7 @@ function EventDetailsPage() {
   useEffect(() => {
     async function fetchEvent() {
       try {
-        const data = await getEventById(eventCode);
+        const data = await getEventById(eventId);
         setEvent(data);
       } catch (error) {
         console.error("Error fetching event:", error);
@@ -24,7 +25,7 @@ function EventDetailsPage() {
     }
 
     fetchEvent();
-  }, [eventCode]);
+  }, [eventId]);
 
   if (loading) {
     return (
@@ -60,6 +61,24 @@ function EventDetailsPage() {
 
       <main className="dashboard-page">
         {/* EVENT INFO */}
+{/* QR CODE */}
+<section className="dashboard-card card-centered">
+  <p className="card-label">Workshop Join QR</p>
+
+  <div style={{ marginTop: "16px" }}>
+    <QRCodeCanvas
+      value={`${window.location.origin}/join/${event.event_code}`}
+      size={180}
+      bgColor="#ffffff"
+      fgColor="#000000"
+    />
+  </div>
+
+  <p className="muted" style={{ marginTop: "16px" }}>
+    Share this QR code for attendees to join the workshop
+  </p>
+</section>
+
         <section className="dashboard-card overview-card">
           <div>
             <p className="card-label">Event Code</p>
