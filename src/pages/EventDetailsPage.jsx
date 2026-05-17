@@ -4,7 +4,7 @@ import "./DashboardPage.css";
 import { useParams, useNavigate } from "react-router-dom";
 
 function EventDetailsPage() {
-  const { eventId } = useParams();
+  const { eventCode } = useParams();
   const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
@@ -13,7 +13,7 @@ function EventDetailsPage() {
   useEffect(() => {
     async function fetchEvent() {
       try {
-        const data = await getEventById(eventId);
+        const data = await getEventById(eventCode);
         setEvent(data);
       } catch (error) {
         console.error("Error fetching event:", error);
@@ -23,7 +23,7 @@ function EventDetailsPage() {
     }
 
     fetchEvent();
-  }, [eventId]);
+  }, [eventCode]);
 
   if (loading) {
     return (
@@ -46,17 +46,11 @@ function EventDetailsPage() {
       <header className="dashboard-header">
         <div className="dashboard-header-inner">
           <div>
-            <p className="dashboard-label">
-              Workshop Navigator
-            </p>
+            <p className="dashboard-label">Workshop Navigator</p>
 
-            <h1 className="dashboard-title">
-              {event.title}
-            </h1>
+            <h1 className="dashboard-title">{event.title}</h1>
 
-            <p className="dashboard-subtitle">
-              Current live workshop event
-            </p>
+            <p className="dashboard-subtitle">Current live workshop event</p>
           </div>
 
           <div className="live-badge">LIVE</div>
@@ -64,15 +58,12 @@ function EventDetailsPage() {
       </header>
 
       <main className="dashboard-page">
-
         {/* EVENT INFO */}
         <section className="dashboard-card overview-card">
           <div>
             <p className="card-label">Event Code</p>
 
-            <h2 className="event-code-text">
-              {event.event_code}
-            </h2>
+            <h2 className="event-code-text">{event.event_code}</h2>
           </div>
 
           <p className="event-time">
@@ -102,12 +93,9 @@ function EventDetailsPage() {
 
         {/* FACILITATOR ACTIONS */}
         <section className="dashboard-card">
-          <p className="card-label">
-            Facilitator Actions
-          </p>
+          <p className="card-label">Facilitator Actions</p>
 
           <div className="action-buttons">
-
             <button
               className="primary-button"
               onClick={() => navigate(`/results/${eventId}`)}
@@ -121,7 +109,6 @@ function EventDetailsPage() {
             >
               Back to Dashboard
             </button>
-
           </div>
         </section>
 
@@ -129,27 +116,18 @@ function EventDetailsPage() {
         <section className="dashboard-card">
           <p className="card-label">Active Poll</p>
 
-          <h3 className="poll-title">
-            How valuable is today’s workshop?
-          </h3>
+          <h3 className="poll-title">How valuable is today’s workshop?</h3>
 
           <div className="poll-bar">
-            <div
-              className="poll-fill"
-              style={{ width: "82%" }}
-            ></div>
+            <div className="poll-fill" style={{ width: "82%" }}></div>
           </div>
 
-          <p className="poll-result">
-            82% Positive Feedback
-          </p>
+          <p className="poll-result">82% Positive Feedback</p>
         </section>
 
         {/* QUESTIONS */}
         <section className="dashboard-card">
-          <p className="card-label">
-            Recent Questions
-          </p>
+          <p className="card-label">Recent Questions</p>
 
           <div className="question-list">
             <div className="question-card">
@@ -164,11 +142,8 @@ function EventDetailsPage() {
 
         {/* EXPORT */}
         <section className="dashboard-card">
-          <button className="secondary-button">
-            Export Results CSV
-          </button>
+          <button className="secondary-button">Export Results CSV</button>
         </section>
-
       </main>
       <Footer />
     </>
