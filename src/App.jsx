@@ -11,6 +11,7 @@ import "./App.css";
 import EventDetailsPage from "./pages/EventDetailsPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import SignupPage from "./pages/SignupPage";
+import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 
 function App() {
   return (
@@ -21,9 +22,16 @@ function App() {
 
       <Route path="/signup" element={<SignupPage />} />
 
+      {/* RESET PASSWORD */}
       <Route
         path="/reset-password"
         element={<ResetPasswordPage />}
+      />
+
+      {/* RESET PASSWORD CONFIRM */}
+      <Route
+        path="/reset-password-confirm"
+        element={<ResetPasswordConfirmPage />}
       />
 
       {/* JOIN EVENT */}

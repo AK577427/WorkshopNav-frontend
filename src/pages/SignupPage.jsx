@@ -8,9 +8,9 @@ function SignupPage() {
   // React Router navigation hook
   const navigate = useNavigate();
 
-  // Store organiser signup form data
+  // Store facilitator signup form data
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -27,13 +27,13 @@ function SignupPage() {
     });
   }
 
-  // Handle organiser account creation
+  // Handle facilitator account creation
   async function handleSubmit(e) {
     e.preventDefault();
 
     // Prevent incomplete form submission
     if (
-      !formData.name ||
+      !formData.username ||
       !formData.email ||
       !formData.password
     ) {
@@ -42,7 +42,11 @@ function SignupPage() {
     }
 
     try {
-    const data = await signupFacilitator(formData);
+      const data = await signupFacilitator({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
 
     window.localStorage.setItem("access", data.access);
     window.localStorage.setItem("refresh", data.refresh);
@@ -93,17 +97,17 @@ function SignupPage() {
             onSubmit={handleSubmit}
           >
 
-            {/* Full name input field */}
+            {/* Username input field */}
             <label className="form-label">
 
-              Full Name
+              Username
 
               <input
                 className="input"
-                name="name"
-                value={formData.name}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Enter your full name"
+                placeholder="Enter a username"
               />
 
             </label>
@@ -140,7 +144,7 @@ function SignupPage() {
 
             </label>
 
-            {/* Submit organiser account creation */}
+            {/* Submit facilitator account creation */}
             <button
               className="button-primary"
               type="submit"
