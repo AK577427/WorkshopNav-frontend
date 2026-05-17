@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
 import { getEventByCode } from "../services/events";
 
-// Interactive attendee event components
+// Interactive attendee session components
+import LivePollCard from "../components/polls/AttendeePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
+import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 import GetSlidesCard from "../components/shared/GetSlidesCard";
@@ -123,9 +125,9 @@ function AttendeeEventPage() {
 
         {/* Display attendee questions */}
         <QuestionList />
-
-        {/* Email capture for workshop slides */}
         <GetSlidesCard />
+      {/* Email capture for workshop slides */}
+        <EmailCaptureForm />
       </main>
 
       {/* Global application footer */}
