@@ -4,12 +4,15 @@ import { getEventById } from "../services/events";
 import "./DashboardPage.css";
 import Footer from "../components/shared/Footer";
 import { useParams, useNavigate } from "react-router-dom";
+import { getPollsByEvent, createPoll } from "../services/polls";
 
 function EventDetailsPage() {
   const { eventId } = useParams();
   const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
+  const [polls, setPolls] = useState([]);
+  const [newPollQuestion, setNewPollQuestion] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,6 +20,9 @@ function EventDetailsPage() {
       try {
         const data = await getEventById(eventId);
         setEvent(data);
+
+        const pollData = await getPollsByEvent(eventId);
+        setPolls(pollData);
       } catch (error) {
         console.error("Error fetching event:", error);
       } finally {
@@ -26,6 +32,23 @@ function EventDetailsPage() {
 
     fetchEvent();
   }, [eventId]);
+
+  async function handleCreatePoll(e) {
+    e.preventDefault();
+
+    if (!newPollQuestion.trim()) return;
+
+    try {
+      const createdPoll = await createPoll(eventId, {
+        question: newPollQuestion,
+      });
+
+      setPolls([...polls, createdPoll]);
+      setNewPollQuestion("");
+    } catch (error) {
+      console.error("Error creating poll:", error);
+    }
+  }
 
   if (loading) {
     return (
@@ -61,23 +84,23 @@ function EventDetailsPage() {
 
       <main className="dashboard-page">
         {/* EVENT INFO */}
-{/* QR CODE */}
-<section className="dashboard-card card-centered">
-  <p className="card-label">Workshop Join QR</p>
+        {/* QR CODE */}
+        <section className="dashboard-card card-centered">
+          <p className="card-label">Workshop Join QR</p>
 
-  <div style={{ marginTop: "16px" }}>
-    <QRCodeCanvas
-      value={`${window.location.origin}/join/${event.event_code}`}
-      size={180}
-      bgColor="#ffffff"
-      fgColor="#000000"
-    />
-  </div>
+          <div style={{ marginTop: "16px" }}>
+            <QRCodeCanvas
+              value={`${window.location.origin}/join/${event.event_code}`}
+              size={180}
+              bgColor="#ffffff"
+              fgColor="#000000"
+            />
+          </div>
 
-  <p className="muted" style={{ marginTop: "16px" }}>
-    Share this QR code for attendees to join the workshop
-  </p>
-</section>
+          <p className="muted" style={{ marginTop: "16px" }}>
+            Share this QR code for attendees to join the workshop
+          </p>
+        </section>
 
         <section className="dashboard-card overview-card">
           <div>
@@ -132,17 +155,46 @@ function EventDetailsPage() {
           </div>
         </section>
 
-        {/* ACTIVE POLL */}
+        {/* CREATE POLL */}
         <section className="dashboard-card">
-          <p className="card-label">Active Poll</p>
+          <p className="card-label">Create Poll</p>
 
-          <h3 className="poll-title">How valuable is today’s workshop?</h3>
+          <form onSubmit={handleCreatePoll}>
+            <input
+              type="text"
+              placeholder="Enter poll question"
+              value={newPollQuestion}
+              onChange={(e) => setNewPollQuestion(e.target.value)}
+              className="poll-input"
+            />
 
-          <div className="poll-bar">
-            <div className="poll-fill" style={{ width: "82%" }}></div>
-          </div>
+            <button
+              type="submit"
+              className="primary-button"
+              style={{ marginTop: "12px" }}
+            >
+              Create Poll
+            </button>
+          </form>
+        </section>
 
-          <p className="poll-result">82% Positive Feedback</p>
+        {/* ACTIVE POLLS */}
+        <section className="dashboard-card">
+          <p className="card-label">Active Polls</p>
+
+          {polls.length === 0 ? (
+            <p className="muted">No polls created yet.</p>
+          ) : (
+            polls.map((poll) => (
+              <div key={poll.id} className="question-card">
+                <h3 className="poll-title">{poll.question}</h3>
+
+                <p className="muted">
+                  {poll.is_active ? "Live Poll" : "Closed Poll"}
+                </p>
+              </div>
+            ))
+          )}
         </section>
 
         {/* QUESTIONS */}

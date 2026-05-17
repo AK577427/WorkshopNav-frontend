@@ -8,6 +8,42 @@ import { getEvents } from "../services/events";
 function DashboardPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+useEffect(() => {
+  async function fetchEvent() {
+    try {
+      const data = await getEventById(eventId);
+      setEvent(data);
+
+      const pollData = await getPollsByEvent(eventId);
+      setPolls(pollData);
+
+    } catch (error) {
+      console.error("Error fetching event:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchEvent();
+}, [eventId]);
+
+async function handleCreatePoll(e) {
+  e.preventDefault();
+
+  if (!newPollQuestion.trim()) return;
+
+  try {
+    const createdPoll = await createPoll(eventId, {
+      question: newPollQuestion,
+    });
+
+    setPolls([...polls, createdPoll]);
+    setNewPollQuestion("");
+
+  } catch (error) {
+    console.error("Error creating poll:", error);
+  }
+}
 
   const navigate = useNavigate();
 
@@ -31,7 +67,6 @@ function DashboardPage() {
     <div className="dashboard-container">
       <div className="dashboard-title">
         <h1>Manage your Events</h1>
-        
       </div>
 
       {/* CREATE EVENT BUTTON */}
