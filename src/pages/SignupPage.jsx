@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
+import { signupFacilitator } from "../services/auth";
 
 function SignupPage() {
 
@@ -27,7 +28,7 @@ function SignupPage() {
   }
 
   // Handle organiser account creation
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // Prevent incomplete form submission
@@ -40,9 +41,18 @@ function SignupPage() {
       return;
     }
 
-    // Temporary MVP redirect after signup
+    try {
+    const data = await signupFacilitator(formData);
+
+    window.localStorage.setItem("access", data.access);
+    window.localStorage.setItem("refresh", data.refresh);
+
     navigate("/dashboard");
+  } catch (err) {
+    console.error(err);
+    setError("We couldn't create your account. Please try again.");
   }
+}
 
   return (
     <>
@@ -66,7 +76,7 @@ function SignupPage() {
         <div className="page-header">
 
           <h1 className="page-title">
-            Create Organiser Account
+            Create Facilitator Account
           </h1>
 
           <p className="page-subtitle">
@@ -135,7 +145,7 @@ function SignupPage() {
               className="button-primary"
               type="submit"
             >
-              Create Organiser Account
+              Create Facilitator Account
             </button>
 
           </form>

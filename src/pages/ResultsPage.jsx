@@ -1,3 +1,14 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import {
+  getPolls,
+  getPollResults,
+  getQuestions,
+  getFeedback,
+  getEmails,
+} from "../services/results";
+
 import {
   BarChart,
   Bar,
@@ -7,28 +18,66 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+
 function ResultsPage() {
+  // Get event id from url
+  const { eventId } = useParams();
+  // Store api-driven results data
+  const [pollResults, setPollResults] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [emailCount, setEmailCount] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
 
-  // Temporary mock poll result data
-  // This will later be replaced with backend/API data
-  const pollResults = [
-    { option: "Communication", votes: 12 },
-    { option: "Motivation", votes: 8 },
-    { option: "Retention", votes: 6 },
-    { option: "Conflict", votes: 5 },
-  ];
+  // Fetch event analytics data when page loads
+  useEffect(() => {
+  async function loadResults() {
+    try {
+      // Fetch all result-related data in parallel
+      const [polls, questionData, feedbackData, emailData] =
+        await Promise.all([
+          getPolls(eventId),
+          getQuestions(eventId),
+          getFeedback(eventId),
+          getEmails(eventId),
+        ]);
+      
+      // Fetch poll response breakdown for first poll
+      if (polls.length > 0) {
+        const resultData = await getPollResults(polls[0].id);
 
-  // Temporary mock question data
-  const questions = [
-    "How do you improve Gen Z engagement?",
-    "What leadership styles work best?",
-  ];
+        setPollResults(
+          resultData.map((result) => ({
+            option: result.option_text,
+            votes: result.count,
+          }))
+        );
+      }
 
-  // Temporary mock summary values
-  const attendeeCount = 42;
-  const emailCount = 18;
-  const pollResponseCount = 31;
-  const averageRating = 4.2;
+      setQuestions(questionData.map((q) => q.question_text));
+      setEmailCount(emailData.length);
+
+      if (feedbackData.length > 0) {
+        const total = feedbackData.reduce(
+          (sum, item) => sum + Number(item.rating || 0),
+          0
+        );
+
+        setAverageRating((total / feedbackData.length).toFixed(1));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  loadResults();
+}, [eventId]);
+
+const attendeeCount = emailCount;
+
+const pollResponseCount = pollResults.reduce(
+  (sum, row) => sum + row.votes,
+  0
+);
 
   // Export event results into a downloadable CSV file
   function exportCSV() {

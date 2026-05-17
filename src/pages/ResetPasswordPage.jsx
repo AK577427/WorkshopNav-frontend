@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
+import { resetPassword } from "../services/auth";
 
 function ResetPasswordPage() {
 
