@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/shared/Footer";
+import ErrorAlert from "../components/shared/ErrorAlert";
+// import JoinEventPage from "./JoinEventPage";
 
 function HomePage() {
 
@@ -13,22 +15,31 @@ function HomePage() {
   // React Router navigation hook
   const navigate = useNavigate();
 
+
+  const [error, setError] = useState("");
+
   // Handle attendee joining a workshop session
+
+  // Handle attendee joining a workshop event
+
   function handleJoin(e) {
     e.preventDefault();
 
     // Prevent empty event code submission
     if (!code.trim()) {
-      alert("Enter a code");
+      setError("Please enter an event code to join.");
       return;
     }
 
     // Navigate attendee to event join page
-    navigate(`/join/${code}`);
+    // navigate(`/join/${code}`);
+    navigate(`/event/${code}`); // updated skip JoinEventPage
   }
 
   return (
     <>
+      <ErrorAlert message={error} onClose={() => setError("")} />
+
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -46,12 +57,12 @@ function HomePage() {
               className="button-primary"
               onClick={() => navigate("/login")}
             >
-              Organiser Login
+              Facilitator Login
             </button>
 
             {/* Navigate to account creation */}
             <button
-              className="secondary-button"
+              className="button-primary"
               onClick={() => navigate("/signup")}
             >
               Create Account
@@ -106,7 +117,7 @@ function HomePage() {
 
             {/* Submit join request */}
             <button className="button-primary">
-              Join Session
+              Join Event
             </button>
 
           </form>

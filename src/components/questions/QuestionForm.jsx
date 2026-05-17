@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function QuestionForm() {
+function QuestionForm({ setError }) {
   const [question, setQuestion] = useState("");
   const [anonymous, setAnonymous] = useState(true);
   const [message, setMessage] = useState("");
@@ -9,7 +9,7 @@ function QuestionForm() {
     e.preventDefault();
 
     if (!question.trim()) {
-      alert("Please enter a question");
+      setError("Please enter your question.");
       return;
     }
 
