@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { postCreateEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
+import { createEvent } from "../services/events";
 import { QRCodeCanvas } from "qrcode.react";
 
 function CreateEventPage() {
   const navigate = useNavigate();
+
   const [err,setErr] = useState("");
 
   const [title, setTitle] = useState("");
@@ -22,7 +23,9 @@ function CreateEventPage() {
     try {
       setIsLoading(true);
 
-      const response = await postCreateEvent({ title });
+     const response = await createEvent({ title });
+setCreatedEvent(response);
+
       setCreatedEvent(response);
       setTitle("");
       setErr("");
