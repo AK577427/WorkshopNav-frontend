@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEventById } from "../services/events";
 import "./DashboardPage.css";
-
+import Footer from "../components/shared/Footer";
 function EventDetailsPage() {
   const { eventId } = useParams();
 

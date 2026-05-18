@@ -4,7 +4,6 @@ function Footer() {
   return (
     <footer className="app-footer">
       <div className="footer-brand">
-        <h3>Workshop Navigator</h3>
         <p>Helping facilitators create engaging workshop experiences.</p>
       </div>
 

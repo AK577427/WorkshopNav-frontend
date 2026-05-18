@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
 import { signupFacilitator } from "../services/auth";
+import Footer from "../components/shared/Footer";
 
 function SignupPage() {
 

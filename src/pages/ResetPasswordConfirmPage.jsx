@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
 import { confirmPasswordReset } from "../services/auth";
+import Footer from "../components/shared/Footer";
 
 function ResetPasswordConfirmPage() {
   const navigate = useNavigate();
@@ -112,6 +113,7 @@ function ResetPasswordConfirmPage() {
           </form>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
