@@ -92,15 +92,14 @@ function CreateEventPage() {
             </p>
 
             <div className="share-link">
-              {`${import.meta.env.VITE_API_URL}/events/join/${createdEvent.event_code}`}
+              {`${window.location.origin}/join/${createdEvent.event_code}`}
             </div>
 
             <button
               className="button-primary"
               onClick={() => {
                 navigator.clipboard.writeText(
-                  // `${window.location.origin}/join/${createdEvent.event_code}`,
-                  `${import.meta.env.VITE_API_URL}/events/join/${createdEvent.event_code}/`);
+                  `${window.location.origin}/join/${createdEvent.event_code}`);
                 alert("Link copied!");
               }}
             >
@@ -109,7 +108,7 @@ function CreateEventPage() {
 
             <div style={{ marginTop: "20px" }}>
               <QRCodeCanvas
-                value={`${import.meta.env.VITE_API_URL}/events/join/${createdEvent.event_code}/`}
+                value={`${window.location.origin}/join/${createdEvent.event_code}`} 
                 size={180}
                 bgColor="#ffffff"
                 fgColor="#000000"
