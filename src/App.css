@@ -15,8 +15,9 @@ body {
 
 .page {
   min-height: 100vh;
-  padding: 40px 16px;
-  max-width: 900px;
+  padding: 40px 24px;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -112,13 +113,13 @@ body {
   background: rgba(25, 21, 65, 0.92);
   border: 1px solid rgba(167, 139, 250, 0.3);
   border-radius: 22px;
-  padding: 26px;
-  max-width: 560px;
+  padding: 40px;
+  max-width: 960px;
+  width: 100%;
   margin: 22px auto;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease;
 }
-
 .card:hover {
   transform: translateY(-2px);
 }
@@ -271,11 +272,10 @@ body {
 }
 
 .landing-content {
-  max-width: 480px;
+  max-width: 720px;
   width: 100%;
   padding-top: 40px;
 }
-
 .landing-title {
   font-size: 48px;
   margin-bottom: 12px;
@@ -356,9 +356,9 @@ body {
 
 
 .event-page {
-  max-width: 620px;
+  max-width: 820px;
+  width: 100%;
 }
-
 .event-welcome {
   text-align: center;
   margin-bottom: 24px;
