@@ -47,6 +47,7 @@ function CreateEventPage() {
       <main className="page">
         <div className="page-header">
           <h1 className="page-title">Create Event</h1>
+
           <p className="page-subtitle">
             Set up a new workshop event
           </p>
@@ -58,7 +59,9 @@ function CreateEventPage() {
 
             <form onSubmit={handleSubmit}>
               {err && (
-                <p className="error-message">{err}</p>
+                <p className="error-message">
+                  {err}
+                </p>
               )}
 
               <label className="form-label">
@@ -77,6 +80,7 @@ function CreateEventPage() {
               <button
                 className="button-primary"
                 type="submit"
+                disabled={isLoading}
               >
                 {isLoading
                   ? "Creating..."
@@ -113,9 +117,13 @@ function CreateEventPage() {
 
             <h2>{createdEvent.title}</h2>
 
-            <p className="muted">Event Code</p>
+            <p className="muted">
+              Event Code
+            </p>
 
-            <h2>{createdEvent.event_code}</h2>
+            <h2>
+              {createdEvent.event_code}
+            </h2>
 
             <p
               className="muted"
