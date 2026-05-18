@@ -67,12 +67,19 @@ function CreateEventPage() {
               <button className="button-primary" type="submit">
                 {isLoading ? "Creating..." : "Create Event"}
               </button>
+
+              <button className="secondary-button" type="button" onClick={() => navigate("/dashboard")}>
+                Back to Dashboard
+              </button>
             </form>
           </section>
         )}
 
         {createdEvent && (
           <section className="card card-centered">
+            <button className="secondary-button" onClick={() => navigate("/dashboard")}>
+              ← Back to Dashboard
+            </button>
             <p className="card-label">Event created</p>
 
             <h2>{createdEvent.title}</h2>
@@ -85,31 +92,24 @@ function CreateEventPage() {
             </p>
 
             <div className="share-link">
-              {`${window.location.origin}/join/${createdEvent.event_code}`}
+              {`${import.meta.env.VITE_API_URL}/events/join/${createdEvent.event_code}`}
             </div>
 
             <button
               className="button-primary"
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `${window.location.origin}/join/${createdEvent.event_code}`,
-                );
+                  // `${window.location.origin}/join/${createdEvent.event_code}`,
+                  `${import.meta.env.VITE_API_URL}/events/join/${createdEvent.event_code}/`);
                 alert("Link copied!");
               }}
             >
               Copy Link
             </button>
-            <button
-              className="button-secondary"
-              onClick={() => navigate("/dashboard")}
-              style={{ marginTop: "12px" }}
-            >
-              Go to Dashboard
-            </button>
 
             <div style={{ marginTop: "20px" }}>
               <QRCodeCanvas
-                value={`${window.location.origin}/join/${createdEvent.event_code}`}
+                value={`${import.meta.env.VITE_API_URL}/events/join/${createdEvent.event_code}/`}
                 size={180}
                 bgColor="#ffffff"
                 fgColor="#000000"
@@ -117,7 +117,7 @@ function CreateEventPage() {
             </div>
 
             <button
-              className="button-secondary"
+              className="button-primary"
               style={{ marginTop: "20px" }}
               onClick={() => setCreatedEvent(null)}
             >
