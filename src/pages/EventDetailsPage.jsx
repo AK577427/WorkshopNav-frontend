@@ -57,14 +57,20 @@ function EventDetailsPage() {
     );
   }
 
-  if (!event) {
-    return (
-      <div className="dashboard-page">
-        <p>Event not found.</p>
-      </div>
-    );
-  }
+if (!event) {
+  return (
+    <div className="dashboard-page">
+      <h2>Event not found</h2>
 
+      <button
+        className="create-button"
+        onClick={() => navigate("/dashboard")}
+      >
+        Back to Dashboard
+      </button>
+    </div>
+  );
+}
   return (
     <>
       <header className="dashboard-header">
