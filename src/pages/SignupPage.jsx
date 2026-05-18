@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
+import Footer from "../components/shared/Footer";
 import { signupFacilitator } from "../services/auth";
 
 function SignupPage() {
