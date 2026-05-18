@@ -61,7 +61,7 @@ function JoinEventPage() {
     return (
       <main className="page">
         <div className="card">
-          <h2>Event not found</h2>
+            <h2>Event not found</h2>
 
           <p className="muted">{error}</p>
         </div>

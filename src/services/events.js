@@ -12,9 +12,8 @@ export function getEventById(eventId) {
 
 // Get event by event code
 export function getEventByCode(eventCode) {
-  return apiRequest(`/events/${eventCode}/`);
+  return apiRequest(`/events/join/${eventCode}/`);
 }
-
 // Create event
 export function createEvent(data) {
   return apiRequest("/events/", {
