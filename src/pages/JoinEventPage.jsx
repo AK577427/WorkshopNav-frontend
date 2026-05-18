@@ -128,7 +128,7 @@ function JoinEventPage() {
           {/* Navigate attendee into live event */}
           <button
             className="button-primary"
-            onClick={() => navigate(`/event/${event.id}`)}
+            onClick={() => navigate(`/event/${event.event_code}`)}
           >
             Join Event
           </button>
