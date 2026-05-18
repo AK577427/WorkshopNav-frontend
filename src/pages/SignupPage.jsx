@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
+import { signupFacilitator } from "../services/auth";
 
 function SignupPage() {
 
   // React Router navigation hook
   const navigate = useNavigate();
 
-  // Store organiser signup form data
+  // Store facilitator signup form data
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -26,13 +27,13 @@ function SignupPage() {
     });
   }
 
-  // Handle organiser account creation
-  function handleSubmit(e) {
+  // Handle facilitator account creation
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // Prevent incomplete form submission
     if (
-      !formData.name ||
+      !formData.username ||
       !formData.email ||
       !formData.password
     ) {
@@ -40,9 +41,22 @@ function SignupPage() {
       return;
     }
 
-    // Temporary MVP redirect after signup
+    try {
+      const data = await signupFacilitator({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+    window.localStorage.setItem("access", data.access);
+    window.localStorage.setItem("refresh", data.refresh);
+
     navigate("/dashboard");
+  } catch (err) {
+    console.error(err);
+    setError("We couldn't create your account. Please try again.");
   }
+}
 
   return (
     <>
@@ -66,7 +80,7 @@ function SignupPage() {
         <div className="page-header">
 
           <h1 className="page-title">
-            Create Organiser Account
+            Create Facilitator Account
           </h1>
 
           <p className="page-subtitle">
@@ -83,17 +97,17 @@ function SignupPage() {
             onSubmit={handleSubmit}
           >
 
-            {/* Full name input field */}
+            {/* Username input field */}
             <label className="form-label">
 
-              Full Name
+              Username
 
               <input
                 className="input"
-                name="name"
-                value={formData.name}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Enter your full name"
+                placeholder="Enter a username"
               />
 
             </label>
@@ -130,12 +144,12 @@ function SignupPage() {
 
             </label>
 
-            {/* Submit organiser account creation */}
+            {/* Submit facilitator account creation */}
             <button
               className="button-primary"
               type="submit"
             >
-              Create Organiser Account
+              Create Facilitator Account
             </button>
 
           </form>

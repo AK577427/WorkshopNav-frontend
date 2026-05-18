@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/shared/ErrorAlert";
+import { requestPasswordReset } from "../services/auth";
 
 function ResetPasswordPage() {
 
@@ -13,7 +14,7 @@ function ResetPasswordPage() {
   const [error, setError] = useState("");
 
   // Handle reset password form submission
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // Prevent empty email submissions
@@ -21,13 +22,23 @@ function ResetPasswordPage() {
       setError("Please enter your email address.");
       return;
     }
+    
+    try {
+    const data = await requestPasswordReset({ email });
+    
+    // Store reset details temporarily for MVP flow
+    localStorage.setItem("reset_uid", data.uid);
+    localStorage.setItem("reset_token", data.token);
 
-    // Temporary MVP success message
-    alert("Password reset link sent");
+    alert("Password reset request sent.");
 
-    // Redirect user back to login page
-    navigate("/login");
+    navigate("/reset-password-confirm");
+    
+  } catch (err) {
+    console.error(err);
+    setError("We couldn't send the password reset request.");
   }
+}
 
   return (
     <>
