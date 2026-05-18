@@ -11,7 +11,7 @@ import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 import GetSlidesCard from "../components/shared/GetSlidesCard";
-
+import LivePollCard from "../components/polls/LivePollCard";
 function AttendeeEventPage() {
   // Get event ID from route parameters
   const { eventCode } = useParams();
@@ -119,8 +119,8 @@ function AttendeeEventPage() {
         </section>
 
         {/* Live polling component */}
-        {/* <LivePollCard /> */}
-
+        <LivePollCard eventId={event.id} />
+        
         {/* Question submission form */}
         <QuestionForm setError={setError} />
 
