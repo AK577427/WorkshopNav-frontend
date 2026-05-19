@@ -107,17 +107,15 @@ function AttendeeEventPage() {
           <p className="muted">You have successfully joined the workshop.</p>
 
           <div className="event-actions-preview">
-            <div className="event-action-chip">Ask Questions</div>
-
-            <div className="event-action-chip">Participate in Polls</div>
-
-            <div className="event-action-chip">Access Slides</div>
+            <span>Ask Questions</span>
+            <span>Polls</span>
+            <span>Slides</span>
           </div>
         </section>
 
         {/* Live polling component */}
         <LivePollCard eventId={event.id} />
-        
+
         {/* Question submission form */}
         <QuestionForm setError={setError} />
 
