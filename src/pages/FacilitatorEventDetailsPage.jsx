@@ -4,6 +4,7 @@ import { useState } from "react";
 import CreatePoll from "../components/polls/CreatePoll";
 import QueuedPolls from "../components/polls/QueuedPolls";
 import LivePollCard from "../components/polls/LivePollCard";
+import Footer from "../components/shared/Footer";
 
 // Shared components
 import LogoutButton from "../components/shared/LogoutButton";
@@ -90,6 +91,7 @@ function FacilitatorEventDetailsPage() {
   }
 
   return (
+  <>
     <main className="page event-details-page">
 
       {/* Navigation button back to facilitator dashboard */}
@@ -215,7 +217,9 @@ function FacilitatorEventDetailsPage() {
       </section>
 
     </main>
-    
+    <Footer />
+  
+  </>
   );
 }
 

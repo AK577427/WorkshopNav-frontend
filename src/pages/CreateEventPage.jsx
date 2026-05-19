@@ -2,6 +2,7 @@ import { useState } from "react";
 import { postCreateEvent } from "../services/events";
 import { useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
+import Footer from "../components/shared/Footer";
 
 function CreateEventPage() {
   const navigate = useNavigate();
@@ -125,6 +126,7 @@ function CreateEventPage() {
           </section>
         )}
       </main>
+      <Footer />
     </>
   );
 }

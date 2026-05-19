@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Event from "../components/shared/Event";
 import "./DashboardPage.css";
 import { getEventsPerFacilitator } from "../services/events";
+import Footer from "../components/shared/Footer";
 
 function DashboardPage() {
   const [events, setEvents] = useState([]);
@@ -26,6 +27,7 @@ function DashboardPage() {
   }, []);
 
   return (
+    <>
     <div className="dashboard-container">
       <div className="dashboard-title">
         <h1>Manage your Events</h1>
@@ -61,6 +63,8 @@ function DashboardPage() {
         </div>
       )}
     </div>
+    <Footer />
+    </>
   );
 }
 
