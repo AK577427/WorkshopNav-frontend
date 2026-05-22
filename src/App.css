@@ -780,6 +780,21 @@ body {
 }
 
 
+.attendee-poll-card h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.attendee-poll-form {
+  display: grid;
+  gap: 12px;
+}
+
+.option-button.selected {
+  border-color: #ec4899;
+  background: rgba(236, 72, 153, 0.22);
+}
+
 .error-band {
   position: fixed;
   top: 24px;
@@ -807,4 +822,19 @@ body {
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
+}
+
+.attendee-poll-card h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.attendee-poll-form {
+  display: grid;
+  gap: 12px;
+}
+
+.option-button.selected {
+  border-color: #ec4899;
+  background: rgba(236, 72, 153, 0.22);
 }
