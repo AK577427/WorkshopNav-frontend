@@ -7,6 +7,7 @@ import { getEventByCode } from "../services/events";
 import LivePollCard from "../components/polls/AttendeePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
+// Interactive attendee event components
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 import GetSlidesCard from "../components/shared/GetSlidesCard";
