@@ -2,14 +2,15 @@ import { useState } from "react";
 import { captureEmail } from "../../services/emails";
 
 
-function EmailCaptureForm({ eventId,setError }) {
+function EmailCaptureForm({ eventId }) {
   const [email, setEmail] = useState("");
+  const [err, setErr] = useState(""); 
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (!email.trim()) {
-      setError("Please enter your email address.");
+      setErr("Please enter your email address.");
       return;
     }
     
@@ -21,7 +22,7 @@ function EmailCaptureForm({ eventId,setError }) {
       setEmail("");
     } catch (err) {
       console.error(err);
-      setError("We couldn't submit your email. Please try again.");
+      setErr("We couldn't submit your email. Please try again.");
     }
   }
 
@@ -31,6 +32,7 @@ function EmailCaptureForm({ eventId,setError }) {
       <h2>Get the Slides</h2>
 
       <form onSubmit={handleSubmit}>
+      {err && <p className="error-message">{err}</p>}
         <input
           className="input"
           type="email"
