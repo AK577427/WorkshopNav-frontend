@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ErrorAlert from "../components/shared/ErrorAlert";
 import { getEventByCode } from "../services/events";
 
 // Interactive attendee session components
@@ -10,7 +9,7 @@ import EmailCaptureForm from "../components/email/EmailCaptureForm";
 // Interactive attendee event components
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
-import GetSlidesCard from "../components/shared/GetSlidesCard";
+import AttendeePollCard from "../components/polls/AttendeePollCard";
 
 function AttendeeEventPage() {
   // Get event ID from route parameters
@@ -22,7 +21,7 @@ function AttendeeEventPage() {
   // Track loading state while fetching event
   const [isLoading, setIsLoading] = useState(true);
 
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   // Load event information when page opens
   useEffect(() => {
@@ -80,7 +79,7 @@ function AttendeeEventPage() {
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
+      {/* <ErrorAlert message={error} onClose={() => setError("")} /> */}
 
       {/* Top application header */}
       <header className="app-header">
@@ -101,13 +100,11 @@ function AttendeeEventPage() {
 
       <main className="page event-page">
         {/* Welcome section for attendees */}
-
+        <h1>Live Workshop Event</h1>
         <section className="event-welcome card">
-          <p className="card-label">Live Workshop Event</p>
-
-          <h1>{event.title}</h1>
 
           <p className="muted">You have successfully joined the workshop.</p>
+          <h1>{event.title}</h1>
 
           <div className="event-actions-preview">
             <div className="event-action-chip">Ask Questions</div>
@@ -118,15 +115,19 @@ function AttendeeEventPage() {
           </div>
         </section>
 
-        {/* Live polling component */}
-        {/* <LivePollCard /> */}
+        {/* Live polling component
+        <LivePollCard /> */}
+
+        {/* Attendee Poll Card */}
+        <AttendeePollCard eventId={event.id} />
 
         {/* Question submission form */}
-        <QuestionForm setError={setError} />
+        <QuestionForm eventId={event.id} />
+        {err && <p className="error-message">{err}</p>}
 
         {/* Display attendee questions */}
-        <QuestionList />
-        <GetSlidesCard />
+        <QuestionList eventId={event.id} />
+
       {/* Email capture for workshop slides */}
         <EmailCaptureForm />
       </main>
