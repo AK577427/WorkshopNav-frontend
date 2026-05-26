@@ -824,6 +824,11 @@ body {
   line-height: 1;
   cursor: pointer;
 }
+.error-message {
+  color: #f87171;
+  font-size: 14px;
+  margin-top: 8px;
+}
 
 .attendee-poll-card h2 {
   margin-top: 0;
