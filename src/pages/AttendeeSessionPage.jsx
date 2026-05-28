@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getEventByCode } from "../services/events";
 
-// Interactive attendee session components
+// Interactive attendee event components
 import LivePollCard from "../components/polls/AttendeePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
-// Interactive attendee event components
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 import AttendeePollCard from "../components/polls/AttendeePollCard";
 
 function AttendeeEventPage() {
   const [refresh, setRefresh] = useState(false);
+  const navigate = useNavigate();
   // Get event ID from route parameters
   const { eventCode } = useParams();
 
@@ -23,6 +23,8 @@ function AttendeeEventPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [err, setErr] = useState("");
+
+  const eventIsActive = event?.is_active === true;
 
   const handleQuestionSubmitted = () => {
     // Trigger a refresh of the question list after a new question is submitted
@@ -41,6 +43,7 @@ function AttendeeEventPage() {
       } catch (err) {
         // Log any fetch errors
         console.error(err);
+        setErr("Unable to load this event right now.");
       } finally {
         // Stop loading spinner
         setIsLoading(false);
@@ -49,6 +52,12 @@ function AttendeeEventPage() {
 
     loadEvent();
   }, [eventCode]);
+
+  useEffect(() => {
+    if (!isLoading && event && !eventIsActive) {
+      navigate(`/event/${event.id}/complete`, { replace: true });
+    }
+  }, [event, eventIsActive, isLoading, navigate]);
 
   // Display loading screen while event data is loading
   if (isLoading) {
@@ -93,7 +102,7 @@ function AttendeeEventPage() {
           {/* Event status and event code */}
           <div className="event-header-actions">
             {/* Live event indicator */}
-            <span className="live-badge">+ Live</span>
+            {eventIsActive ? <span className="live-badge">+ Live</span> : null}
 
             {/* Display attendee event code */}
             <span className="event-code-pill">{event.event_code}</span>
