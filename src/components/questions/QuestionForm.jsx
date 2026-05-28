@@ -10,6 +10,9 @@ function QuestionForm({ eventId, onSuccess }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    setErr("");
+    setMessage("");
+
     if (!question.trim()) {
       setErr("Please enter your question.");
       return;
@@ -17,6 +20,7 @@ function QuestionForm({ eventId, onSuccess }) {
 
     try {
       await postQuestion(eventId, { text: question, anonymous });
+      setErr("");
       setMessage("Your question has been submitted.");
       setAnonymous(true);
       if (onSuccess) {
@@ -40,7 +44,11 @@ function QuestionForm({ eventId, onSuccess }) {
         <textarea
           className="textarea"
           value={question}
-          onChange={(e) => setQuestion(e.target.value)}
+          onChange={(e) => {
+            setErr("");
+            setMessage("");
+            setQuestion(e.target.value);
+          }}
           placeholder="Type your question..."
           rows="4"
         />

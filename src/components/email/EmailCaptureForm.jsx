@@ -23,6 +23,7 @@ function EmailCaptureForm({ eventId }) {
 
       try {
         await captureEmail(eventId,email);
+        setErr("");
         setMessage("Your email has been submitted successfully!");
         setEmail("");
 
@@ -45,7 +46,11 @@ function EmailCaptureForm({ eventId }) {
           className="input"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setErr("");
+            setMessage("");
+            setEmail(e.target.value);
+          }}
           placeholder="Enter your email address"
         />
 
