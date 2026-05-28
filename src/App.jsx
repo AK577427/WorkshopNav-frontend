@@ -13,6 +13,9 @@ import FacilitatorEventDetailsPage from "./pages/FacilitatorEventDetailsPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import SignupPage from "./pages/SignupPage";
 import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
+import QuestionForm from "./components/questions/QuestionForm";
+import QuestionList from "./components/questions/QuestionList";
+import EmailCaptureForm from "./components/email/EmailCaptureForm";
 
 function App() {
   return (
@@ -51,6 +54,22 @@ function App() {
       <Route
         path="/event/:eventCode"
         element={<AttendeeEventPage />}
+      />
+      {/* QUESTION SUBMISSION */}
+      <Route
+        path="/events/:eventId/questions"
+        element={<QuestionForm />}
+      />
+
+      {/* Get Questions */}
+      <Route
+        path="/events/:eventId/questions"
+        element={<QuestionList />}
+      />
+      {/* Email Capture */}
+      <Route
+        path="/event/:eventId/emails"
+        element={<EmailCaptureForm />}
       />
 
       {/* EVENT COMPLETE */}
