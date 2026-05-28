@@ -5,26 +5,34 @@ import { captureEmail } from "../../services/emails";
 function EmailCaptureForm({ eventId }) {
   const [email, setEmail] = useState("");
   const [err, setErr] = useState(""); 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
-    if (!email.trim()) {
-      setErr("Please enter your email address.");
-      return;
-    }
-    
-    try {
-      await captureEmail(eventId, {
-        email,
-      });
+      //empty email validation
+      if (!email || !email.includes("@")) {
+        setErr("Please enter a valid email address.");
+        return;
+      }
 
-      setEmail("");
-    } catch (err) {
-      console.error(err);
-      setErr("We couldn't submit your email. Please try again.");
-    }
-  }
+      setLoading(true);
+      setErr("");
+      setMessage("");
+
+      try {
+        await captureEmail(eventId,email);
+        setMessage("Your email has been submitted successfully!");
+        setEmail("");
+
+      } catch (err) {
+        setErr("We couldn't submit your email. Please try again.");
+        console.log(err);       
+      }finally{
+        setLoading(false);
+      }
+    };
 
   return (
     <section className="card">
@@ -44,6 +52,7 @@ function EmailCaptureForm({ eventId }) {
         <button type="submit" className="button-primary">
           Send Me the Slides
         </button>
+        {message && <p className="success-message">{message}</p>}
       </form>
     </section>
   );
