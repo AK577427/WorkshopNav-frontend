@@ -12,6 +12,7 @@ import QuestionList from "../components/questions/QuestionList";
 import AttendeePollCard from "../components/polls/AttendeePollCard";
 
 function AttendeeEventPage() {
+  const [refresh, setRefresh] = useState(false);
   // Get event ID from route parameters
   const { eventCode } = useParams();
 
@@ -22,6 +23,11 @@ function AttendeeEventPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [err, setErr] = useState("");
+
+  const handleQuestionSubmitted = () => {
+    // Trigger a refresh of the question list after a new question is submitted
+    setRefresh((prev) => !prev);
+  };
 
   // Load event information when page opens
   useEffect(() => {
@@ -70,7 +76,6 @@ function AttendeeEventPage() {
           <h2>Event not found</h2>
 
           <p className="muted">This workshop event could not be loaded.</p>
-
           <p className="muted">Please check the event code and try again.</p>
         </section>
       </main>
@@ -79,8 +84,6 @@ function AttendeeEventPage() {
 
   return (
     <>
-      {/* <ErrorAlert message={error} onClose={() => setError("")} /> */}
-
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -122,14 +125,14 @@ function AttendeeEventPage() {
         <AttendeePollCard eventId={event.id} />
 
         {/* Question submission form */}
-        <QuestionForm eventId={event.id} />
+        <QuestionForm eventId={event.id} onSuccess={handleQuestionSubmitted} />
         {err && <p className="error-message">{err}</p>}
 
         {/* Display attendee questions */}
-        <QuestionList eventId={event.id} />
+        <QuestionList eventId={event.id} refresh={refresh} />
 
       {/* Email capture for workshop slides */}
-        <EmailCaptureForm />
+        <EmailCaptureForm eventId={event.id}  />
       </main>
 
       {/* Global application footer */}
