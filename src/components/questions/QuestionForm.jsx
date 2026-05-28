@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { postQuestion } from "../../services/questions";
 
-function QuestionForm({ eventId }) {
+function QuestionForm({ eventId, onSuccess }) {
   const [question, setQuestion] = useState("");
   const [anonymous, setAnonymous] = useState(true);
   const [message, setMessage] = useState("");
@@ -16,18 +16,17 @@ function QuestionForm({ eventId }) {
     }
 
     try {
-      const response = await postQuestion(eventId, { text: question, anonymous });
-      setQuestion(response.text);
+      await postQuestion(eventId, { text: question, anonymous });
       setMessage("Your question has been submitted.");
       setAnonymous(true);
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (err) {
       console.error(err);
       setErr("Failed to submit question. Please try again.");
       return ;
     }
-
-    console.log({ question, anonymous });
-    setMessage("Your question has been submitted.");
     setQuestion("");
   }
 
@@ -63,5 +62,4 @@ function QuestionForm({ eventId }) {
     </section>
   );
 }
-
 export default QuestionForm;

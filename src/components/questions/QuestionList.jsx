@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getQuestions } from "../../services/questions";
 import { useEffect } from "react";
 
-function QuestionList({ eventId }) {
+function QuestionList({ eventId , refresh }) {
   const [questions, setQuestions] = useState([]);
 
 
@@ -17,7 +17,7 @@ function QuestionList({ eventId }) {
     }
 
     fetchQuestions();
-  }, [eventId]);
+  }, [eventId, refresh]);
   
   return (
     <section className="card">
