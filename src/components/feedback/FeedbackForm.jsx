@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { submitFeedback } from "../../services/feedback";
 
-function FeedbackForm({ eventId, setError }) {
+function FeedbackForm({ eventId }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
+  const [err, setErr] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
 
+    setErr("");
+    setMessage("");
+
     if (!rating) {
-      setError("Please select a rating before submitting feedback.");
+      setErr("Please select a rating before submitting feedback.");
       return;
     }
 
@@ -20,12 +24,13 @@ function FeedbackForm({ eventId, setError }) {
         comment,
       });
 
+      setErr("");
       setMessage("Thanks for your feedback!");
       setRating(0);
       setComment("");
     } catch (err) {
       console.error(err);
-      setError("We couldn't submit your feedback. Please try again.");
+      setErr("We couldn't submit your feedback. Please try again.");
     }
   }
     
@@ -36,6 +41,7 @@ function FeedbackForm({ eventId, setError }) {
       <h2>Please take a moment to share your feedback</h2>
 
       <form onSubmit={handleSubmit}>
+        {err && <p className="error-message">{err}</p>}
         {/* Star Rating */}
         <div className="star-rating">
           {[1, 2, 3, 4, 5].map((star) => (
@@ -45,7 +51,10 @@ function FeedbackForm({ eventId, setError }) {
               className={`star-button ${
                 rating >= star ? "active" : ""
               }`}
-              onClick={() => setRating(star)}
+              onClick={() => {
+                setErr("");
+                setRating(star);
+              }}
             >
               ★
             </button>
@@ -56,7 +65,10 @@ function FeedbackForm({ eventId, setError }) {
         <textarea
           className="textarea"
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => {
+            setErr("");
+            setComment(e.target.value);
+          }}
           placeholder="Additional comments (optional)..."
           rows="5"
         />

@@ -16,6 +16,7 @@ import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 import QuestionForm from "./components/questions/QuestionForm";
 import QuestionList from "./components/questions/QuestionList";
 import EmailCaptureForm from "./components/email/EmailCaptureForm";
+import FeedbackForm from "./components/feedback/FeedbackForm";
 
 function App() {
   return (
@@ -76,6 +77,12 @@ function App() {
       <Route
         path="/event/:eventId/complete"
         element={<EventCompletePage />}
+      />
+
+      {/* FEEDBACK */}
+      <Route
+        path="/event/:eventId/feedback"
+        element={<FeedbackForm />}
       />
 
       {/* DASHBOARD */}
