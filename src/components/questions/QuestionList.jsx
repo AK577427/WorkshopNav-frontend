@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getQuestions } from "../../services/questions";
+import { getQuestions, upvoteQuestion } from "../../services/questions";
 import { useEffect } from "react";
 
 function QuestionList({ eventId , refresh }) {
@@ -18,6 +18,24 @@ function QuestionList({ eventId , refresh }) {
 
     fetchQuestions();
   }, [eventId, refresh]);
+
+  async function handleUpVote(questionId) {
+  try {
+    await upvoteQuestion(questionId);
+
+    // update UI immediately
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((q) =>
+        q.id === questionId
+          ? { ...q, upvotes: q.upvotes + 1 }
+          : q
+      )
+    );
+
+  } catch (err) {
+    console.error("Failed to upvote:", err);
+  }
+}
   
   return (
     <section className="card">
@@ -32,7 +50,7 @@ function QuestionList({ eventId , refresh }) {
             <div className="question-meta">
               <span>{question.anonymous ? "Anonymous" : "Named User"}</span>
 
-              <button className="upvote-button">
+              <button className="upvote-button" onClick={() => handleUpVote(question.id)}>
                 ▲ {question.upvotes}
               </button>
             </div>
