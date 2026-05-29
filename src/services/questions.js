@@ -17,5 +17,10 @@ export async function getQuestions(eventId) {
   return apiRequest(`/events/${eventId}/questions/`, {
     method: "GET",
   });
+}
 
+export async function upvoteQuestion(questionId) {
+  return apiRequest(`/questions/${questionId}/upvote/`, {
+    method: "PATCH",
+  });
 }
