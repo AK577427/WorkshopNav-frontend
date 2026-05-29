@@ -3,12 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getEventByCode } from "../services/events";
 
 // Interactive attendee event components
-import LivePollCard from "../components/polls/AttendeePollCard";
+// import LivePollCard from "../components/polls/LivePollCard";
 import QuestionForm from "../components/questions/QuestionForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 import AttendeePollCard from "../components/polls/AttendeePollCard";
+import EventCompletePage from "./EventCompletePage";
+
 
 function AttendeeEventPage() {
   const [refresh, setRefresh] = useState(false);
@@ -49,9 +51,37 @@ function AttendeeEventPage() {
         setIsLoading(false);
       }
     }
-
     loadEvent();
   }, [eventCode]);
+
+  // useEffect(() => {
+  //   loadEvent();
+
+  //   const interval = setInterval(() => {
+  //     loadEvent();
+  //   }, 10000); // Refresh event data every 10 seconds
+
+  //   return () => clearInterval(interval);
+  // }, [eventCode]);
+
+  // if(loading) return <p>Loading...</p>
+
+  // if(!event?.is_active){
+  //   return <EventCompletePage event={event} />
+  // }
+
+
+  // if (!event) {
+  //   return <p>Event not found.</p>;
+  // }
+
+
+  // // Event automatically switches when API refreshes
+  // if (!eventIsActive) {
+  //   return <EventCompletePage event={event} />;
+  // }
+
+
 
   useEffect(() => {
     if (!isLoading && event && !eventIsActive) {
@@ -127,10 +157,6 @@ function AttendeeEventPage() {
           </div>
         </section>
 
-        {/* Live polling component
-        <LivePollCard /> */}
-
-        {/* Attendee Poll Card */}
         <AttendeePollCard eventId={event.id} />
 
         {/* Question submission form */}
@@ -151,3 +177,113 @@ function AttendeeEventPage() {
 }
 
 export default AttendeeEventPage;
+
+// import { useEffect, useState } from "react";
+// import { useParams } from "react-router-dom";
+// import { getEventByCode } from "../services/events";
+
+// import QuestionForm from "../components/questions/QuestionForm";
+// import EmailCaptureForm from "../components/email/EmailCaptureForm";
+// import Footer from "../components/shared/Footer";
+// import QuestionList from "../components/questions/QuestionList";
+// import AttendeePollCard from "../components/polls/AttendeePollCard";
+// import EventCompletePage from "./EventCompletePage";
+
+// function AttendeeEventPage() {
+//   const { eventCode } = useParams();
+
+//   const [event, setEvent] = useState(null);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [refresh, setRefresh] = useState(false);
+//   const [err, setErr] = useState("");
+
+//   const eventIsActive = event?.is_active === true;
+
+//   const handleQuestionSubmitted = () => {
+//     setRefresh((prev) => !prev);
+//   };
+
+//   async function loadEvent() {
+//     try {
+//       const data = await getEventByCode(eventCode);
+//       setEvent(data);
+//       setErr("");
+//     } catch (err) {
+//       console.error(err);
+//       setErr("Unable to load this event right now.");
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   }
+
+//   useEffect(() => {
+//     loadEvent();
+
+//     const interval = setInterval(() => {
+//       loadEvent();
+//     }, 10000);
+
+//     return () => clearInterval(interval);
+//   }, [eventCode]);
+
+//   if (isLoading) {
+//     return <p>Loading...</p>;
+//   }
+
+//   if (!event) {
+//     return <p>Event not found.</p>;
+//   }
+
+//   // Event automatically switches when API refreshes
+//   if (!eventIsActive) {
+//     return <EventCompletePage event={event.id} />;
+//   }
+
+//   return (
+//     <>
+//       <header className="app-header">
+//         <div className="app-header-inner">
+//           <div className="app-logo">Workshop Navigator</div>
+
+//           <div className="event-header-actions">
+//             <span className="live-badge">+ Live</span>
+//             <span className="event-code-pill">
+//               {event.event_code}
+//             </span>
+//           </div>
+//         </div>
+//       </header>
+
+//       <main className="page event-page">
+
+//         <section className="event-welcome card">
+//           <p className="muted">
+//             You have successfully joined the workshop.
+//           </p>
+
+//           <h1>{event.title}</h1>
+//         </section>
+
+//         <AttendeePollCard eventId={event.id} />
+
+//         <QuestionForm
+//           eventId={event.id}
+//           onSuccess={handleQuestionSubmitted}
+//         />
+
+//         {err && <p className="error-message">{err}</p>}
+
+//         <QuestionList
+//           eventId={event.id}
+//           refresh={refresh}
+//         />
+
+//         <EmailCaptureForm eventId={event.id} />
+//       </main>
+
+//       <Footer />
+//     </>
+//   );
+// }
+
+// export default AttendeeEventPage;
