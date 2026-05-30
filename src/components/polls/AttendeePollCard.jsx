@@ -1,32 +1,175 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {getPolls, submitPollResponse, getPollResponses} from "../../services/polls";
 
-function AttendeePollCard({
-  question = "How are you finding the session so far?",
-  options = ["Great", "Good", "Unsure"],
-}) {
-  const [selectedOption, setSelectedOption] = useState("");
+function AttendeePollCard({eventId }) {
+
+  //poll data
+  const [poll, setPoll] = useState(null);
+  const [pollOptions, setPollOptions] = useState([]);
+
+  //user interface
+  const [selectedOption, setSelectedOption] = useState(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  function handleSubmit(e) {
+  //ui states
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
+
+  //poll results
+  const [responses, setResponses] = useState([]);
+
+
+  // fetch  active poll
+  useEffect(() => {
+    async function fetchActivePoll(){
+      try {
+        setLoading(true);
+        setErr("");
+
+        //get all polls for this event
+        const allPolls = await getPolls(eventId);
+        console.log("Fetched polls:", allPolls);
+        //find the active poll (assuming only one active poll at a time)
+        const activePoll = allPolls.find(poll => poll.is_active===true);
+
+        if (activePoll) {
+          console.log("Active poll found:", activePoll);
+          setPoll(activePoll);
+          setPollOptions(activePoll.poll_options || []);
+
+          const options = activePoll.poll_options || [];
+          console.log("Poll options from API:", options);
+          
+          //fetch responses for this poll
+          const pollResponses = await getPollResponses(activePoll.id);
+          setResponses(pollResponses || [] );
+          setErr("");
+        }else{
+          setPoll(null);
+          setPollOptions([]);
+          setResponses([]);
+          setErr("No active poll at the moment.");
+        }
+      } catch (err) {
+        console.error("Error fetching poll data:", err);
+        setErr("Failed to fetch poll data");
+        setPoll(null);
+        setPollOptions([]);
+        setResponses([]);
+        setErr("Failed to fetch poll data");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchActivePoll();
+
+    const interval = setInterval(fetchActivePoll, 15000); // Refresh poll data every 15 seconds
+    return () => clearInterval(interval); // Clean up interval on component unmount
+
+  }, [eventId]);
+
+  //handle poll submission
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!selectedOption) {
-      alert("Please select an answer");
+      setErr("Please select an answer");
       return;
     }
+    try {
+      setLoading(true);
+      setErr("");
+      await submitPollResponse(poll.id,  { option: selectedOption } );
 
-    setHasSubmitted(true);
+      setHasSubmitted(true);
+      }catch (err) {
+      console.error("Error submitting poll response:", err);
+      setErr("Failed to submit your response. Please try again.");
+      } finally {
+      setLoading(false);
+      }
   }
+
+  //count responses for each option
+  const getOptionVoteCount = (optionId) => {
+    return responses.filter((response) => response.option === optionId).length;
+  };
+
+
+  //calculate total responses for percentage calculation
+  const getOptionPercentage = (optionId) => {
+    const totalResponses  = responses.length;
+    if (totalResponses === 0) return 0;
+    const voteCount = getOptionVoteCount(optionId);
+    return Math.round((voteCount / totalResponses) * 100);
+  };
+
+  //Loading state
+  if (loading && !poll) {
+     return (
+    <article className="card attendee-poll-card">
+      <p className="card-label">LIVE POLL</p>
+      <h2>Loading poll...</h2>
+    </article>
+  );
+  }
+
+  const totalResponses  = responses.length;
 
   return (
     <article className="card attendee-poll-card">
       <p className="card-label">LIVE POLL</p>
-
-      <h2>{question}</h2>
-
+ 
+      {/* <h2>{poll.question}</h2> */}
+ 
       {!hasSubmitted ? (
         <form onSubmit={handleSubmit} className="attendee-poll-form">
-          {options.map((option) => (
+          {err && <p className="error-message">{err}</p>}
+ 
+          {pollOptions && pollOptions.length > 0 ? (
+            <div className="options-container">
+              {pollOptions.map((option) => {
+                const voteCount = getOptionVoteCount(option.id);
+                const percentage = getOptionPercentage(option.id);
+ 
+                return (
+                  <div key={option.id} className="option-wrapper">
+                    {/* {option.option_text} Display option text */}
+                    <button
+                      type="button"
+                      className={`option-button-votes ${
+                        selectedOption === option.id ? "selected" : ""
+                      }`}
+                      onClick={() => {
+                        setSelectedOption(option.id);
+                        setErr("");
+                      }}
+                      disabled={loading}
+                    >
+                      <span className="option-text">{option.option_text}</span>
+                      <span className="option-meta">
+                        {voteCount} {voteCount === 1 ? "vote" : "votes"} · {percentage}%
+                      </span>
+                    </button>
+ 
+                    {totalResponses > 0 && (
+                      <div className="progress-bar">
+                        <div
+                          className="progress-fill"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="muted">No options available.</p>
+          )}
+
+          {/* {options.map((option) => (
             <button
               type="button"
               key={option}
@@ -37,9 +180,12 @@ function AttendeePollCard({
             >
               {option}
             </button>
-          ))}
-
-          <button className="button-primary">
+          ))} */}
+          {/* //disable submit button poll is inactive or no option selected */}
+          <button 
+            className="button-primary" 
+            disabled={!poll || !selectedOption}
+            type="submit">
             Submit Answer
           </button>
         </form>

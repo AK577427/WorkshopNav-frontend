@@ -5,8 +5,10 @@ import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
 import ErrorAlert from "../components/shared/ErrorAlert";
 
-function EventCompletePage() {
-  const { eventId } = useParams();
+function EventCompletePage({ eventId :propEventId }) {
+  const {eventId: routeEventId } = useParams();
+  const eventId = propEventId || routeEventId;
+  console.log("Event ID from URL:", eventId);
   const [error, setError] = useState("");
 
   return (

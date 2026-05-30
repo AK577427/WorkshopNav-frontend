@@ -830,17 +830,115 @@ body {
   margin-top: 8px;
 }
 
-.attendee-poll-card h2 {
-  margin-top: 0;
-  margin-bottom: 18px;
+.option-button-votes {
+  width: 100%;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(138, 43, 226, 0.25);
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 50%;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
 }
 
-.attendee-poll-form {
-  display: grid;
-  gap: 12px;
+.option-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(187, 45, 217, 0), rgba(187, 45, 217, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+ 
+.option-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(138, 43, 226, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(187, 45, 217, 0.2);
+}
+ 
+.option-button:hover:not(:disabled)::before {
+  opacity: 1;
+}
+ 
+.option-button-votes.selected {
+  background: linear-gradient(135deg, rgba(187, 45, 217, 0.25) 0%, rgba(255, 20, 147, 0.15) 100%);
+  border-color: #bb2dd9;
+  box-shadow: 0 12px 32px rgba(187, 45, 217, 0.35),
+              inset 0 0 20px rgba(187, 45, 217, 0.1);
+  transform: translateY(-2px);
+}
+ 
+.option-button-votes.selected::before {
+  opacity: 1;
+}
+ 
+.option-button-votes:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.option-text {
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.3px;
+}
+ 
+.option-meta {
+  font-size: 18px;
+  color: rgba(199, 195, 244, 0.8);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+ 
+.progress-bar {
+  height: 28px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(138, 43, 226, 0.15);
+  position: relative;
+}
+ 
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(187, 45, 217, 0.4);
+  position: relative;
+}
+ 
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
 }
 
-.option-button.selected {
-  border-color: #ec4899;
-  background: rgba(236, 72, 153, 0.22);
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
