@@ -181,8 +181,11 @@ function AttendeePollCard({eventId }) {
               {option}
             </button>
           ))} */}
-
-          <button className="button-primary">
+          {/* //disable submit button poll is inactive or no option selected */}
+          <button 
+            className="button-primary" 
+            disabled={!poll || !selectedOption}
+            type="submit">
             Submit Answer
           </button>
         </form>
