@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEventByCode } from "../services/events";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Interactive attendee event components
 import QuestionForm from "../components/questions/QuestionForm";
@@ -13,7 +13,7 @@ import EventCompletePage from "./EventCompletePage";
 
 function AttendeeEventPage() {
   const { eventCode } = useParams();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // State management
   const [event, setEvent] = useState(null);
@@ -30,8 +30,8 @@ function AttendeeEventPage() {
       const data = await getEventByCode(eventCode);
       setEvent(data);
       setErr("");
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.err(err);
       setErr("Unable to load this event right now.");
     } finally {
       setIsLoading(false);
@@ -94,7 +94,8 @@ function AttendeeEventPage() {
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
-          <div className="app-logo">Workshop Navigator</div>
+          <div className="app-logo"
+          onClick={()=> navigate("/")}>Workshop Navigator</div>
 
           <div className="event-header-actions">
             {eventIsActive && <span className="live-badge">+ Live</span>}
