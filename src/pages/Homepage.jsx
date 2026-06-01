@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/shared/Footer";
-import ErrorAlert from "../components/shared/ErrorAlert";
-// import JoinEventPage from "./JoinEventPage";
 
 function HomePage() {
 
@@ -16,7 +14,7 @@ function HomePage() {
   const navigate = useNavigate();
 
 
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   // Handle attendee joining a workshop session
 
@@ -27,7 +25,7 @@ function HomePage() {
 
     // Prevent empty event code submission
     if (!code.trim()) {
-      setError("Please enter an event code to join.");
+      setErr("Please enter an event code to join.");
       return;
     }
 
@@ -38,14 +36,12 @@ function HomePage() {
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
 
           {/* Application branding */}
-          <div className="app-logo">
+          <div className="app-logo" onClick={()=> navigate("/")}>
             Workshop Navigator
           </div>
 
@@ -90,6 +86,7 @@ function HomePage() {
           <p className="landing-helper">
             Join live polls and ask questions.
           </p>
+          {err && <p className="error-message">{err}</p>}
 
           {/* Optional attendee name input */}
           <input
