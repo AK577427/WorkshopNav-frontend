@@ -120,8 +120,11 @@ function AttendeePollCard({eventId }) {
   return (
     <article className="card attendee-poll-card">
       <p className="card-label">LIVE POLL</p>
- 
-      {/* <h2>{poll.question}</h2> */}
+      {poll?.question == null?(
+        <p className="muted"></p>
+      ):(
+        <h2>{poll.question}</h2>
+      )}
  
       {!hasSubmitted ? (
         <form onSubmit={handleSubmit} className="attendee-poll-form">
@@ -135,7 +138,6 @@ function AttendeePollCard({eventId }) {
  
                 return (
                   <div key={option.id} className="option-wrapper">
-                    {/* {option.option_text} Display option text */}
                     <button
                       type="button"
                       className={`option-button-votes ${
@@ -168,23 +170,9 @@ function AttendeePollCard({eventId }) {
           ) : (
             <p className="muted">No options available.</p>
           )}
-
-          {/* {options.map((option) => (
-            <button
-              type="button"
-              key={option}
-              className={`option-button ${
-                selectedOption === option ? "selected" : ""
-              }`}
-              onClick={() => setSelectedOption(option)}
-            >
-              {option}
-            </button>
-          ))} */}
-          {/* //disable submit button poll is inactive or no option selected */}
           <button 
             className="button-primary" 
-            disabled={!poll || !selectedOption}
+            disabled={loading || !poll || (pollOptions && pollOptions.length === 0)}
             type="submit">
             Submit Answer
           </button>
