@@ -19,7 +19,14 @@
   line-height: 1.4;
 }
 
+.event-item {
+  position: relative;
+}
+
 .live-badge {
+  top: 50px;
+  right: 50px;
+  z-index: 1;
   background: linear-gradient(135deg, #6d5dfc, #c951e7);
   padding: 8px 14px;
   border-radius: 999px;
