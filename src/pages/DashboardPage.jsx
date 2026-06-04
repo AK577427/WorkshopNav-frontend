@@ -12,6 +12,9 @@ function DashboardPage() {
 
   const navigate = useNavigate();
 
+  // (eventIsActive will be determined per event inside the map)
+
+
   useEffect(() => {
     async function fetchEvents() {
       try {
@@ -64,21 +67,32 @@ function DashboardPage() {
           </div>
         )}
         {!loading && events.length === 0 && <p>No events yet</p>}
-        {!loading && events.length > 0 && (
-          <div className="events-list">
-            <h1>Existing Events</h1>
-            <p>Here you can view and manage all the events you've created. Click on an event to see more details, edit it, or view results.</p>
 
-            {events.map((event) => (
-              <Event
-                key={event.id}
-                event={event}
-                onClick={() => navigate(`/dashboard/events/${event.event_code}`)}
-              />
-            ))}
-          </div>
+
+        {!loading && events.length > 0 && (
+          <section className="card">
+            <div className="events-list">
+              <h1>Existing Events</h1>
+              <p>Here you can view and manage all the events you've created. Click on an event to see more details, edit it, or view results.</p>
+
+              {events.map((event) => (
+                <div key={event.id} className="event-item">
+                  <span className={event?.is_active ? "active-badge" : "inactive-badge"}>
+                    {event?.is_active ? "Active" : "Completed"}
+                  </span>                 
+
+                  <Event
+                    event={event}
+                    onClick={() => navigate(`/dashboard/events/${event.event_code}`)}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
         )}
+
       </div>
+
     <Footer />
     </>
   );
