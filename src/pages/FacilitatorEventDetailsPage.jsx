@@ -145,41 +145,41 @@ function FacilitatorEventDetailsPage() {
       </section>
 
       {/* Sticky navigation tabs */}
-      <nav className="event-tabs">
+      {/* <nav className="event-tabs"> */}
 
         {/* Overview navigation tab */}
-        <button
+        {/* <button
           className={activeTab === "overview" ? "active" : ""}
           onClick={() => scrollToSection("overview")}
         >
           Overview
-        </button>
+        </button> */}
 
         {/* Poll navigation tab */}
-        <button
+        {/* <button
           className={activeTab === "polls" ? "active" : ""}
           onClick={() => scrollToSection("polls")}
         >
           Polls
-        </button>
+        </button> */}
 
         {/* Questions navigation tab */}
-        <button
+        {/* <button
           className={activeTab === "questions" ? "active" : ""}
           onClick={() => scrollToSection("questions")}
         >
           Questions
-        </button>
+        </button> */}
 
         {/* Results navigation tab */}
-        <button
+        {/* <button
           className={activeTab === "results" ? "active" : ""}
           onClick={() => scrollToSection("results")}
         >
           Results
         </button>
 
-      </nav>
+      </nav> */}
 
       {/* Poll management section */}
       <section
