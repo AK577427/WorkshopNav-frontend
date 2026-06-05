@@ -162,6 +162,7 @@ body {
   color: white;
   cursor: pointer;
   font-weight: 600;
+  margin-top: 10px;
 }
 
 .secondary-button:hover {
