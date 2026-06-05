@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Poll management components
 import CreatePoll from "../components/polls/CreatePoll";
 import QueuedPolls from "../components/polls/QueuedPolls";
 import LivePollCard from "../components/polls/LivePollCard";
 import Footer from "../components/shared/Footer";
-import { useNavigate } from "react-router-dom";  
-
+import { useNavigate, useParams } from "react-router-dom";
+import { getEventsPerFacilitator } from "../services/events";
 // Shared components
 import LogoutButton from "../components/shared/LogoutButton";
 
@@ -17,6 +17,10 @@ import ResultsOverview from "../components/questions/ResultsOverview";
 function FacilitatorEventDetailsPage() {
 
   const navigate = useNavigate();
+  const { eventId } = useParams();
+
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Track currently active navigation tab
   const [activeTab, setActiveTab] = useState("overview");
@@ -49,6 +53,23 @@ function FacilitatorEventDetailsPage() {
       ],
     },
   ]);
+
+  useEffect(() => {
+    async function fetchEvent() {
+      try {
+        const data = await getEventsPerFacilitator(eventId);
+        setEvent(data);
+      } catch (error) {
+        console.error("Error fetching event:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (eventId) {
+      fetchEvent();
+    }
+  }, [eventId]);
 
   // Smooth scroll navigation between page sections
   function scrollToSection(sectionId) {
@@ -93,6 +114,22 @@ function FacilitatorEventDetailsPage() {
     ]);
   }
 
+  if (loading) {
+    return (
+      <div className="dashboard-container">
+        <p>Loading event details…</p>
+      </div>
+    );
+  }
+
+  if (!event) {
+    return (
+      <div className="dashboard-container">
+        <p>Event not found.</p>
+      </div>
+    );
+  }
+
   return (
   <>
   <header className="app-header">
@@ -112,7 +149,8 @@ function FacilitatorEventDetailsPage() {
     <main className="page event-details-page">
 
       {/* Navigation button back to facilitator dashboard */}
-      <button className="back-link">
+      <button className="back-link"
+      onClick={() => navigate("/dashboard")}>
         ← Back to Dashboard
       </button>
 
@@ -127,59 +165,22 @@ function FacilitatorEventDetailsPage() {
           {/* Event title and live status */}
           <div className="event-title-row">
 
-            <h1>Gen Z Leadership Workshop</h1>
+            <h1>{event?.title || "Event Title"}</h1>
 
             <span className="live-badge">
-              Live
+              {event?.is_active ? "Live" : "Completed"}
             </span>
 
           </div>
 
           {/* Event date/time */}
-          <p>May 22, 2025 · 10:00 AM</p>
+          <p>{event?.date_time || "May 22, 2025 · 10:00 AM"}</p>
 
           {/* Event access code */}
-          <p>Event Code: AB12CD</p>
+          <p>Event Code: {event?.event_code || "AB12CD"}</p>
 
         </div>
       </section>
-
-      {/* Sticky navigation tabs */}
-      <nav className="event-tabs">
-
-        {/* Overview navigation tab */}
-        <button
-          className={activeTab === "overview" ? "active" : ""}
-          onClick={() => scrollToSection("overview")}
-        >
-          Overview
-        </button>
-
-        {/* Poll navigation tab */}
-        <button
-          className={activeTab === "polls" ? "active" : ""}
-          onClick={() => scrollToSection("polls")}
-        >
-          Polls
-        </button>
-
-        {/* Questions navigation tab */}
-        <button
-          className={activeTab === "questions" ? "active" : ""}
-          onClick={() => scrollToSection("questions")}
-        >
-          Questions
-        </button>
-
-        {/* Results navigation tab */}
-        <button
-          className={activeTab === "results" ? "active" : ""}
-          onClick={() => scrollToSection("results")}
-        >
-          Results
-        </button>
-
-      </nav>
 
       {/* Poll management section */}
       <section

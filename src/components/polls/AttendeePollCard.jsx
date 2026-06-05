@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {getPolls, submitPollResponse, getPollResponses} from "../../services/polls";
 
-function AttendeePollCard({eventId }) {
+function AttendeePollCard({eventId}) {
 
   //poll data
   const [poll, setPoll] = useState(null);
@@ -17,7 +17,6 @@ function AttendeePollCard({eventId }) {
 
   //poll results
   const [responses, setResponses] = useState([]);
-
 
   // fetch  active poll
   useEffect(() => {
@@ -131,13 +130,13 @@ function AttendeePollCard({eventId }) {
           {err && <p className="error-message">{err}</p>}
  
           {pollOptions && pollOptions.length > 0 ? (
-            <div className="options-container">
+            <div className="poll-results">
               {pollOptions.map((option) => {
                 const voteCount = getOptionVoteCount(option.id);
                 const percentage = getOptionPercentage(option.id);
  
                 return (
-                  <div key={option.id} className="option-wrapper">
+                  <div key={option.id} className="poll-result-row">
                     <button
                       type="button"
                       className={`option-button-votes ${
@@ -150,19 +149,21 @@ function AttendeePollCard({eventId }) {
                       disabled={loading}
                     >
                       <span className="option-text">{option.option_text}</span>
-                      <span className="option-meta">
-                        {voteCount} {voteCount === 1 ? "vote" : "votes"} · {percentage}%
-                      </span>
                     </button>
- 
+                    
                     {totalResponses > 0 && (
-                      <div className="progress-bar">
+                      <div className="poll-result-bar">
                         <div
                           className="progress-fill"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
+
                     )}
+                    <div className="poll-result-label">
+                      <span>{voteCount} {voteCount === 1 ? "vote" : "votes"}</span>
+                      <span>{percentage}%</span>
+                    </div>
                   </div>
                 );
               })}
