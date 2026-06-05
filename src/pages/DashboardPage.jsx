@@ -9,6 +9,7 @@ import Footer from "../components/shared/Footer";
 function DashboardPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState("");
 
   const navigate = useNavigate();
 
@@ -20,15 +21,29 @@ function DashboardPage() {
       try {
         const data = await getEventsPerFacilitator();
         setEvents(data);
-      } catch (error) {
-        console.error("Error fetching events:", error);
+        setErr("");
+      } catch (err) {
+        console.err("Error fetching events:", err);
+        setErr("Failed to fetch events.");  
       } finally {
         setLoading(false);
       }
     }
-
     fetchEvents();
   }, []);
+
+  // // ✅ FIXED: Load event on mount and set up auto-refresh
+  // useEffect(() => {
+  //   fetchEvents();
+
+  //   // Refresh event data every 10 seconds
+  //   const interval = setInterval(() => {
+  //     fetchEvents();
+  //   }, 10000);
+
+  //   // Cleanup interval on unmount
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>
@@ -66,13 +81,14 @@ function DashboardPage() {
             <p className="muted">Loading your workshop events...</p>
           </div>
         )}
+        {!loading && err && <p className="error">{err}</p>} 
         {!loading && events.length === 0 && <p>No events yet</p>}
 
 
         {!loading && events.length > 0 && (
           <section className="card">
             <div className="events-list">
-              <h1>Existing Events</h1>
+              <h2>Existing Events</h2>
               <p>Here you can view and manage all the events you've created. Click on an event to see more details, edit it, or view results.</p>
 
               {events.map((event) => (
