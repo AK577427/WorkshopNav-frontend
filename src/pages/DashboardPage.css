@@ -198,10 +198,9 @@
 }
 
 .events-list {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   gap: 14px;
-  margin-top: 20px;
 }
 
 .event-card {
