@@ -99,7 +99,7 @@ function DashboardPage() {
 
                   <Event
                     event={event}
-                    onClick={() => navigate(`/dashboard/events/${event.event_code}`)}
+                    onClick={() => navigate(`/dashboard/events/${event.id}`)}
                   />
                 </div>
               ))}

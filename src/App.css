@@ -47,6 +47,11 @@ body {
   color: #c7c3f4;
 }
 
+.muted-polldelete {
+  color: #c7c3f4;
+  flex: absolute;
+}
+
 /* HEADER */
 
 .app-header {
@@ -617,6 +622,13 @@ body {
   cursor: pointer;
 }
 
+.delete-poll-button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  background:#8b5cf6;
+}
+
 .poll-form {
   display: grid;
   gap: 12px;
@@ -831,6 +843,14 @@ body {
   font-size: 14px;
   margin-top: 8px;
 }
+
+.success-message {
+  color: #c7c3f4;
+  font-size: 14px;
+  margin: 10px 0 0;
+  width: 100%;
+}
+
 
 .option-button-votes {
   width: 100%;

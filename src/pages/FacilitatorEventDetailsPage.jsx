@@ -6,9 +6,11 @@ import QueuedPolls from "../components/polls/QueuedPolls";
 import LivePollCard from "../components/polls/LivePollCard";
 import Footer from "../components/shared/Footer";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEventsPerFacilitator } from "../services/events";
+import { getEventsPerFacilitator} from "../services/events";
 // Shared components
 import LogoutButton from "../components/shared/LogoutButton";
+import {getPolls} from "../services/results";
+import {launchPoll, deletePoll, updatePollStatus} from "../services/polls";
 
 // Question and analytics components
 import RecentQuestions from "../components/questions/RecentQuestions";
@@ -21,6 +23,7 @@ function FacilitatorEventDetailsPage() {
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   // Track currently active navigation tab
   const [activeTab, setActiveTab] = useState("overview");
@@ -29,36 +32,18 @@ function FacilitatorEventDetailsPage() {
   const [queuedPolls, setQueuedPolls] = useState([]);
 
   // Store currently active live polls
-  const [activePolls, setActivePolls] = useState([
-
-    // Mock active poll data
-    {
-      id: 1,
-      question: "How was the event so far?",
-      options: [
-        { label: "Great", votes: 25 },
-        { label: "Good", votes: 15 },
-        { label: "Needs more examples", votes: 5 },
-      ],
-    },
-
-    // Mock active poll data
-    {
-      id: 2,
-      question: "What topics interest you most?",
-      options: [
-        { label: "Leadership", votes: 12 },
-        { label: "Communication", votes: 9 },
-        { label: "Gen Z workplace culture", votes: 11 },
-      ],
-    },
-  ]);
+  const [activePolls, setActivePolls] = useState([ ]);
 
   useEffect(() => {
     async function fetchEvent() {
       try {
-        const data = await getEventsPerFacilitator(eventId);
-        setEvent(data);
+        const events = await getEventsPerFacilitator();
+        const found = events.find(
+          (e)=> String(e.id) === String(eventId) 
+        );
+        setEvent(found ?? null);
+        console.log("Fetched event data:", found);
+        console.log("title: ", found?.title);
       } catch (error) {
         console.error("Error fetching event:", error);
       } finally {
@@ -66,23 +51,43 @@ function FacilitatorEventDetailsPage() {
       }
     }
 
-    if (eventId) {
+    if (eventId && eventId !== "undefined") {
       fetchEvent();
     }
   }, [eventId]);
 
-  // Smooth scroll navigation between page sections
-  function scrollToSection(sectionId) {
+  useEffect(() => {
+  console.log("eventId from URL:", eventId);
+  console.log("event object:", event);
+}, [event]);
 
-    // Update active tab styling
-    setActiveTab(sectionId);
+  useEffect(() => {
+  async function fetchPolls() {
+    try {
+      const polls = await getPolls(eventId);
+      console.log("Fetched polls:", polls);
 
-    // Scroll to matching section
-    document.getElementById(sectionId)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+      const queued = polls.filter(
+        (poll) => poll.is_active === false
+      );
+
+      const live = polls.filter(
+        (poll) => poll.is_active === true
+      );
+
+      setQueuedPolls(queued);
+      setActivePolls(live);
+
+    } catch (err) {
+      console.error("Failed to load polls", err);
+    }
   }
+
+  if (eventId) {
+    fetchPolls();
+  }
+}, [eventId]);
+
 
   // Add newly created poll into queue
   function handleCreatePoll(newPoll) {
@@ -91,6 +96,8 @@ function FacilitatorEventDetailsPage() {
 
   // Move poll from queued state into active live polls
   function handleLaunchPoll(pollToLaunch) {
+
+    const responseLaunchPoll = launchPoll(pollToLaunch.id);
 
     // Remove poll from queued list
     setQueuedPolls(
@@ -106,13 +113,54 @@ function FacilitatorEventDetailsPage() {
         ...pollToLaunch,
 
         // Convert plain option strings into poll objects
-        options: pollToLaunch.options.map((option) => ({
+        options: pollToLaunch.poll_options.map((option) => ({
           label: option,
           votes: 0,
         })),
       },
     ]);
   }
+
+  async function handleDeletePoll(pollId) {
+    try {
+      await deletePoll(pollId);
+      setQueuedPolls((prevQueuedPolls) =>
+        prevQueuedPolls.filter((poll) => poll.id !== pollId)
+      );
+      setDeleteMessage("Poll deleted successfully.");
+      setTimeout(() => setDeleteMessage(""), 3000);
+    } catch (error) {
+      console.error("Error deleting poll:", error);
+      setDeleteMessage("Unable to delete poll. Please try again.");
+      setTimeout(() => setDeleteMessage(""), 3000);
+    }
+  }
+
+async function handleDeactivatePoll(pollId) {
+  try {
+    await updatePollStatus(pollId);
+      console.log("Poll deactivated:", pollId);
+  setActivePolls((prevActivePolls) =>
+    prevActivePolls.filter((poll) => poll.id !== pollId)
+  );
+  const poll = activePolls.find((p) => p.id === pollId);
+  if(poll){
+    setQueuedPolls((prev)=>[
+      ...prev,
+      {
+        ...poll,
+        poll_options: poll.poll_options.map((option) => option.option_text)
+      },
+    ]);
+  }
+  } catch (error) {
+    console.error("Error deactivating poll:", error);
+  } finally {
+    setActivePolls((prevActivePolls) =>
+      prevActivePolls.filter((poll) => poll.id !== pollId)
+    );
+  } 
+}
 
   if (loading) {
     return (
@@ -165,10 +213,9 @@ function FacilitatorEventDetailsPage() {
           {/* Event title and live status */}
           <div className="event-title-row">
 
-            <h1>{event?.title || "Event Title"}</h1>
+            <h1>{event?.title}</h1>
 
-            <span className="live-badge">
-              {event?.is_active ? "Live" : "Completed"}
+            <span className="live-badge">{event?.is_active ? "Live" : "Completed"}
             </span>
 
           </div>
@@ -177,7 +224,8 @@ function FacilitatorEventDetailsPage() {
           <p>{event?.date_time || "May 22, 2025 · 10:00 AM"}</p>
 
           {/* Event access code */}
-          <p>Event Code: {event?.event_code || "AB12CD"}</p>
+          {/* <p>Event Code: {event?.event_code || "AB12CD"}</p> */}
+          <p>Event Code: {event?.event_code}</p>
 
         </div>
       </section>
@@ -188,13 +236,20 @@ function FacilitatorEventDetailsPage() {
         className="event-section"
       >
 
-        {/* Poll creation form */}
-        <CreatePoll onCreatePoll={handleCreatePoll} />
+        <div className="event-section">
+          {/* Poll creation form */}
+          <CreatePoll onCreatePoll={handleCreatePoll} />
+
+          {deleteMessage && (
+            <p className="success-message">{deleteMessage}</p>
+          )}
+        </div>
 
         {/* List of polls waiting to launch */}
         <QueuedPolls
           polls={queuedPolls}
           onLaunchPoll={handleLaunchPoll}
+          onDeletePoll={handleDeletePoll}
         />
 
         {/* Currently active live polls */}
@@ -206,8 +261,13 @@ function FacilitatorEventDetailsPage() {
           {activePolls.map((poll) => (
             <LivePollCard
               key={poll.id}
+              pollId={poll.id}
               question={poll.question}
-              options={poll.options}
+              options={poll.poll_options.map((option) => ({
+                label: option.option_text,
+                votes: option.response_count,
+              }))}
+              onDeactivate={handleDeactivatePoll}
             />
           ))}
 

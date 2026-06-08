@@ -1,4 +1,4 @@
-function QueuedPolls({ polls, onLaunchPoll }) {
+function QueuedPolls({ polls, onLaunchPoll, onDeletePoll }) {
   if (polls.length === 0) {
     return null;
   }
@@ -18,7 +18,7 @@ function QueuedPolls({ polls, onLaunchPoll }) {
             <h3>{poll.question}</h3>
 
             <p>
-              {poll.options.length} options · Ready to launch
+              {poll.poll_options.length || 0} options · Ready to launch
             </p>
           </div>
 
@@ -27,6 +27,12 @@ function QueuedPolls({ polls, onLaunchPoll }) {
             onClick={() => onLaunchPoll(poll)}
           >
             Launch Now
+          </button>
+          <button
+            className="delete-poll-button"
+            onClick={() => onDeletePoll(poll.id)}
+          >
+            Delete Poll
           </button>
         </article>
       ))}
