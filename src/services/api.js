@@ -13,5 +13,6 @@ export async function apiRequest(endpoint, options = {}) {
     throw new Error(`API error: ${response.status}`);
   }
 
-  return response.json();
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
 }
