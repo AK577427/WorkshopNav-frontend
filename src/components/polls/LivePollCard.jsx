@@ -1,9 +1,24 @@
 import { useState } from "react";
+// import {useParams} from "react-router-dom";
+// import { deactivatePoll } from "../../services/polls";
 
-function LivePollCard({ question, options }) {
+function LivePollCard({pollId, question, options, onDeactivate}) {
+  // const { pollId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [ending, setEnding] = useState(false);
 
   const totalVotes = options.reduce((sum, option) => sum + option.votes, 0);
+
+  async function handleDeactivatePoll() {
+    setEnding(true);
+    try {
+      await onDeactivate(pollId);
+    } catch (err) {
+      console.error("Failed to end poll", err);
+    } finally {    
+      setEnding(false);
+    }
+  }
 
   return (
     <article className="live-poll-card">
@@ -46,8 +61,16 @@ function LivePollCard({ question, options }) {
               </div>
             );
           })}
+
         </div>
       )}
+      <button
+        className= "delete-poll-button"
+        onClick = {handleDeactivatePoll}
+        disabled={ending}
+        >
+          {ending ? "Ending..." : "End Poll"}
+      </button>
     </article>
   );
 }
