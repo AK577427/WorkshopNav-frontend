@@ -1,5 +1,5 @@
 # Workshop Navigator
-> Recursive Turtles
+https://workshopnav.netlify.app
 
 ## Table of Contents
 - [Workshop Navigator](#workshop-navigator)
