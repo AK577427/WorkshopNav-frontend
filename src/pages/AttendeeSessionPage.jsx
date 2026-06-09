@@ -10,6 +10,7 @@ import Footer from "../components/shared/Footer";
 import QuestionList from "../components/questions/QuestionList";
 import AttendeePollCard from "../components/polls/AttendeePollCard";
 import EventCompletePage from "./EventCompletePage";
+import AttendeePollList from "../components/polls/AttendeePollList";
 
 function AttendeeEventPage() {
   const { eventCode } = useParams();
@@ -119,7 +120,7 @@ function AttendeeEventPage() {
         </section>
 
         {/* Poll card */}
-        <AttendeePollCard eventId={event.id} />
+        <AttendeePollList eventId={event.id} />
 
         {/* Question submission form */}
         <QuestionForm eventId={event.id} onSuccess={handleQuestionSubmitted} />

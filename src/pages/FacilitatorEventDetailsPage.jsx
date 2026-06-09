@@ -220,11 +220,10 @@ async function handleDeactivatePoll(pollId) {
 
           </div>
 
-          {/* Event date/time */}
-          <p>{event?.date_time || "May 22, 2025 · 10:00 AM"}</p>
+          {/* Event today's date/time */}
+          <p>{event?.date_time || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })}</p>
 
           {/* Event access code */}
-          {/* <p>Event Code: {event?.event_code || "AB12CD"}</p> */}
           <p>Event Code: {event?.event_code}</p>
 
         </div>
