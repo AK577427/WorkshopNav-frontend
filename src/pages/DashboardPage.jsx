@@ -13,9 +13,6 @@ function DashboardPage() {
 
   const navigate = useNavigate();
 
-  // (eventIsActive will be determined per event inside the map)
-
-
   useEffect(() => {
     async function fetchEvents() {
       try {
@@ -31,19 +28,6 @@ function DashboardPage() {
     }
     fetchEvents();
   }, []);
-
-  // // ✅ FIXED: Load event on mount and set up auto-refresh
-  // useEffect(() => {
-  //   fetchEvents();
-
-  //   // Refresh event data every 10 seconds
-  //   const interval = setInterval(() => {
-  //     fetchEvents();
-  //   }, 10000);
-
-  //   // Cleanup interval on unmount
-  //   return () => clearInterval(interval);
-  // }, []);
 
   return (
     <>
@@ -86,25 +70,33 @@ function DashboardPage() {
 
 
         {!loading && events.length > 0 && (
-          <section className="card">
+          <article className="card">
             <div className="events-list">
               <h2>Existing Events</h2>
               <p>Here you can view and manage all the events you've created. Click on an event to see more details, edit it, or view results.</p>
 
               {events.map((event) => (
-                <div key={event.id} className="event-item">
-                  <span className={event?.is_active ? "active-badge" : "inactive-badge"}>
-                    {event?.is_active ? "Active" : "Completed"}
-                  </span>                 
+              <div key={event.id} className="event-item">
+                <Event event={event}/>
+                <div className="event-actions">
+                <button
+                  className={event?.is_active ? "active-badge" : "inactive-badge"}
+                  onClick={() =>
+                    navigate(
+                      event?.is_active
+                        ? `/dashboard/events/${event.id}`
+                        : `/results/${event.id}`
+                    )
+                  }
+                >
+                  {event?.is_active ? "Active" : "Completed"}
+                </button>
 
-                  <Event
-                    event={event}
-                    onClick={() => navigate(`/dashboard/events/${event.id}`)}
-                  />
-                </div>
+              </div>
+            </div>
               ))}
             </div>
-          </section>
+          </article>
         )}
 
       </div>
