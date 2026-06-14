@@ -39,6 +39,7 @@
   border-radius: 999px;
   font-size: 13px;
   font-weight: 700;
+  border: 1px solid rgba(134, 239, 172, 0.35);
 }
 
 .event-item .inactive-badge {
@@ -48,6 +49,7 @@
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 700;
+  border: 1px solid rgba(230, 236, 233, 0.35);
 }
 
 .event-actions{
