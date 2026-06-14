@@ -16,6 +16,7 @@ import { QRCodeCanvas } from "qrcode.react";
 // Question and analytics components
 import RecentQuestions from "../components/questions/RecentQuestions";
 import ResultsOverview from "../components/questions/ResultsOverview";
+// import QuestionList from "../components/questions/QuestionList";
 
 function FacilitatorEventDetailsPage() {
 
@@ -363,7 +364,8 @@ async function handleDeactivatePoll(pollId) {
         className="event-section"
       >
 
-        <RecentQuestions />
+        {/* <RecentQuestions /> */}
+        <RecentQuestions eventId={eventId}/>
 
       </section>
 
