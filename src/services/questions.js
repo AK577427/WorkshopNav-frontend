@@ -24,3 +24,9 @@ export async function upvoteQuestion(questionId) {
     method: "PATCH",
   });
 }
+
+export async function getUpvotes(questionId) {
+  return apiRequest(`/questions/${questionId}/upvote/`, {
+    method: "GET",
+  });
+}
