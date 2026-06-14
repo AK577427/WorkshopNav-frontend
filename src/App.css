@@ -658,15 +658,10 @@ body {
 
 .event-summary-content {
   display: flex;
-  justify-content:first baseline;
+  justify-content:space-between;
   align-items: flex-start;
   gap: 32px;
   flex-wrap: wrap;       /* share block drops below on narrow screens */
-}
-
-.event-summary-main {
-  flex: 1 1 280px;       /* left column takes remaining space */
-  min-width: 260px;
 }
 
 .event-share {
@@ -676,8 +671,6 @@ body {
   align-items: flex-start;
   gap: 10px;
 }
-
-
 
 @media (max-width: 700px) {
   .dashboard-grid,
