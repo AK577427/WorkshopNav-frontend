@@ -382,6 +382,8 @@ body {
   gap: 10px;
 }
 
+
+
 .live-badge {
   background: rgba(34, 197, 94, 0.28);
   color: #86efac;
@@ -512,11 +514,7 @@ body {
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 12px;
-  cursor: pointer;
-}
-
-.event-card:hover {
-  transform: translateY(-2px);
+  /* cursor: pointer; */
 }
 
 /* SHARE */
@@ -584,6 +582,37 @@ body {
   height: 2px;
   background: #c084fc;
   border-radius: 999px;
+}
+
+.event-summary-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mark-completed-btn,
+.delete-event-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+}
+
+.mark-completed-btn,
+.delete-event-btn  { background: #8b5cf6;}
+
+/* disabled state for both (e.g. event already completed) */
+.mark-completed-btn:disabled,
+.delete-event-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mark-completed-btn:hover,
+.delete-event-btn:hover {
+  transform: translateY(-2px);
 }
 
 
