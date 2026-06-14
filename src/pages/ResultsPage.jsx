@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Footer from "../components/shared/Footer";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "../components/shared/LogoutButton";
+import { deleteEvent } from "../services/events";
 
 import {
   getPolls,
@@ -32,6 +33,8 @@ function ResultsPage() {
   const [averageRating, setAverageRating] = useState(0);
     // React Router navigation hook
   const navigate = useNavigate();
+
+  const [deleting, setDeleting] = useState("")
 
   // Fetch event analytics data when page loads
   useEffect(() => {
@@ -122,6 +125,24 @@ const pollResponseCount = pollResults.reduce(
     a.click();
   }
 
+   async function handleDeleteEvent() {
+      if (!event) return;
+      const confirmed = window.confirm(
+        "Delete this event? This cannot be undone."
+      );
+      if (!confirmed) return;
+      try {
+        setDeleting(true);
+        // Pass whatever deleteEvent expects (event.id here; switch to `event`
+        // if your service signature uses the full object).
+        await deleteEvent(event.id);
+        navigate("/dashboard");
+      } catch (error) {
+        console.error("Error deleting event:", error);
+        setDeleting(false);
+      }
+    }
+
   return (
     <>
       {/* Top application header */}
@@ -159,6 +180,13 @@ const pollResponseCount = pollResults.reduce(
           <p className="page-subtitle">
             Summary of audience engagement and insights
           </p>
+          <button
+            className="delete-event-btn"
+            onClick={handleDeleteEvent}
+            disabled={deleting}
+            >
+            {deleting ? "Deleting…" : "Delete Event"}
+          </button>
 
         </div>
 
