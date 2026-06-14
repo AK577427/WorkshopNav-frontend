@@ -6,7 +6,7 @@ import QueuedPolls from "../components/polls/QueuedPolls";
 import LivePollCard from "../components/polls/LivePollCard";
 import Footer from "../components/shared/Footer";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEventsPerFacilitator} from "../services/events";
+import { getEventsPerFacilitator, deleteEvent, updateEvent} from "../services/events";
 // Shared components
 import LogoutButton from "../components/shared/LogoutButton";
 import {getPolls} from "../services/results";
@@ -25,8 +25,11 @@ function FacilitatorEventDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [deleteMessage, setDeleteMessage] = useState("");
 
+  const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
   // Track currently active navigation tab
-  const [activeTab, setActiveTab] = useState("overview");
+  // const [activeTab, setActiveTab] = useState("overview");
 
   // Store polls waiting to be launched
   const [queuedPolls, setQueuedPolls] = useState([]);
@@ -97,7 +100,7 @@ function FacilitatorEventDetailsPage() {
   // Move poll from queued state into active live polls
   function handleLaunchPoll(pollToLaunch) {
 
-    const responseLaunchPoll = launchPoll(pollToLaunch.id);
+    // const responseLaunchPoll = launchPoll(pollToLaunch.id);
 
     // Remove poll from queued list
     setQueuedPolls(
@@ -162,6 +165,38 @@ async function handleDeactivatePoll(pollId) {
   } 
 }
 
+  async function handleMarkCompleted() {
+    if (!event) return;
+    try {
+      setUpdating(true);
+      await updateEvent(event.id, { is_active: false });
+      setEvent((prev) => ({ ...prev, is_active: false }));
+    } catch (error) {
+      console.error("Error marking event as completed:", error);
+    } finally {
+      setUpdating(false);
+    }
+  }
+ 
+  // Delete the event, then route back to the dashboard.
+  async function handleDeleteEvent() {
+    if (!event) return;
+    const confirmed = window.confirm(
+      "Delete this event? This cannot be undone."
+    );
+    if (!confirmed) return;
+    try {
+      setDeleting(true);
+      // Pass whatever deleteEvent expects (event.id here; switch to `event`
+      // if your service signature uses the full object).
+      await deleteEvent(event.id);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      setDeleting(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="dashboard-container">
@@ -225,6 +260,29 @@ async function handleDeactivatePoll(pollId) {
 
           {/* Event access code */}
           <p>Event Code: {event?.event_code}</p>
+
+            {/* Event-level actions */}
+            <div className="event-summary-actions">
+              <button
+                className="mark-completed-btn"
+                onClick={handleMarkCompleted}
+                disabled={!event?.is_active || updating}
+              >
+                {!event?.is_active
+                  ? "Completed"
+                  : updating
+                    ? "Updating…"
+                    : "Mark as Completed"}
+              </button>
+ 
+              <button
+                className="delete-event-btn"
+                onClick={handleDeleteEvent}
+                disabled={deleting}
+              >
+                {deleting ? "Deleting…" : "Delete Event"}
+              </button>
+            </div>
 
         </div>
       </section>
