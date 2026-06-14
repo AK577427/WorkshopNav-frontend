@@ -11,15 +11,18 @@ import { getEventsPerFacilitator, deleteEvent, updateEvent} from "../services/ev
 import LogoutButton from "../components/shared/LogoutButton";
 import {getPolls} from "../services/results";
 import {launchPoll, deletePoll, updatePollStatus} from "../services/polls";
+import { QRCodeCanvas } from "qrcode.react";
 
 // Question and analytics components
 import RecentQuestions from "../components/questions/RecentQuestions";
 import ResultsOverview from "../components/questions/ResultsOverview";
+// import QuestionList from "../components/questions/QuestionList";
 
 function FacilitatorEventDetailsPage() {
 
   const navigate = useNavigate();
   const { eventId } = useParams();
+  const [copied, setCopied] =useState(false);
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -100,7 +103,7 @@ function FacilitatorEventDetailsPage() {
   // Move poll from queued state into active live polls
   function handleLaunchPoll(pollToLaunch) {
 
-    // const responseLaunchPoll = launchPoll(pollToLaunch.id);
+    const responseLaunchPoll = launchPoll(pollToLaunch.id);
 
     // Remove poll from queued list
     setQueuedPolls(
@@ -197,6 +200,16 @@ async function handleDeactivatePoll(pollId) {
     }
   }
 
+  async function handleCopyLink() {
+  try {
+    await navigator.clipboard.writeText(joinLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  } catch (err) {
+    console.error("Failed to copy link", err);
+  }
+}
+
   if (loading) {
     return (
       <div className="dashboard-container">
@@ -212,6 +225,8 @@ async function handleDeactivatePoll(pollId) {
       </div>
     );
   }
+
+  const joinLink = `${window.location.origin}/join/${event.event_code}/`
 
   return (
   <>
@@ -238,12 +253,10 @@ async function handleDeactivatePoll(pollId) {
       </button>
 
       {/* Event overview section */}
-      <section
-        id="overview"
-        className="event-summary-card"
-      >
+      <section id="overview" className="event-summary-card">
 
         <div className="event-summary-content">
+          {/* <div className="event-summary-main"> */}
 
           {/* Event title and live status */}
           <div className="event-title-row">
@@ -252,14 +265,31 @@ async function handleDeactivatePoll(pollId) {
 
             <span className="live-badge">{event?.is_active ? "Live" : "Completed"}
             </span>
+            
+            {/* Event today's date/time */}
+            <p>{event?.date_time || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })}</p>
 
+            {/* Event access code */}
+            <p>Event Code: {event?.event_code}</p>
           </div>
 
-          {/* Event today's date/time */}
-          <p>{event?.date_time || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })}</p>
+          {/* Shareable join link + QR code (derived from event code) */}
+            <div className="event-share">
+              <p className="event-share-label">Share this link</p>
 
-          {/* Event access code */}
-          <p>Event Code: {event?.event_code}</p>
+              <div className="event-share-link">{joinLink}</div>
+
+              <button className="copy-link-btn" onClick={handleCopyLink}>
+                {copied ? "Copied!" : "Copy Link"}
+              </button>
+
+              <div className="event-qr">
+                <QRCodeCanvas value={joinLink} size={160} />
+              </div>
+            </div>
+          {/* </div> */}
+        </div>
+        </section>
 
             {/* Event-level actions */}
             <div className="event-summary-actions">
@@ -282,10 +312,7 @@ async function handleDeactivatePoll(pollId) {
               >
                 {deleting ? "Deleting…" : "Delete Event"}
               </button>
-            </div>
-
-        </div>
-      </section>
+              </div>
 
       {/* Poll management section */}
       <section
@@ -337,7 +364,8 @@ async function handleDeactivatePoll(pollId) {
         className="event-section"
       >
 
-        <RecentQuestions />
+        {/* <RecentQuestions /> */}
+        <RecentQuestions eventId={eventId}/>
 
       </section>
 
