@@ -194,6 +194,15 @@ body {
   cursor: pointer;
 }
 
+.votes {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(139, 92, 246, 0.25);
+  color: white;
+}
+
+
 .logout-button {
   width: 100%;
   padding: 14px;
@@ -776,6 +785,7 @@ body {
   border-radius: 999px;
   font-size: 13px;
   font-weight: 700;
+  border: 1px solid rgba(134, 239, 172, 0.35);
 }
 
 .poll-arrow.open {
