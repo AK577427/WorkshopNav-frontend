@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { getQuestions, getUpvotes } from "../../services/questions";
+import { getQuestions } from "../../services/questions";
 import { useEffect } from "react";
 
 function RecentQuestions({ eventId , refresh }) {
   const [questions, setQuestions] = useState([]);
-  const [votes, setVotes] = useState([]);
 
 
   useEffect(() => {
@@ -18,20 +17,14 @@ function RecentQuestions({ eventId , refresh }) {
     }
 
     fetchQuestions();
+
+        // refresh every 10 seconds
+    const interval = setInterval(fetchQuestions, 10 * 1000);
+ 
+    // clear on unmount or when eventId / refresh changes
+    return () => clearInterval(interval);
   }, [eventId, refresh]);
 
-   useEffect(() => {
-    async function fetchVotes(questionId) {
-      try {
-        const data = await getUpvotes(questionId);
-        setVotes(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    fetchVotes();
-  }, [ refresh]);
   return (
     <section className="card">
       <p className="card-label">Live questions</p>
