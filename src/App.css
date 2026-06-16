@@ -475,10 +475,12 @@ body {
 }
 
 .results-grid div {
-  background: #1c1c2e;
+  background: rgba(255, 255, 255, 0.06);;
   border-radius: 16px;
+  border: 1px solid rgba(199, 195, 244, 0.25);;
   padding: 1rem;
   text-align: center;
+  color:  #c7c3f4;
 }
 
 .results-grid strong {
@@ -606,7 +608,7 @@ body {
   padding: 10px 16px;
   cursor: pointer;
   font-weight: 600;
-  color: #fff;
+  color: white;
 }
 
 .mark-completed-btn,
@@ -721,6 +723,12 @@ body {
   border-radius: 12px;
   padding: 10px 14px;
   background:#8b5cf6;
+  cursor: pointer;
+  color: white;
+}
+
+.delete-poll-button:hover{
+  transform: translateY(-2px);
 }
 
 .poll-form {
