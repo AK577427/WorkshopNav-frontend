@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEventByCode } from "../services/events";
 import Footer from "../components/shared/Footer";
+import { getDeviceToken } from "../services/auth";
+import { joinEvent } from "../services/attendee";
 
 function JoinEventPage() {
 
   // Get event code from URL parameters
   const { eventCode } = useParams();
+  const [name, setName] = useState("");
 
   // React Router navigation hook
   const navigate = useNavigate();
@@ -85,6 +88,15 @@ function JoinEventPage() {
     );
   }
 
+  async function handleJoin() {
+  try {
+    await joinEvent(event.event_code, getDeviceToken(), name.trim());
+    navigate(`/event/${event.event_code}`);
+  } catch (err) {
+    setError("Couldn't join. Please try again.");
+  }
+}
+
   return (
     <>
       {/* Top application header */}
@@ -125,10 +137,19 @@ function JoinEventPage() {
           {/* Display event code */}
           <h2>{event.event_code}</h2>
 
+          Optional attendee name input
+          <input
+            className="input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name (optional)"
+          />
+
           {/* Navigate attendee into live event */}
           <button
             className="button-primary"
-            onClick={() => navigate(`/event/${event.event_code}`)}
+            // onClick={() => navigate(`/event/${event.event_code}`)}
+            onClick={handleJoin}
           >
             Join Event
           </button>
