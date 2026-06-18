@@ -190,13 +190,15 @@ const pollResponseCount = pollResults.reduce(
       </header>
 
       <main className="page">
+              {/* Navigation button back to facilitator dashboard */}
+      <button className="back-link"
+      onClick={() => navigate("/dashboard")}>
+        ← Back to Dashboard
+      </button>
 
         {/* Page introduction */}
         <div className="page-header">
-          <h1>{event.title}</h1>
-          <h1 className="page-title">
-            Results
-          </h1>
+          <h1 className="page-title">{event?.title ?? "Event Results"}</h1>
 
           <p className="page-subtitle">
             Summary of audience engagement and insights
