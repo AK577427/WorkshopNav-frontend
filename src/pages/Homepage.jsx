@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/shared/Footer";
+import { getDeviceToken } from "../services/auth";
+import { joinEvent } from "../services/attendee";
 
 function HomePage() {
 
@@ -20,7 +22,7 @@ function HomePage() {
 
   // Handle attendee joining a workshop event
 
-  function handleJoin(e) {
+  async function handleJoin(e) {
     e.preventDefault();
 
     // Prevent empty event code submission
@@ -31,7 +33,12 @@ function HomePage() {
 
     // Navigate attendee to event join page
     // navigate(`/join/${code}`);
-    navigate(`/event/${code}`); // updated skip JoinEventPage
+    try{
+      await joinEvent(code.trim(), getDeviceToken(), name.trim());
+      navigate(`/event/${code}`); // updated skip JoinEventPage
+    } catch (err){
+      setErr("Couldn't join the event - check the code & try again");
+    }
   }
 
   return (

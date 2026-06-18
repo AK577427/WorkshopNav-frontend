@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Footer from "../components/shared/Footer";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "../components/shared/LogoutButton";
-import { deleteEvent } from "../services/events";
+import { deleteEvent, getEventsPerFacilitator } from "../services/events";
 
 import {
   getPolls,
@@ -21,34 +21,49 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { getAttendees } from "../services/attendee";
 
 
 function ResultsPage() {
   // Get event id from url
   const { eventId } = useParams();
   // Store api-driven results data
+  const [event, setEvent] = useState(null);
   const [pollResults, setPollResults] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [emailCount, setEmailCount] = useState(0);
+  const [emails, setEmails] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+  const [attendeeCount, setAttendeeCount] = useState(0);
+  // const [attendeeNames, setAttendeeNames] = useState([]);
     // React Router navigation hook
   const navigate = useNavigate();
-
-  const [deleting, setDeleting] = useState("")
 
   // Fetch event analytics data when page loads
   useEffect(() => {
   async function loadResults() {
     try {
       // Fetch all result-related data in parallel
-      const [polls, questionData, feedbackData, emailData] =
+      const [events,polls, questionData, feedbackData, emailData, attendeeData] =
         await Promise.all([
+          getEventsPerFacilitator(),
           getPolls(eventId),
           getQuestions(eventId),
           getFeedback(eventId),
           getEmails(eventId),
+          getAttendees(eventId),
         ]);
-      
+
+      setAttendeeCount(attendeeData.count);
+      // setAttendeeNames(attendeeData.names ?? []);
+      console.log("attendeeData:", attendeeData);
+
+      //Find this event so we can show its title and delete it, if needed
+      const found = events.find(
+        (e) => String(e.id) === String(eventId)
+      );
+      setEvent (found ?? null)
+
       // Fetch poll response breakdown for first poll
       if (polls.length > 0) {
         const resultData = await getPollResults(polls[0].id);
@@ -62,7 +77,8 @@ function ResultsPage() {
       }
 
       setQuestions(questionData.map((q) => q.question_text));
-      setEmailCount(emailData.length);
+      // setEmailCount(emailData.length);
+      setEmails(emailData);
 
       if (feedbackData.length > 0) {
         const total = feedbackData.reduce(
@@ -80,7 +96,7 @@ function ResultsPage() {
   loadResults();
 }, [eventId]);
 
-const attendeeCount = emailCount;
+const emailCount = emails.length;
 
 const pollResponseCount = pollResults.reduce(
   (sum, row) => sum + row.votes,
@@ -92,10 +108,20 @@ const pollResponseCount = pollResults.reduce(
 
     // Build summary section of CSV
     let csv = "Event Summary\n";
+    csv += `Event,${event?.title ?? ""}\n `;
     csv += `Attendees,${attendeeCount}\n`;
     csv += `Poll Responses,${pollResponseCount}\n`;
     csv += `Questions,${questions.length}\n`;
-    csv += `Emails Captured,${emailCount}\n`;
+    csv += `Emails Count,${emailCount}\n`;
+    csv += "\nCaptured Emails\n";  // Build captured-emails section of CSV
+    if (emails.length === 0) {
+      csv += "None\n";
+    } else {
+      emails.forEach((e) => {
+        // handle both { email: "..." } objects and plain strings
+        csv += `${e.email ?? e}\n`;
+      });
+    }
     csv += `Average Rating,${averageRating}\n\n`;
 
     // Build poll results section of CSV
@@ -125,23 +151,23 @@ const pollResponseCount = pollResults.reduce(
     a.click();
   }
 
-   async function handleDeleteEvent() {
-      if (!event) return;
-      const confirmed = window.confirm(
-        "Delete this event? This cannot be undone."
-      );
-      if (!confirmed) return;
-      try {
-        setDeleting(true);
-        // Pass whatever deleteEvent expects (event.id here; switch to `event`
-        // if your service signature uses the full object).
-        await deleteEvent(event.id);
-        navigate("/dashboard");
-      } catch (error) {
-        console.error("Error deleting event:", error);
-        setDeleting(false);
-      }
+  async function handleDeleteEvent() {
+    if (!event) return;
+    const confirmed = window.confirm(
+      "Delete this event? This cannot be undone."
+    );
+    if (!confirmed) return;
+    try {
+      setDeleting(true);
+      // Pass whatever deleteEvent expects (event.id here; switch to `event`
+      // if your service signature uses the full object).
+      await deleteEvent(event.id);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      setDeleting(false);
     }
+  }
 
   return (
     <>
@@ -160,11 +186,6 @@ const pollResponseCount = pollResults.reduce(
             <LogoutButton />
           </div>
 
-          {/* Current page label
-          <div className="event-code">
-            Results
-          </div> */}
-
         </div>
       </header>
 
@@ -172,9 +193,9 @@ const pollResponseCount = pollResults.reduce(
 
         {/* Page introduction */}
         <div className="page-header">
-
+          <h1>{event.title}</h1>
           <h1 className="page-title">
-            Event Results
+            Results
           </h1>
 
           <p className="page-subtitle">

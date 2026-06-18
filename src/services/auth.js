@@ -20,3 +20,12 @@ export function confirmPasswordReset(data) {
     body: JSON.stringify(data),
   });
 }
+
+export function getDeviceToken() {
+  let token = localStorage.getItem("device_token");
+  if (!token) {
+    token = crypto.randomUUID();
+    localStorage.setItem("device_token", token);
+  }
+  return token;
+}

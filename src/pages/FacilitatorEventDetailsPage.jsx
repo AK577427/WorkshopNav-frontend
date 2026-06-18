@@ -16,7 +16,6 @@ import { QRCodeCanvas } from "qrcode.react";
 // Question and analytics components
 import RecentQuestions from "../components/questions/RecentQuestions";
 import ResultsOverview from "../components/questions/ResultsOverview";
-// import QuestionList from "../components/questions/QuestionList";
 
 function FacilitatorEventDetailsPage() {
 
@@ -60,6 +59,7 @@ function FacilitatorEventDetailsPage() {
     if (eventId && eventId !== "undefined") {
       fetchEvent();
     }
+
   }, [eventId]);
 
   useEffect(() => {
@@ -92,6 +92,13 @@ function FacilitatorEventDetailsPage() {
   if (eventId) {
     fetchPolls();
   }
+
+  // refresh every 10 seconds
+  const interval = setInterval(fetchPolls, 10 * 1000);
+
+  // clear on unmount or when eventId changes
+  return () => clearInterval(interval);
+
 }, [eventId]);
 
 
@@ -226,7 +233,7 @@ async function handleDeactivatePoll(pollId) {
     );
   }
 
-  const joinLink = `${window.location.origin}/join/${event.event_code}/`
+  const joinLink = `${window.location.origin}/join/${event.event_code}/`;
 
   return (
   <>
@@ -313,6 +320,17 @@ async function handleDeactivatePoll(pollId) {
                 {deleting ? "Deleting…" : "Delete Event"}
               </button>
               </div>
+      
+      {/* Event analytics/results section */}
+      <section
+        id="results"
+        className="event-section"
+      >
+
+        <ResultsOverview eventId = {eventId}/>
+
+      </section>
+
 
       {/* Poll management section */}
       <section
@@ -369,15 +387,7 @@ async function handleDeactivatePoll(pollId) {
 
       </section>
 
-      {/* Event analytics/results section */}
-      <section
-        id="results"
-        className="event-section"
-      >
-
-        <ResultsOverview />
-
-      </section>
+      
 
     </main>
     <Footer />
