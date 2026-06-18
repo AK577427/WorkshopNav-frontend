@@ -5,8 +5,6 @@ import { postLogin } from "../services/post-login";
 // Shared footer component
 import Footer from "../components/shared/Footer";
 
-import ErrorAlert from "../components/shared/ErrorAlert";
-
 function LoginPage() {
 
   // Store organiser email input
@@ -19,9 +17,6 @@ function LoginPage() {
   // React Router navigation hook
   const navigate = useNavigate();
   
-  const [error, setError] = useState("");
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!email || !password) {
@@ -49,8 +44,6 @@ function LoginPage() {
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">

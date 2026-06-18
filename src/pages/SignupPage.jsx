@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorAlert from "../components/shared/ErrorAlert";
 import { signupFacilitator } from "../services/auth";
 import Footer from "../components/shared/Footer";
 
@@ -16,7 +15,7 @@ function SignupPage() {
     password: "",
   });
   
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   // Handle updates to form input fields
   function handleChange(e) {
@@ -38,7 +37,7 @@ function SignupPage() {
       !formData.email ||
       !formData.password
     ) {
-      setError("Please complete all required fields.");
+      setErr("Please complete all required fields.");
       return;
     }
 
@@ -54,15 +53,20 @@ function SignupPage() {
 
     navigate("/dashboard");
   } catch (err) {
-    console.error(err);
-    setError("We couldn't create your account. Please try again.");
+    const data = err?.data;
+    if(data?.username){
+      setErr(data.username[0]);
+    }else if (data?.email){
+      setErr(data.email[0]);
+    }else {
+    setErr("We couldn't create your account. Please try again.");
+      }
+    }
   }
-}
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-        
+         
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -94,10 +98,8 @@ function SignupPage() {
         {/* Signup form card */}
         <section className="card">
 
-          <form
-            className="stack"
-            onSubmit={handleSubmit}
-          >
+          <form className="stack" onSubmit={handleSubmit}>
+          {err && <p className="error-message">{err}</p>}
 
             {/* Username input field */}
             <label className="form-label">
