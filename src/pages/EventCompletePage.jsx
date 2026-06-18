@@ -3,18 +3,15 @@ import { useParams } from "react-router-dom";
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
-import ErrorAlert from "../components/shared/ErrorAlert";
 
 function EventCompletePage({ eventId :propEventId }) {
   const {eventId: routeEventId } = useParams();
   const eventId = propEventId || routeEventId;
   console.log("Event ID from URL:", eventId);
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -35,10 +32,10 @@ function EventCompletePage({ eventId :propEventId }) {
         </section>
 
         {/* Collect attendee feedback */}
-        <FeedbackForm eventId={eventId} setError={setError} />
+        <FeedbackForm eventId={eventId} setErr={setErr} />
 
         {/* Capture attendee email for slides/resources */}
-        <EmailCaptureForm eventId={eventId} setError={setError} />
+        <EmailCaptureForm eventId={eventId} setErr={setErr} />
 
         {/* Closing message */}
         <p className="end-note">Thanks again. See you in the next event.</p>

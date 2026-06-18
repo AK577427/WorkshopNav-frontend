@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorAlert from "../components/shared/ErrorAlert";
 import { confirmPasswordReset } from "../services/auth";
 import Footer from "../components/shared/Footer";
 
@@ -11,7 +10,7 @@ function ResetPasswordConfirmPage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,17 +20,17 @@ function ResetPasswordConfirmPage() {
     const token = localStorage.getItem("reset_token");
 
     if (!newPassword || !confirmPassword) {
-      setError("Please complete both password fields.");
+      setErr("Please complete both password fields.");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.");
+      setErr("Passwords do not match.");
       return;
     }
 
     if (!uid || !token) {
-      setError("Reset details are missing. Please request a new reset link.");
+      setErr("Reset details are missing. Please request a new reset link.");
       return;
     }
 
@@ -50,14 +49,12 @@ function ResetPasswordConfirmPage() {
       navigate("/login");
     } catch (err) {
       console.error(err);
-      setError("We couldn't reset your password.");
+      setErr("We couldn't reset your password.");
     }
   }
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
-
       <header className="app-header">
         <div className="app-header-inner">
           <div className="app-logo">Workshop Navigator</div>
@@ -75,6 +72,7 @@ function ResetPasswordConfirmPage() {
 
         <section className="card">
           <form className="stack" onSubmit={handleSubmit}>
+            {err && <p className="error-message">{err}</p>}
             <label className="form-label">
               New Password
 

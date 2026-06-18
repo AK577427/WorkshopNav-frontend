@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorAlert from "../components/shared/ErrorAlert";
 import { requestPasswordReset } from "../services/auth";
 import Footer from "../components/shared/Footer";
 
@@ -12,7 +11,7 @@ function ResetPasswordPage() {
   // Store email input value
   const [email, setEmail] = useState("");
 
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
 
   // Handle reset password form submission
   async function handleSubmit(e) {
@@ -20,7 +19,7 @@ function ResetPasswordPage() {
 
     // Prevent empty email submissions
     if (!email) {
-      setError("Please enter your email address.");
+      setErr("Please enter your email address.");
       return;
     }
     
@@ -37,13 +36,12 @@ function ResetPasswordPage() {
     
   } catch (err) {
     console.error(err);
-    setError("We couldn't send the password reset request.");
+    setErr("We couldn't send the password reset request.");
   }
 }
 
   return (
     <>
-      <ErrorAlert message={error} onClose={() => setError("")} />
       {/* Top application header */}
       <header className="app-header">
         <div className="app-header-inner">
@@ -78,6 +76,7 @@ function ResetPasswordPage() {
             className="stack"
             onSubmit={handleSubmit}
           >
+            {err && <p className="error-message">{err}</p>}
 
             {/* Email input field */}
             <label className="form-label">
