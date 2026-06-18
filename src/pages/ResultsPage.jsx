@@ -21,7 +21,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { getCapturedEmails } from "../services/emails";
 import { getAttendees } from "../services/attendee";
 
 
@@ -55,7 +54,7 @@ function ResultsPage() {
           getAttendees(eventId),
         ]);
 
-      setAttendeeCount(attendeeData.map((a)=> a.count));
+      setAttendeeCount(attendeeData.count);
       // setAttendeeNames(attendeeData.names ?? []);
       console.log("attendeeData:", attendeeData);
 
@@ -97,17 +96,6 @@ function ResultsPage() {
   loadResults();
 }, [eventId]);
 
-// async function capturedEmails(eventId) {
-//   try {
-//     const emails = await getCapturedEmails(eventId);
-//   }catch(err){
-//     console.log("Failed to get emails", err)
-//   }
-  
-//   capturedEmails()
-  
-// }
-
 const emailCount = emails.length;
 
 const pollResponseCount = pollResults.reduce(
@@ -121,7 +109,7 @@ const pollResponseCount = pollResults.reduce(
     // Build summary section of CSV
     let csv = "Event Summary\n";
     csv += `Event,${event?.title ?? ""}\n `;
-    csv += `Attendees,${setAttendeeCount}\n`;
+    csv += `Attendees,${attendeeCount}\n`;
     csv += `Poll Responses,${pollResponseCount}\n`;
     csv += `Questions,${questions.length}\n`;
     csv += `Emails Count,${emailCount}\n`;
@@ -163,23 +151,23 @@ const pollResponseCount = pollResults.reduce(
     a.click();
   }
 
-   async function handleDeleteEvent() {
-      if (!event) return;
-      const confirmed = window.confirm(
-        "Delete this event? This cannot be undone."
-      );
-      if (!confirmed) return;
-      try {
-        setDeleting(true);
-        // Pass whatever deleteEvent expects (event.id here; switch to `event`
-        // if your service signature uses the full object).
-        await deleteEvent(event.id);
-        navigate("/dashboard");
-      } catch (error) {
-        console.error("Error deleting event:", error);
-        setDeleting(false);
-      }
+  async function handleDeleteEvent() {
+    if (!event) return;
+    const confirmed = window.confirm(
+      "Delete this event? This cannot be undone."
+    );
+    if (!confirmed) return;
+    try {
+      setDeleting(true);
+      // Pass whatever deleteEvent expects (event.id here; switch to `event`
+      // if your service signature uses the full object).
+      await deleteEvent(event.id);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      setDeleting(false);
     }
+  }
 
   return (
     <>
@@ -198,11 +186,6 @@ const pollResponseCount = pollResults.reduce(
             <LogoutButton />
           </div>
 
-          {/* Current page label */}
-          {/* <div className="event-code">
-            Results
-          </div>  */}
-
         </div>
       </header>
 
@@ -210,8 +193,9 @@ const pollResponseCount = pollResults.reduce(
 
         {/* Page introduction */}
         <div className="page-header">
+          <h1>{event.title}</h1>
           <h1 className="page-title">
-            Event Results
+            Results
           </h1>
 
           <p className="page-subtitle">
@@ -241,7 +225,7 @@ const pollResponseCount = pollResults.reduce(
 
             <div className="result-row">
               <span>Attendees</span>
-              <span>{setAttendeeCount}</span>
+              <span>{attendeeCount}</span>
             </div>
 
             <div className="result-row">
