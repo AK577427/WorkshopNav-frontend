@@ -13,6 +13,8 @@ function ResetPasswordPage() {
 
   const [err, setErr] = useState("");
 
+  const [sent, setSent] = useState(false);
+
   // Handle reset password form submission
   async function handleSubmit(e) {
     e.preventDefault();
@@ -24,16 +26,9 @@ function ResetPasswordPage() {
     }
     
     try {
-    const data = await requestPasswordReset({ email });
-    
-    // Store reset details temporarily for MVP flow
-    localStorage.setItem("reset_uid", data.uid);
-    localStorage.setItem("reset_token", data.token);
-
-    alert("Password reset request sent.");
-
-    navigate("/reset-password-confirm");
-    
+    await requestPasswordReset({ email });
+    setErr("");
+    setSent(true);    
   } catch (err) {
     console.error(err);
     setErr("We couldn't send the password reset request.");
@@ -47,7 +42,8 @@ function ResetPasswordPage() {
         <div className="app-header-inner">
 
           {/* Application branding */}
-          <div className="app-logo">
+          <div className="app-logo"
+            onClick={()=> navigate("/")}>
             Workshop Navigator
           </div>
 
@@ -71,7 +67,11 @@ function ResetPasswordPage() {
 
         {/* Password reset form */}
         <section className="card">
-
+          {sent ? (
+            <p className="muted">
+            If an account exists for that email, we've sent a reset link. Check your inbox.
+            </p>
+          ) : (
           <form
             className="stack"
             onSubmit={handleSubmit}
@@ -111,6 +111,7 @@ function ResetPasswordPage() {
             </button>
 
           </form>
+          )}
         </section>
       </main>
       <Footer />
