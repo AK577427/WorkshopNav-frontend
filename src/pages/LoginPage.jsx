@@ -33,10 +33,15 @@ function LoginPage() {
           console.log("Token saved to localStorage:", response.access);
           navigate("/dashboard");
         })
-        .catch((error) => {
+        .catch((err) => {
           // Handle login error, e.g., show error message
-          console.error("Login failed:", error);
-          setErr("Login failed. Please check your credentials and try again.");
+          const errorMessage = 
+          err?.data?.email ||
+          err?.data?.password ||
+          err?.data?.error ||
+          "Login failed. Please check your credentials and try again.";
+  
+          setErr(errorMessage);
         });
     }
   };
