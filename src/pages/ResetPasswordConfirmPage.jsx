@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { confirmPasswordReset } from "../services/auth";
 import Footer from "../components/shared/Footer";
 
@@ -11,14 +11,11 @@ function ResetPasswordConfirmPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [err, setErr] = useState("");
+  const {uid, token} = useParams();
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    // Get reset details saved from reset request
-    const uid = localStorage.getItem("reset_uid");
-    const token = localStorage.getItem("reset_token");
-
+    
     if (!newPassword || !confirmPassword) {
       setErr("Please complete both password fields.");
       return;
@@ -30,7 +27,7 @@ function ResetPasswordConfirmPage() {
     }
 
     if (!uid || !token) {
-      setErr("Reset details are missing. Please request a new reset link.");
+      setErr("Invalid or expired reset link. Please request a new one.");
       return;
     }
 
@@ -41,15 +38,21 @@ function ResetPasswordConfirmPage() {
         new_password: newPassword,
       });
 
-      // Remove reset details after successful password reset
-      localStorage.removeItem("reset_uid");
-      localStorage.removeItem("reset_token");
+      // // Remove reset details after successful password reset
+      // localStorage.removeItem("reset_uid");
+      // localStorage.removeItem("reset_token");
 
       alert("Password reset successfully.");
       navigate("/login");
     } catch (err) {
-      console.error(err);
-      setErr("We couldn't reset your password.");
+      const errorMessage = 
+        err?.data.error?.[0] ||
+        err?.data?.new_password?.[0] ||
+        "We couldn't reset your password.The link may be expired";
+        console.log(err.data)
+
+      setErr(errorMessage);
+
     }
   }
 

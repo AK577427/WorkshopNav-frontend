@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import FeedbackForm from "../components/feedback/FeedbackForm";
 import EmailCaptureForm from "../components/email/EmailCaptureForm";
 import Footer from "../components/shared/Footer";
+import { useNavigate } from "react-router-dom";
 
 function EventCompletePage({ eventId :propEventId }) {
   const {eventId: routeEventId } = useParams();
   const eventId = propEventId || routeEventId;
   console.log("Event ID from URL:", eventId);
   const [err, setErr] = useState("");
+  const navigate = useNavigate();
 
   return (
     <>
@@ -16,7 +18,9 @@ function EventCompletePage({ eventId :propEventId }) {
       <header className="app-header">
         <div className="app-header-inner">
           {/* Application branding */}
-          <div className="app-logo">Workshop Navigator</div>
+          <div className="app-logo"
+          onClick={()=> navigate("/")}>
+            Workshop Navigator</div>
         </div>
       </header>
 

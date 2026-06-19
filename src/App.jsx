@@ -35,7 +35,7 @@ function App() {
 
       {/* RESET PASSWORD CONFIRM */}
       <Route
-        path="/reset-password-confirm"
+        path="/reset-password-confirm/:uid/:token"
         element={<ResetPasswordConfirmPage />}
       />
 

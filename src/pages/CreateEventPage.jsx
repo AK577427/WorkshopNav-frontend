@@ -42,7 +42,8 @@ function CreateEventPage() {
     <header className="app-header">
         <div className="app-header-inner">
           {/* Application branding */}
-          <div className="app-logo">
+          <div className="app-logo"
+          onClick={()=> navigate("/")}>
             Workshop Navigator
           </div>
 
