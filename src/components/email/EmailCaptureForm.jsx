@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { captureEmail } from "../../services/emails";
 
 
@@ -34,6 +34,17 @@ function EmailCaptureForm({ eventId }) {
         setLoading(false);
       }
     };
+
+    useEffect(() => {
+      if (err || message) {
+        const timer = setTimeout(() => {
+          setErr("");
+          setMessage("");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+      }
+    }, [err, message]);
 
   return (
     <section className="card">

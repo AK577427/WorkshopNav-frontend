@@ -414,10 +414,11 @@ body {
 
 
 .question-item {
+  justify-content: space-between;
   border: 1px solid rgba(199, 195, 244, 0.25);
   border-radius: 16px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06); 
 }
 
 .question-meta {
@@ -425,7 +426,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-top: 14px;
-  color: #c7c3f4;
+  /* color: #c7c3f4; */
   font-size: 14px;
 }
 
@@ -945,6 +946,17 @@ body {
   color: #f87171;
   font-size: 14px;
   margin-top: 8px;
+}
+
+.qn-error-message {
+  /* color: #d32f2f; */
+  /* color: linear-gradient(135deg, #8b5cf6, #ec4899); */
+  color: #ec4899;
+  /* background-color: #fdecea; */
+  /* border: 1px solid #f5c2c7; */
+  /* padding: 0.75rem; */
+  border-radius: 8px;
+  /* margin-bottom: 1rem; */
 }
 
 .success-message {

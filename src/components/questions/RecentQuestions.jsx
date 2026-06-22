@@ -33,12 +33,14 @@ function RecentQuestions({ eventId , refresh }) {
       <div className="stack">
         {questions.map((question) => (
           <div key={question.id} className="question-item">
-            <p>{question.question_text}</p>
-            <div>
-            <span> votes</span>
-            <span className="votes">{question.upvotes}</span>
+            <div className="question-meta">
+              <span>{question.question_text}</span>
+              {/* <span>votes</span> */}
+              <span className="votes"> ▲ {question.upvotes}</span>
             </div>
-            
+            <div>
+              <span>{question.attendee_name}</span>
+            </div>
          </div>
         ))}
       </div>
