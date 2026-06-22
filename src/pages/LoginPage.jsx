@@ -68,7 +68,7 @@ function LoginPage() {
         <div className="page-header">
 
           <h1 className="page-title">
-            Facilitatir Login
+            Facilitator Login
           </h1>
 
           <p className="page-subtitle">
