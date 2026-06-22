@@ -32,7 +32,7 @@ function AttendeeEventPage() {
       setEvent(data);
       setErr("");
     } catch (err) {
-      console.err(err);
+      console.error(err);
       setErr("Unable to load this event right now.");
     } finally {
       setIsLoading(false);
