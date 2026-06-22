@@ -9,6 +9,8 @@ export async function postQuestion(eventId, data) {
     body: JSON.stringify({
         question_text: data.text,
         anonymous: data.anonymous,
+        device_token : localStorage.getItem("device_token"),
+        attendee_name : localStorage.getItem("attendeeName"),
     }),
   });
     }
